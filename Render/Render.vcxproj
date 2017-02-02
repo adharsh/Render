@@ -127,6 +127,7 @@
     <ClCompile Include="Render\Engine.cpp" />
     <ClCompile Include="Render\graphics\BasicShader.cpp" />
     <ClCompile Include="Render\graphics\Mesh.cpp" />
+    <ClCompile Include="Render\graphics\PhongShader .cpp" />
     <ClCompile Include="Render\graphics\Shader.cpp" />
     <ClCompile Include="Render\graphics\Texture.cpp" />
     <ClCompile Include="Render\Time.cpp" />
@@ -138,7 +139,9 @@
     <ClInclude Include="Render\Engine.h" />
     <ClInclude Include="Render\Game.h" />
     <ClInclude Include="Render\graphics\BasicShader.h" />
+    <ClInclude Include="Render\graphics\LightStructs.h" />
     <ClInclude Include="Render\graphics\Mesh.h" />
+    <ClInclude Include="Render\graphics\PhongShader.h" />
     <ClInclude Include="Render\graphics\Texture.h" />
     <ClInclude Include="Render\Handle.h" />
     <ClInclude Include="Render\graphics\Shader.h" />
@@ -151,6 +154,8 @@
     <None Include="Render\res\shaders\basicFragment.fs" />
     <None Include="Render\res\shaders\basicVertex.vs" />
     <None Include="Render\res\shaders\fragmentshader.fs" />
+    <None Include="Render\res\shaders\phongFragment.fs" />
+    <None Include="Render\res\shaders\phongVertex.vs" />
     <None Include="Render\res\shaders\vertexshader.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

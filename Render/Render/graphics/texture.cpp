@@ -10,11 +10,6 @@ namespace ginkgo {
 			tid = load();
 	}
 
-	Texture::Texture()
-	{ 
-	
-	}
-
 	Texture::~Texture()
 	{ 
 	

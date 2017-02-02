@@ -45,6 +45,9 @@
     <ClCompile Include="Render\graphics\BasicShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Render\graphics\PhongShader .cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render\Engine.h">
@@ -80,11 +83,19 @@
     <ClInclude Include="Render\graphics\BasicShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Render\graphics\PhongShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\graphics\LightStructs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Render\res\shaders\basicVertex.vs" />
     <None Include="Render\res\shaders\basicFragment.fs" />
     <None Include="Render\res\shaders\fragmentshader.fs" />
     <None Include="Render\res\shaders\vertexshader.vs" />
+    <None Include="Render\res\shaders\phongFragment.fs" />
+    <None Include="Render\res\shaders\phongVertex.vs" />
   </ItemGroup>
 </Project>

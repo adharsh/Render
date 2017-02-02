@@ -4,7 +4,6 @@
 #include <string>
 #include <glm/glm.hpp>
 
-
 namespace ginkgo {
 
 	struct ObjMaterial

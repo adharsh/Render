@@ -1,17 +1,53 @@
-Suggestion on loadMesh in FileUtils.h
+isolate code that uses normals
+addddata stuff
+fragmentshader
 
-Remove default constructor of Texture since its not necessary
 
-Window->Reset Window LayoutWindow->Reset Window Layout
-
-filesutils.cpp: return pixels instead of return result
-
-Mesh.cpp todo
-
-texture = Texture("res/textures/Hi.png"); vs texture("res/textures/Hi.png"); //second has error
+******
+indices Mesh addData
 
 binding and unbinding textures
 
 references by Texture Class
 
 fragmentshader.fs todo, should i use glEnable(GL_TEXTURE2D) and glDisable(GL_TEXTURE2D)
+
+change up all the paramters and make them const stuff
+
+replace input() todo
+
+change up PhongShader and make it a singleton class
+make private variables all static
+
+Watch Companion Video on Lighting
+Make-> float diffuseFactor = dot(direction, normal); //to see what happens, opposite shading?
+
+Control k+d for all files
+
+Optimize calculations for Mesh.cpp, instead of copying and pasting, do it all at once
+
+draw() method for Mesh excluding use of normals too
+
+change location of uniform variables in phongFragment.fs
+
+phongFragment todo
+
+refactor shader class so methods are all overloaded setUniform
+change shader char* parameters to std::string&
+
+make get methods return const values
+
+**********
+Window->Reset Window LayoutWindow->Reset Window Layout
+
+Remove default constructor of Texture since its not necessary -> Make pointer if should not need to initialize when declared
+
+filesutils.cpp: return pixels instead of return result -> Library should clean up other stuff by itself, not just variables present
+
+okay to use new, manage memory yourself
+
+texture = Texture("res/textures/Hi.png"); vs texture("res/textures/Hi.png"); //second has error -> Visual Studio Directory
+
+default argument should only be present when declared, only variable (without = value) should be present in implementation
+
+universal zero initializer -> = 0;

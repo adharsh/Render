@@ -4,6 +4,8 @@
 #include <GL/glew.h>
 #include <glm\glm.hpp>
 
+#include "LightStructs.h"
+
 namespace ginkgo {
 
 		class Shader
@@ -31,7 +33,8 @@ namespace ginkgo {
 			void setUniform3f(const GLchar* name, const glm::vec3& vector);
 			void setUniform4f(const GLchar* name, const glm::vec4& vector);
 			void setUniformMat4(const GLchar* name, const glm::mat4& matrix);
-
+			void setUniform(const std::string& name, DirectionalLight& directionalLight);
+			void setUniform(const std::string& name, BaseLight& baseLight);
 			void bind() const;
 			void unbind() const;
 		private:

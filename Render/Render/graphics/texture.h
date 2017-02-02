@@ -20,7 +20,6 @@ namespace ginkgo {
 		GLuint load();
 	public:
 		Texture(const std::string& path, glm::vec4& color);
-		Texture();
 		~Texture();
 		void bind();
 		void unbind();

@@ -12,7 +12,7 @@
 #include "Time.h"
 #include "graphics/Mesh.h"
 #include "graphics/Texture.h"
-#include "graphics/BasicShader.h"
+#include "graphics/PhongShader.h"
 #include "utils/ObjLoader.h"
 
 namespace ginkgo {
@@ -21,19 +21,31 @@ namespace ginkgo {
 	{
 	private:
 		Window& window;
-		BasicShader shader;
+		PhongShader shader;
 		Mesh mesh;
-		Texture texture;
+		Texture* texture;
 
 		glm::mat4 projection;
 		glm::mat4 view;
 		glm::mat4 model;
 		glm::mat4 transform;
+
+		glm::vec3 cameraPosition = glm::vec3(0.0f, 0.0f, 3.0f);
+		glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+		glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+		GLfloat yaw = -90.0f;
+		GLfloat pitch = 0.0f;
+		GLfloat fov = 45.0f;
+		GLfloat lastX = window.getWidth() / 2.0f;
+		GLfloat lastY = window.getHeight() / 2.0f;
 	public:
 		Game(Window& a) : window(a)
 		{
-			projection = glm::perspective(45.0f, window.getAspectRatio(), 0.1f, 100.0f);
-			view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+			projection = glm::perspective(fov, window.getAspectRatio(), 0.1f, 100.0f);
+			view = glm::lookAt(
+				cameraPosition,
+				cameraPosition + cameraFront,
+				cameraUp);
 #if 0
 			
 			ObjIntermediate obj;
@@ -54,8 +66,7 @@ namespace ginkgo {
 			
 			mesh.addData(vertices, indices, uvs);
 #else
-
-			texture = Texture("Render/res/textures/Hi.png", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+			texture = new Texture("Render/res/textures/Hi.png", glm::vec4(0.0f, 1.0f, 1.0f, 1.0f));
 			//texture = Texture("", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
 			std::vector<glm::vec3> vertices;
@@ -76,26 +87,41 @@ namespace ginkgo {
 			indices.push_back(3); indices.push_back(2); indices.push_back(0);
 			indices.push_back(2); indices.push_back(0); indices.push_back(1);
 
+			/*
+			std::vector<glm::vec3> vertices;
+			vertices.push_back(glm::vec3(-1.0f, -1.0f, 0.5773f));
+			vertices.push_back(glm::vec3(0.0f, -1.0f, -1.15475f));
+			vertices.push_back(glm::vec3(1.0f, -1.0f, 0.5773f));
+			vertices.push_back(glm::vec3(0.0f, 1.0f, 0.0f));
+
+			std::vector<glm::vec2> uvs;
+			uvs.push_back(glm::vec2(0.0f, 0.0f));
+			uvs.push_back(glm::vec2(0.5f, 0.0f));
+			uvs.push_back(glm::vec2(1.0f, 0.0f));
+			uvs.push_back(glm::vec2(0.0f, 0.5f));
+
+			std::vector<GLuint> indices;
+			indices.push_back(0); indices.push_back(3); indices.push_back(1);
+			indices.push_back(1); indices.push_back(3); indices.push_back(2);
+			indices.push_back(2); indices.push_back(3); indices.push_back(0);
+			indices.push_back(1); indices.push_back(2); indices.push_back(0);
+			*/
+
 			mesh.addData(vertices, indices, uvs);
 #endif
 		}
 
 		void input()
 		{
+			GLfloat cameraSpeed = 2.0f * 200000 * 10E-10; //TODO: Replace code, actually input() method itself
 			if (window.isKeyPressed(GLFW_KEY_UP))
-				std::cout << "Pressed Up\n";
-
+				cameraPosition += cameraSpeed * cameraFront;
 			if (window.isKeyPressed(GLFW_KEY_DOWN))
-				std::cout << "Pressed Down\n";
-			
-			if (window.isKeyPressed(GLFW_KEY_RIGHT))
-				std::cout << "Pressed Right\n";
-
+				cameraPosition -= cameraSpeed * cameraFront;
 			if (window.isKeyPressed(GLFW_KEY_LEFT))
-				std::cout << "Pressed Left\n";
-
-
-
+				cameraPosition -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+			if (window.isKeyPressed(GLFW_KEY_RIGHT))
+				cameraPosition += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 		}
 
 		float temp = 0.0f;
@@ -103,17 +129,28 @@ namespace ginkgo {
 		{
 			temp += Time::getDelta();
 			float a = sin(temp*1.5)*0.001f;
-			texture.setColor(glm::vec4(sin(temp), -sin(temp), sin(temp), 1.0f));
+		//	texture->setColor(glm::vec4(sin(temp), -sin(temp), sin(temp), 1.0f));
+		//	window.setClearColor(glm::vec4(sin(temp), sin(temp), sin(temp), sin(temp)));
+			
 			model = glm::rotate(model, a, glm::vec3(1.0f, 0.0f, 0.0f));
-			window.setClearColor(glm::vec4(sin(temp), sin(temp), sin(temp), sin(temp)));
+			
+			projection = glm::perspective(fov, window.getAspectRatio(), 0.1f, 100.0f);
+
+			view = glm::lookAt(
+				cameraPosition,
+				cameraPosition + cameraFront,
+				cameraUp);
+
+			shader.setAmbientLight(glm::vec4(0.3f, 0.3f, 0.3f, 1.0f));
 		}
 
 		void render()
 		{
 			shader.bind();
-			shader.updateUniforms(projection * view * model, texture);
+			shader.updateUniforms(projection * view * model, *texture);
 			mesh.draw();
 			shader.unbind();
+
 		}
 
 	};

@@ -203,4 +203,16 @@ namespace ginkgo {
 		glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, &matrix[0][0]);
 	}
 
+	void Shader::setUniform(const std::string& name, BaseLight& baseLight)
+	{
+		setUniform4f((name + ".base").c_str(), baseLight.color);
+		setUniform1f((name + ".base").c_str(), baseLight.intensity);
+	}
+
+	void Shader::setUniform(const std::string& name, DirectionalLight& directionalLight)
+	{
+		setUniform((name + ".base").c_str(), directionalLight.base);
+		setUniform3f((name + ".base").c_str(), directionalLight.direction);
+	}
+
 }
