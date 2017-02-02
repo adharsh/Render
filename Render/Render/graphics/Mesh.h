@@ -13,11 +13,13 @@ namespace ginkgo {
 		GLuint VBO;
 		GLuint EBO;
 		GLuint size;
-
+		GLuint data_size;
 	public:
 		Mesh();
-		void addVertices(std::vector<glm::vec3>& vertices, std::vector<GLuint>& indices);
+		void addData(std::vector<glm::vec3>& vertices, std::vector<GLuint>& indices, std::vector<glm::vec2>& uvs);
 		void draw();
+	private:
+		GLfloat* generateDataMatrix(std::vector<glm::vec3>& vertices, std::vector<glm::vec2>& uvs);
 	};
 
 

@@ -1,0 +1,17 @@
+Suggestion on loadMesh in FileUtils.h
+
+Remove default constructor of Texture since its not necessary
+
+Window->Reset Window LayoutWindow->Reset Window Layout
+
+filesutils.cpp: return pixels instead of return result
+
+Mesh.cpp todo
+
+texture = Texture("res/textures/Hi.png"); vs texture("res/textures/Hi.png"); //second has error
+
+binding and unbinding textures
+
+references by Texture Class
+
+fragmentshader.fs todo, should i use glEnable(GL_TEXTURE2D) and glDisable(GL_TEXTURE2D)

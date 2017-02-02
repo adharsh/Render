@@ -125,9 +125,10 @@
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Render\Engine.cpp" />
+    <ClCompile Include="Render\graphics\BasicShader.cpp" />
     <ClCompile Include="Render\graphics\Mesh.cpp" />
     <ClCompile Include="Render\graphics\Shader.cpp" />
-    <ClCompile Include="Render\graphics\texture.cpp" />
+    <ClCompile Include="Render\graphics\Texture.cpp" />
     <ClCompile Include="Render\Time.cpp" />
     <ClCompile Include="Render\graphics\Window.cpp" />
     <ClCompile Include="Render\Utils\FileUtils.cpp" />
@@ -136,19 +137,21 @@
   <ItemGroup>
     <ClInclude Include="Render\Engine.h" />
     <ClInclude Include="Render\Game.h" />
+    <ClInclude Include="Render\graphics\BasicShader.h" />
     <ClInclude Include="Render\graphics\Mesh.h" />
-    <ClInclude Include="Render\graphics\texture.h" />
+    <ClInclude Include="Render\graphics\Texture.h" />
     <ClInclude Include="Render\Handle.h" />
     <ClInclude Include="Render\graphics\Shader.h" />
     <ClInclude Include="Render\Time.h" />
     <ClInclude Include="Render\graphics\Window.h" />
     <ClInclude Include="Render\Utils\FileUtils.h" />
-    <ClInclude Include="Render\utils\imageload.h" />
     <ClInclude Include="Render\utils\ObjLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Render\res\shaders\basicFragment.fs" />
     <None Include="Render\res\shaders\basicVertex.vs" />
+    <None Include="Render\res\shaders\fragmentshader.fs" />
+    <None Include="Render\res\shaders\vertexshader.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -15,7 +15,7 @@ using namespace ginkgo;
 int main()
 {
 
-	Window window = Window("Render", 800, 600);
+	Window window = Window("Render", 800, 600, glm::vec4(0.4f, 0.5f, 0.5f, 1.0f));
 
 	Engine engine = Engine(window);
 	engine.start();

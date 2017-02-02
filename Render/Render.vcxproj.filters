@@ -39,7 +39,10 @@
     <ClCompile Include="Render\utils\ObjLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Render\graphics\texture.cpp">
+    <ClCompile Include="Render\graphics\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\graphics\BasicShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -71,15 +74,17 @@
     <ClInclude Include="Render\utils\ObjLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Render\graphics\texture.h">
+    <ClInclude Include="Render\graphics\Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Render\utils\imageload.h">
+    <ClInclude Include="Render\graphics\BasicShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Render\res\shaders\basicVertex.vs" />
     <None Include="Render\res\shaders\basicFragment.fs" />
+    <None Include="Render\res\shaders\fragmentshader.fs" />
+    <None Include="Render\res\shaders\vertexshader.vs" />
   </ItemGroup>
 </Project>

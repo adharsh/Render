@@ -2,11 +2,13 @@
 #include <iostream>
 
 namespace ginkgo {
-		Window::Window(const char *name, int width, int height)
+		Window::Window(const char *name, int width, int height, glm::vec4& clear_color)
 		{
 			this->title = name;
 			this->width = width;
 			this->height = height;
+			this->clear_color = clear_color;
+
 			if (!init())
 				glfwTerminate();
 
@@ -107,7 +109,7 @@ namespace ginkgo {
 		void Window::clear() const
 		{
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			//glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+			glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
 		}
 
 		void Window::update()

@@ -160,6 +160,10 @@ namespace ginkgo {
 			for (unsigned int i = 0; i < a.indices.size(); i++)
 				indices.emplace_back(a.indices[i]);
 		}
+
+		for (unsigned int i = 0; i < indices.size(); i++)
+			indices[i]--;
+
 		matLib = matLibList;
 		vertex = vertexList;
 		normals = normalList;
