@@ -16,34 +16,49 @@ namespace ginkgo {
 	}
 
 
-	void Mesh::addData(std::vector<glm::vec3>& vertices, std::vector<GLuint>& indices, std::vector<glm::vec2>& uvs)
+	void Mesh::addData(std::vector<glm::vec3>& positions, std::vector<GLuint>& indices, std::vector<glm::vec2>& uvs, bool haveNormals)
 	{
 		//Generating Normals
 		std::vector<glm::vec3> normals;
-		for (int i = 0; i < indices.size(); i++)
+		for (int i = 0; i < positions.size(); i++)
 			normals.emplace_back(glm::vec3(0.0f, 0.0f, 0.0f));
 
-		for (int i = 0; i < indices.size(); i += 3)
+		if (haveNormals)
 		{
-			int i0 = indices[i];
-			int i1 = indices[i + 1];
-			int i2 = indices[i + 2];
+			for (int i = 0; i < indices.size(); i += 3)
+			{
+				int i0 = indices[i];
+				int i1 = indices[i + 1];
+				int i2 = indices[i + 2];
 
-			glm::vec3 v1 = vertices[i1] - vertices[i0];
-			glm::vec3 v2 = vertices[i2] - vertices[i0];
+				glm::vec3 v1 = positions[i1] - positions[i0];
+				glm::vec3 v2 = positions[i2] - positions[i0];
 
-			glm::vec3 normal = glm::normalize(glm::cross(v1, v2));
+				glm::vec3 normal = glm::normalize(glm::cross(v1, v2));
 
-			normals[i0] = normals[i0] + normal;
-			normals[i1] = normals[i1] + normal;
-			normals[i2] = normals[i2] + normal;
+				normals[i0] = normals[i0] + normal;
+				normals[i1] = normals[i1] + normal;
+				normals[i2] = normals[i2] + normal;
+			}
+
+			for (int i = 0; i < positions.size(); i++)
+				normals[i] = glm::normalize(normals[i]);
 		}
 
-		for (int i = 0; i < vertices.size(); i++)
-			normals[i] = glm::normalize(normals[i]);
-
 		//Loading Data
-		GLfloat* data = generateDataMatrixWithNormals(vertices, uvs, normals);
+		GLfloat* data = generateDataMatrix(positions, uvs, normals);
+
+		for (int i = 0; i < positions.size(); i++)
+		{
+			std::cout << data[i * 8 + 0] << std::endl;
+			std::cout << data[i * 8 + 1] << std::endl;
+			std::cout << data[i * 8 + 2] << std::endl;
+			std::cout << data[i * 8 + 3] << std::endl;
+			std::cout << data[i * 8 + 4] << std::endl;
+			std::cout << data[i * 8 + 5] << std::endl;
+			std::cout << data[i * 8 + 6] << std::endl;
+			std::cout << data[i * 8 + 7] << std::endl << std::endl;
+		}
 
 		size = indices.size();
 
@@ -57,7 +72,7 @@ namespace ginkgo {
 
 		glBindVertexArray(0);
 
-		delete data;
+		//delete data;
 	}
 
 	void Mesh::draw()
@@ -67,53 +82,33 @@ namespace ginkgo {
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
 		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, data_size * sizeof(GLfloat), 0);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, data_size * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
-		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, data_size * sizeof(GLfloat), (GLvoid*)(5 * sizeof(GLfloat)));
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), 0);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(5 * sizeof(GLfloat)));
 
 		glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_INT, 0);
 
 		glBindVertexArray(0);
 	}
 
-	GLfloat* Mesh::generateDataMatrix(std::vector<glm::vec3>& vertices, std::vector<glm::vec2>& uvs)
+	GLfloat* Mesh::generateDataMatrix(std::vector<glm::vec3>& positions, std::vector<glm::vec2>& uvs, std::vector<glm::vec3>& normals)
 	{
-		data_size = vertices.size() * 5;
+		data_size = positions.size() * 8;
 		GLfloat* data = new GLfloat[data_size];
 
-		if (vertices.size() != uvs.size())
-			return NULL;
-
-		for (GLuint i = 0; i < vertices.size(); i++)
+	/*	if (positions.size() != uvs.size() || positions.size() != normals.size())
 		{
-			data[i * 5 + 0] = vertices[i].x;
-			data[i * 5 + 1] = vertices[i].y;
-			data[i * 5 + 2] = vertices[i].z;
-			data[i * 5 + 3] = uvs[i].x;
-			data[i * 5 + 4] = uvs[i].y;
-		}
-
-		return data;
-	}
-
-	GLfloat* Mesh::generateDataMatrixWithNormals(std::vector<glm::vec3>& vertices, std::vector<glm::vec2>& uvs, std::vector<glm::vec3>& normals)
-	{
-		data_size = vertices.size() * 8;
-		GLfloat* data = new GLfloat[data_size];
-
-	/*	if (vertices.size() != uvs.size() || vertices.size() != normals.size())
-		{
-			std::cout << "generateDataMatrixNormals() error" << std::endl;
+			std::cout << "Incorrect amount of data. Should be the same number of sets of positions, uvs, and normals." << std::endl;
 			system("pause");
 			return NULL;
-		}
-	*/
+		}*/
+	
 
-		for (GLuint i = 0; i < vertices.size(); i++)
+		for (GLuint i = 0; i < positions.size(); i++)
 		{
-			data[i * 8 + 0] = vertices[i].x;
-			data[i * 8 + 1] = vertices[i].y;
-			data[i * 8 + 2] = vertices[i].z;
+			data[i * 8 + 0] = positions[i].x;
+			data[i * 8 + 1] = positions[i].y;
+			data[i * 8 + 2] = positions[i].z;
 			data[i * 8 + 3] = uvs[i].x;
 			data[i * 8 + 4] = uvs[i].y;
 			data[i * 8 + 5] = normals[i].x;

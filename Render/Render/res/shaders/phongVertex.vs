@@ -9,6 +9,7 @@ out vec2 texCoord;
 out vec3 normalCoord;
 
 uniform mat4 transform;
+//uniform mat4 model;
 
 void main()
 {

@@ -8,8 +8,7 @@ namespace ginkgo {
 		addFragmentShader("Render/res/shaders/phongFragment.fs");
 		compileShader();
 
-		ambientLight = glm::vec4(0.3f, 0.3f, 0.3f, 1.0f);
-
+		ambientLight = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
 		directionalLight.base.color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 		directionalLight.base.intensity = 0.0f;
 		directionalLight.direction = glm::vec3(0.0f, 0.0f, 0.0f);
@@ -27,6 +26,9 @@ namespace ginkgo {
 		setUniform4f("ambientLight", ambientLight);
 
 		setUniform("directionalLight", directionalLight);
+
+		//if (texture.hasImage())
+		//	texture.unbind();
 	}
 
 }

@@ -59,4 +59,5 @@ void main()
 	totalLight += calcDirectionalLight(directionalLight, normal);
 
 	fragColor = color * totalLight;
+	//fragColor = vec4(1.0f, 0.0f, 0.0f, 1.0f);
 }

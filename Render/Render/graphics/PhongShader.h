@@ -23,7 +23,10 @@ namespace ginkgo {
 
 
 		inline DirectionalLight& getDirectionalLight() { return directionalLight; }
-		inline void setDirectionalLight(const DirectionalLight& directionalLight) { this->directionalLight = directionalLight; }
+		inline void setDirectionalLight(const DirectionalLight& directionalLight) //underTheAssumption that its normalized
+		{ 
+			this->directionalLight = directionalLight;
+		}
 	};
 
 

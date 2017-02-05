@@ -96,13 +96,13 @@ namespace ginkgo {
 		GLenum error = glGetError();
 
 		if (error != GL_NO_ERROR)
-			std::cout << "OpenGL Error: " << error << std::endl;
+			std::cout << "OpenGL Error: " << error << " in Engine.cpp, most likely game.render()" << std::endl;
 		
 		window.update();
 		error = glGetError();
 
 		if (error != GL_NO_ERROR)
-			std::cout << "OpenGL Error: " << error << std::endl;
+			std::cout << "OpenGL Error: " << error << " in Engine.cpp, most likely window.update()" << std::endl;;
 	}
 
 	void Engine::cleanUp()
