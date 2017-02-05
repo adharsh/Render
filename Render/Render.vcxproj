@@ -127,7 +127,7 @@
     <ClCompile Include="Render\Engine.cpp" />
     <ClCompile Include="Render\graphics\BasicShader.cpp" />
     <ClCompile Include="Render\graphics\Mesh.cpp" />
-    <ClCompile Include="Render\graphics\PhongShader .cpp" />
+    <ClCompile Include="Render\graphics\PhongShader.cpp" />
     <ClCompile Include="Render\graphics\Shader.cpp" />
     <ClCompile Include="Render\graphics\Texture.cpp" />
     <ClCompile Include="Render\Time.cpp" />

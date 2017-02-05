@@ -1,9 +1,15 @@
-isolate code that uses normals
-addddata stuff
-fragmentshader
+check uniforms
+
+
+
+
+check normals and vertices size 
+
 
 
 ******
+TODOs:
+
 indices Mesh addData
 
 binding and unbinding textures
@@ -37,7 +43,14 @@ change shader char* parameters to std::string&
 
 make get methods return const values
 
+make PhongShader class singleton
+
+rename vertices to positions
+
+rename variables in shaders to make it more comprehensible, in texturesVS, out texturesFS
+
 **********
+Notes:
 Window->Reset Window LayoutWindow->Reset Window Layout
 
 Remove default constructor of Texture since its not necessary -> Make pointer if should not need to initialize when declared
@@ -51,3 +64,5 @@ texture = Texture("res/textures/Hi.png"); vs texture("res/textures/Hi.png"); //s
 default argument should only be present when declared, only variable (without = value) should be present in implementation
 
 universal zero initializer -> = 0;
+
+emplace_back() better than put_back()

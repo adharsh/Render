@@ -2,6 +2,7 @@
 
 #include <gl\glew.h>
 #include "Mesh.h"
+#include <iostream>
 
 namespace ginkgo {
 
@@ -15,16 +16,36 @@ namespace ginkgo {
 	}
 
 
-	void Mesh::addData(std::vector<glm::vec3>& vertices, std::vector<GLuint>& indices, std::vector<glm::vec2>& uvs, bool calculateNormals)
+	void Mesh::addData(std::vector<glm::vec3>& vertices, std::vector<GLuint>& indices, std::vector<glm::vec2>& uvs)
 	{
-		GLfloat* data;
-		if (calculateNormals)
+		//Generating Normals
+		std::vector<glm::vec3> normals;
+		for (int i = 0; i < indices.size(); i++)
+			normals.emplace_back(glm::vec3(0.0f, 0.0f, 0.0f));
+
+		for (int i = 0; i < indices.size(); i += 3)
 		{
-			std::vector<glm::vec3> normals = calcNormals(vertices, indices);
-			data = generateDataMatrixWithNormals(vertices, uvs, normals);
+			int i0 = indices[i];
+			int i1 = indices[i + 1];
+			int i2 = indices[i + 2];
+
+			glm::vec3 v1 = vertices[i1] - vertices[i0];
+			glm::vec3 v2 = vertices[i2] - vertices[i0];
+
+			glm::vec3 normal = glm::normalize(glm::cross(v1, v2));
+
+			normals[i0] = normals[i0] + normal;
+			normals[i1] = normals[i1] + normal;
+			normals[i2] = normals[i2] + normal;
 		}
-		else
-			data = generateDataMatrix(vertices, uvs);
+
+		for (int i = 0; i < vertices.size(); i++)
+			normals[i] = glm::normalize(normals[i]);
+
+		//Loading Data
+		GLfloat* data = generateDataMatrixWithNormals(vertices, uvs, normals);
+
+		size = indices.size();
 
 		glBindVertexArray(VAO);
 
@@ -43,19 +64,16 @@ namespace ginkgo {
 	{
 		glBindVertexArray(VAO);
 
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, data_size * sizeof(GLfloat), 0);
 		glEnableVertexAttribArray(0);
-
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, data_size * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
 		glEnableVertexAttribArray(1);
-
-		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, data_size * sizeof(GLfloat), (GLvoid*)(5 * sizeof(GLfloat)));
 		glEnableVertexAttribArray(2);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, data_size * sizeof(GLfloat), 0);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, data_size * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, data_size * sizeof(GLfloat), (GLvoid*)(5 * sizeof(GLfloat)));
 
 		glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_INT, 0);
 
 		glBindVertexArray(0);
-
 	}
 
 	GLfloat* Mesh::generateDataMatrix(std::vector<glm::vec3>& vertices, std::vector<glm::vec2>& uvs)
@@ -64,28 +82,17 @@ namespace ginkgo {
 		GLfloat* data = new GLfloat[data_size];
 
 		if (vertices.size() != uvs.size())
-		{
-			for (GLuint i = 0; i < vertices.size(); i++)
-			{
-				data[i * 5 + 0] = vertices[i].x;
-				data[i * 5 + 1] = vertices[i].y;
-				data[i * 5 + 2] = vertices[i].z;
-				data[i * 5 + 3] = 0;
-				data[i * 5 + 4] = 0;
-			}
+			return NULL;
 
-		}
-		else
+		for (GLuint i = 0; i < vertices.size(); i++)
 		{
-			for (GLuint i = 0; i < vertices.size(); i++)
-			{
-				data[i * 5 + 0] = vertices[i].x;
-				data[i * 5 + 1] = vertices[i].y;
-				data[i * 5 + 2] = vertices[i].z;
-				data[i * 5 + 3] = uvs[i].x;
-				data[i * 5 + 4] = uvs[i].y;
-			}
+			data[i * 5 + 0] = vertices[i].x;
+			data[i * 5 + 1] = vertices[i].y;
+			data[i * 5 + 2] = vertices[i].z;
+			data[i * 5 + 3] = uvs[i].x;
+			data[i * 5 + 4] = uvs[i].y;
 		}
+
 		return data;
 	}
 
@@ -94,64 +101,27 @@ namespace ginkgo {
 		data_size = vertices.size() * 8;
 		GLfloat* data = new GLfloat[data_size];
 
-		if (vertices.size() != uvs.size())
+	/*	if (vertices.size() != uvs.size() || vertices.size() != normals.size())
 		{
-			for (GLuint i = 0; i < vertices.size(); i++)
-			{
-				data[i * 8 + 0] = vertices[i].x;
-				data[i * 8 + 1] = vertices[i].y;
-				data[i * 8 + 2] = vertices[i].z;
-				data[i * 8 + 3] = 0;
-				data[i * 8 + 4] = 0;
-				data[i * 8 + 5] = normals[i].x;
-				data[i * 8 + 6] = normals[i].y;
-				data[i * 8 + 7] = normals[i].z;
-			}
+			std::cout << "generateDataMatrixNormals() error" << std::endl;
+			system("pause");
+			return NULL;
+		}
+	*/
 
-		}
-		else
+		for (GLuint i = 0; i < vertices.size(); i++)
 		{
-			for (GLuint i = 0; i < vertices.size(); i++)
-			{
-				data[i * 8 + 0] = vertices[i].x;
-				data[i * 8 + 1] = vertices[i].y;
-				data[i * 8 + 2] = vertices[i].z;
-				data[i * 8 + 3] = uvs[i].x;
-				data[i * 8 + 4] = uvs[i].y;
-				data[i * 8 + 5] = normals[i].x;
-				data[i * 8 + 6] = normals[i].y;
-				data[i * 8 + 7] = normals[i].z;
-			}
+			data[i * 8 + 0] = vertices[i].x;
+			data[i * 8 + 1] = vertices[i].y;
+			data[i * 8 + 2] = vertices[i].z;
+			data[i * 8 + 3] = uvs[i].x;
+			data[i * 8 + 4] = uvs[i].y;
+			data[i * 8 + 5] = normals[i].x;
+			data[i * 8 + 6] = normals[i].y;
+			data[i * 8 + 7] = normals[i].z;
 		}
+
 		return data;
-	}
-
-	std::vector<glm::vec3>& Mesh::calcNormals(std::vector<glm::vec3>& vertices, std::vector<GLuint>& indices)
-	{
-		std::vector<glm::vec3> normals;
-
-		for (int i = 0; i < indices.size(); i++)
-		{
-			int i0 = indices[i];
-			int i1 = indices[i + 1];
-			int i2 = indices[i + 2];
-
-			glm::vec3 v1 = vertices[i1] - vertices[i0];
-			glm::vec3 v2 = vertices[i2] - vertices[i0];
-
-			glm::vec3 normal = glm::normalize(glm::cross(v1, v2));
-
-			normals[i0] = normals[i0] + normal;
-			normals[i1] = normals[i1] + normal;
-			normals[i2] = normals[i2] + normal;
-		}
-		
-		for (int i = 0; i < vertices.size(); i++)
-		{
-			normals[i] = glm::normalize(normals[i]);
-		}
-
-		return normals;
 	}
 
 }

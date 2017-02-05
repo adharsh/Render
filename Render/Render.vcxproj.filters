@@ -45,7 +45,7 @@
     <ClCompile Include="Render\graphics\BasicShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Render\graphics\PhongShader .cpp">
+    <ClCompile Include="Render\graphics\PhongShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
