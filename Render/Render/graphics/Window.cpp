@@ -69,7 +69,7 @@ namespace ginkgo {
 			//glEnable(GL_CULL_FACE);	//Not drawing unnecessary front and back stuff
 			glEnable(GL_DEPTH_TEST); //Z component for depth
 			glDepthFunc(GL_LESS);
-			//Depth clamp for later
+			glEnable(GL_DEPTH_CLAMP);//Depth clamp so camera won't be halfway inside or outside
 			//glEnable(GL_FRAMEBUFFER_SRGB); //More gamma correction, all other colors are already exponential, it does it for us
 			//Wireframe
 			//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
