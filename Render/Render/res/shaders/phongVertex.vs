@@ -9,11 +9,11 @@ out vec2 texCoord;
 out vec3 normalCoord;
 
 uniform mat4 transform;
-uniform mat4 model;
+//uniform mat4 model;
 
 void main()
 {
 	gl_Position = transform * vec4(position, 1.0f);
 	texCoord = texture;
-	normalCoord = (transform * vec4(normal, 0.0)).xyz;
+	normalCoord = normal;
 }

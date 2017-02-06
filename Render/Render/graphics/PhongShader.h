@@ -16,7 +16,7 @@ namespace ginkgo {
 		DirectionalLight directionalLight;
 	public:
 		PhongShader();
-		void updateUniforms(glm::mat4& model, glm::mat4& projectionMatrix, Texture& texture);
+		void updateUniforms(glm::mat4& projectionMatrix, Texture& texture);
 
 		inline glm::vec4& getAmbientLight() { return ambientLight; }
 		inline void setAmbientLight(const glm::vec4& ambientLight) { this->ambientLight = ambientLight; }
