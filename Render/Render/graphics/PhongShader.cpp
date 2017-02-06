@@ -15,7 +15,7 @@ namespace ginkgo {
 	}
 
 
-	void PhongShader::updateUniforms(glm::mat4& model, glm::mat4& projectionMatrix, Texture& texture)
+	void PhongShader::updateUniforms(glm::mat4& model, glm::mat4& projectionMatrix, Texture& texture, glm::vec3& cameraPosition)
 	{
 		if (texture.hasImage())
 			texture.bind();
@@ -28,6 +28,11 @@ namespace ginkgo {
 		setUniform4f("baseColor", texture.getColor());
 		setUniform4f("ambientLight", ambientLight);
 		setUniform("directionalLight", directionalLight);
+
+		setUniform1f("specularIntensity", texture.getSpecularIntensity());
+		setUniform1f("specularPower", texture.getSpecularPower());
+
+		setUniform3f("eyePos", cameraPosition);
 
 		//if (texture.hasImage())
 		//	texture.unbind();

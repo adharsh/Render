@@ -6,10 +6,19 @@ namespace ginkgo {
 	Texture::Texture(const std::string& path, glm::vec4& c)
 		: fileName(path), color(c)
 	{
-		if(fileName.compare(""))
+		if (fileName.compare(""))
 			tid = load();
+
+		this->specularIntensity = 2;
+		this->specularPower = 32;
 	}
 
+	Texture::Texture(const std::string& path, glm::vec4& c, float specularIntensity, float specularPower) : Texture(path, c)
+	{
+		this->specularIntensity = specularIntensity;
+		this->specularPower = specularPower;
+	}
+	
 	Texture::~Texture()
 	{ 
 	

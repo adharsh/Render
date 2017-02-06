@@ -52,7 +52,7 @@ namespace ginkgo {
 			shader.setAmbientLight(glm::vec4(0.1f, 0.1, 0.1, 1.0f));
 			DirectionalLight dLight;
 			dLight.base.color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-			dLight.base.intensity = 1.0f;
+			dLight.base.intensity = 0.55f;
 			dLight.direction = glm::vec3(1.0f, 1.0f, 1.0f);
 			shader.setDirectionalLight(dLight);
 
@@ -158,7 +158,7 @@ namespace ginkgo {
 		void render()
 		{
 			shader.bind();
-			shader.updateUniforms(model, projection * view * model, *texture);
+			shader.updateUniforms(model, projection * view * model, *texture, cameraPosition);
 			mesh.draw();
 			shader.unbind();
 
