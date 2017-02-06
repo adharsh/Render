@@ -47,7 +47,7 @@ namespace ginkgo {
 				cameraPosition + cameraFront,
 				cameraUp);
 
-			texture = new Texture("Render/res/textures/Hi.png", glm::vec4(0.0f, 1.0f, 1.0f, 1.0f));
+			texture = new Texture("Render/res/textures/Hi.png", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 			//texture = new Texture("", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 			shader.setAmbientLight(glm::vec4(0.1f, 0.1, 0.1, 1.0f));
 			DirectionalLight dLight;
@@ -158,7 +158,7 @@ namespace ginkgo {
 		void render()
 		{
 			shader.bind();
-			shader.updateUniforms(projection * view * model, *texture);
+			shader.updateUniforms(model, projection * view * model, *texture);
 			mesh.draw();
 			shader.unbind();
 

@@ -48,18 +48,6 @@ namespace ginkgo {
 		//Loading Data
 		GLfloat* data = generateDataMatrix(positions, uvs, normals);
 
-		for (int i = 0; i < positions.size(); i++)
-		{
-			std::cout << data[i * 8 + 0] << std::endl;
-			std::cout << data[i * 8 + 1] << std::endl;
-			std::cout << data[i * 8 + 2] << std::endl;
-			std::cout << data[i * 8 + 3] << std::endl;
-			std::cout << data[i * 8 + 4] << std::endl;
-			std::cout << data[i * 8 + 5] << std::endl;
-			std::cout << data[i * 8 + 6] << std::endl;
-			std::cout << data[i * 8 + 7] << std::endl << std::endl;
-		}
-
 		size = indices.size();
 
 		glBindVertexArray(VAO);

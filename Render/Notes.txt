@@ -55,6 +55,11 @@ error generated from creating a plane
 
 make it so that if there is not texture, set it to a single color
 
+why does model * normal make the light stay the same with it?
+
+Delegating constructors in Texture.cpp
+
+
 **********
 Notes:
 Window->Reset Window LayoutWindow->Reset Window Layout

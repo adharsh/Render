@@ -15,16 +15,18 @@ namespace ginkgo {
 	}
 
 
-	void PhongShader::updateUniforms(glm::mat4& projectionMatrix, Texture& texture)
+	void PhongShader::updateUniforms(glm::mat4& model, glm::mat4& projectionMatrix, Texture& texture)
 	{
 		if (texture.hasImage())
 			texture.bind();
 		//else
 		//	texture.unbind();
+		
+		setUniformMat4("model", model);
 		setUniformMat4("transform", projectionMatrix);
+		
 		setUniform4f("baseColor", texture.getColor());
 		setUniform4f("ambientLight", ambientLight);
-
 		setUniform("directionalLight", directionalLight);
 
 		//if (texture.hasImage())
