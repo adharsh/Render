@@ -26,7 +26,7 @@ namespace ginkgo {
 		inline void setAmbientLight(const glm::vec4& ambientLight) { this->ambientLight = ambientLight; }
 
 		void setPointLights(const std::vector<PointLight>& pointLights);
-		
+				
 		inline DirectionalLight& getDirectionalLight() { return directionalLight; }
 		void setDirectionalLight(const DirectionalLight& directionalLight);
 		

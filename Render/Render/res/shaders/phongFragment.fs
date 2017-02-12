@@ -92,9 +92,6 @@ vec4 calcPointLight(PointLight pointLight, vec3 normal)
 						 pointLight.attenuation.linear * distanceToPoint + 
 						 pointLight.attenuation.quadratic * distanceToPoint * distanceToPoint
 						 + 0.0001;
-	
-	//attenuation = length(worldPos);
-	//attenuation = 1000;
 	return 15.0f * color / attenuation; 
 }
 
