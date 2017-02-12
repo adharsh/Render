@@ -1,5 +1,4 @@
-check why glm::scale isn't working
--is it suppsed to be extremely sensitive to scale vectors?
+
 
 ******
 TODOs:
@@ -59,6 +58,9 @@ why does model * normal make the light stay the same with it?
 
 Delegating constructors in Texture.cpp
 
+change base to baselight
+
+make specularExponent and specularPower consistent
 
 **********
 Notes:
@@ -78,7 +80,7 @@ universal zero initializer -> = 0;
 
 emplace_back() better than put_back()
 
-
+const variables better than sending in a uniform in GLSL
 
 *******
 What to do when not drawing anything to the screen:

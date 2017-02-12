@@ -64,12 +64,12 @@ namespace ginkgo {
 			std::cout << "OpenGL " << glGetString(GL_VERSION) << std::endl;
 
 			/**********Other Settings**********/
-			//glFrontFace(GL_CW);	//Drawing front face in Clockwise 
-			//glCullFace(GL_BACK); //Not drawing back face
-			//glEnable(GL_CULL_FACE);	//Not drawing unnecessary front and back stuff
-			glEnable(GL_DEPTH_TEST); //Z component for depth
-			glDepthFunc(GL_LESS);
-			glEnable(GL_DEPTH_CLAMP);//Depth clamp so camera won't be halfway inside or outside
+			glFrontFace(GL_CW);	//Drawing front face in Clockwise //TBB //already
+			glCullFace(GL_BACK); //Not drawing back face	//TBB
+			//glEnable(GL_CULL_FACE);	//Not drawing unnecessary front and back stuff //TBB
+			glEnable(GL_DEPTH_TEST); //Z component for depth //TBB //already
+			//glDepthFunc(GL_LESS); //already
+			glEnable(GL_DEPTH_CLAMP);//Depth clamp so camera won't be halfway inside or outside //TBB //already
 			//glEnable(GL_FRAMEBUFFER_SRGB); //More gamma correction, all other colors are already exponential, it does it for us
 			//Wireframe
 			//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);

@@ -41,21 +41,6 @@ namespace ginkgo {
 	public:
 		Game(Window& a) : window(a)
 		{
-			projection = glm::perspective(fov, window.getAspectRatio(), 0.1f, 1000.0f);
-			view = glm::lookAt(
-				cameraPosition,
-				cameraPosition + cameraFront,
-				cameraUp);
-
-			texture = new Texture("Render/res/textures/Hi.png", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-			//texture = new Texture("", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-			shader.setAmbientLight(glm::vec4(0.1f, 0.1, 0.1, 1.0f));
-			DirectionalLight dLight;
-			dLight.base.color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
-			dLight.base.intensity = 0.55f;
-			dLight.direction = glm::vec3(1.0f, 1.0f, 1.0f);
-			shader.setDirectionalLight(dLight);
-
 
 #if 0
 			//No UVS generated from this, why?
@@ -67,13 +52,13 @@ namespace ginkgo {
 			std::vector<glm::vec2> uvs = obj.getUVList();
 
 			/*		for (unsigned int i = 0; i < uvs.size(); i++)
-						std::cout << uvs[i].x << ",  " << uvs[i].y << std::endl; */
+			std::cout << uvs[i].x << ",  " << uvs[i].y << std::endl; */
 
-						/*for (unsigned int i = 0; i < vertices.size(); i++)
-						std::cout << vertices[i].x << ",  " << vertices[i].y << ",  " << vertices[i].z << ",  " << std::endl;
+			/*for (unsigned int i = 0; i < vertices.size(); i++)
+			std::cout << vertices[i].x << ",  " << vertices[i].y << ",  " << vertices[i].z << ",  " << std::endl;
 
-						for (unsigned int i = 0; i < indices.size(); i += 3)
-							std::cout << indices[i] << ", " << indices[i+1] << ", " << indices[i+2] << std::endl;*/
+			for (unsigned int i = 0; i < indices.size(); i += 3)
+			std::cout << indices[i] << ", " << indices[i+1] << ", " << indices[i+2] << std::endl;*/
 
 			mesh.addData(vertices, indices, uvs, false);
 #endif
@@ -119,6 +104,39 @@ namespace ginkgo {
 
 			mesh.addData(positions, indices, uvs, true);
 #endif
+
+			projection = glm::perspective(fov, window.getAspectRatio(), 0.1f, 1000.0f);
+			view = glm::lookAt(
+				cameraPosition,
+				cameraPosition + cameraFront,
+				cameraUp);
+
+			texture = new Texture("Render/res/textures/white.png", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+			//texture = new Texture("", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+			DirectionalLight dLight(
+				BaseLight(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), 0.55f),
+				glm::vec3(1.0f, 1.0f, 1.0f));
+			//shader.setDirectionalLight(dLight);
+			shader.setAmbientLight(glm::vec4(0.1f, 0.1f, 0.1f, 0.1f));
+
+			PointLight pLight1(
+				BaseLight(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f), 1.0f),
+				Attenuation(0.0f, 0.0f, 1.0f),
+				glm::vec3(-4.0f, 0.0f, 7.0f));
+			
+			PointLight pLight2(
+				BaseLight(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f), 1.0f),
+				Attenuation(0.0f, 0.0f, 1.0f),
+				glm::vec3(0.0f, 0.0f, 7.0f));
+
+			PointLight pLight3(
+				BaseLight(glm::vec4(0.0f, 0.0f, 1.0f, 1.0f), 1.0f),
+				Attenuation(0.0f, 0.0f, 1.0f),
+				glm::vec3(4.0f, 0.0f, 7.0f));
+
+			shader.setPointLights({ pLight1, pLight2, pLight3 });
+			
+			model = glm::scale(model, glm::vec3(1.1f, 1.1f, 1.1f));
 		}
 
 		void input()
@@ -144,8 +162,9 @@ namespace ginkgo {
 			//texture->setColor(glm::vec4(sin(temp), -sin(temp), sin(temp), 1.0f));
 			//window.setClearColor(glm::vec4(sin(temp), sin(temp), sin(temp), sin(temp)));
 			//window.setClearColor(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-
+			
 			model = glm::rotate(model, a, glm::vec3(0.0f, 1.0f, 0.0f));
+			
 			//projection = glm::perspective(fov, window.getAspectRatio(), 0.1f, 100.0f);
 			view = glm::lookAt(
 				cameraPosition,

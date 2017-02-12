@@ -1,11 +1,14 @@
 #version 330 
 precision highp float;
 
+const int MAX_POINT_LIGHTS = 4;
+
 in vec2 texCoord;
 in vec3 normalCoord;
 in vec3 worldPos;
 
 out vec4 fragColor;
+
 
 struct BaseLight
 {
@@ -19,11 +22,26 @@ struct DirectionalLight
 	vec3 direction;
 };
 
+struct Attenuation
+{
+	float constant;
+	float linear;
+	float quadratic;
+};
+
+struct PointLight
+{
+	BaseLight base;
+	Attenuation attenuation;
+	vec3 position;
+};
+
 uniform vec4 baseColor;
 uniform vec4 ambientLight;
 uniform sampler2D sampler;
 
 uniform DirectionalLight directionalLight;
+uniform PointLight pointLights[MAX_POINT_LIGHTS];
 
 uniform vec3 eyePos;
 uniform float specularIntensity;
@@ -49,7 +67,7 @@ vec4 calcLight(BaseLight base, vec3 direction, vec3 normal)
 
 		if(specularFactor > 0)
 		{
-			specularColor = vec4(base.color) * specularIntensity * specularFactor;
+			specularColor = base.color * specularIntensity * specularFactor;
 		}
 
 	}
@@ -62,6 +80,23 @@ vec4 calcDirectionalLight(DirectionalLight directionalLight, vec3 normal)
 	return calcLight(directionalLight.base, -directionalLight.direction, normal);
 }
 
+vec4 calcPointLight(PointLight pointLight, vec3 normal)
+{
+	vec3 lightDirection = worldPos - pointLight.position;
+	float distanceToPoint = length(lightDirection);
+	lightDirection = normalize(lightDirection);
+
+	vec4 color = calcLight(pointLight.base, lightDirection, normal);
+	
+	float attenuation = pointLight.attenuation.constant + 
+						 pointLight.attenuation.linear * distanceToPoint + 
+						 pointLight.attenuation.quadratic * distanceToPoint * distanceToPoint
+						 + 0.0001;
+	
+	//attenuation = length(worldPos);
+	//attenuation = 1000;
+	return 15.0f * color / attenuation; 
+}
 
 void main()
 {
@@ -75,6 +110,9 @@ void main()
 	vec3 normal = normalize(normalCoord); //TODO: gaureentte its already normalized, so in the future take out this code
 
 	totalLight += calcDirectionalLight(directionalLight, normal);
+
+	for(int i = 0; i < MAX_POINT_LIGHTS; i++)
+		totalLight += calcPointLight(pointLights[i], normal);
 
 	fragColor = color * totalLight;
 	//fragColor = vec4(1.0f, 0.0f, 0.0f, 1.0f);

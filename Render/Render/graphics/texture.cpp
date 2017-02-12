@@ -13,7 +13,8 @@ namespace ginkgo {
 		this->specularPower = 32;
 	}
 
-	Texture::Texture(const std::string& path, glm::vec4& c, float specularIntensity, float specularPower) : Texture(path, c)
+	Texture::Texture(const std::string& path, glm::vec4& c, float specularIntensity, float specularPower)
+		: Texture(path, c)
 	{
 		this->specularIntensity = specularIntensity;
 		this->specularPower = specularPower;
