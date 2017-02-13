@@ -16,10 +16,11 @@ namespace ginkgo {
 		GLuint data_size;
 	public:
 		Mesh();
-		void addData(std::vector<glm::vec3>& positions, std::vector<GLuint>& indices, std::vector<glm::vec2>& uvs, bool haveNormals = true);
+		~Mesh();
+		void addData(const std::vector<glm::vec3>& positions, const std::vector<GLuint>& indices, const std::vector<glm::vec2>& uvs, bool haveNormals = true);
 		void draw();
 	private:
-		GLfloat* generateDataMatrix(std::vector<glm::vec3>& positions, std::vector<glm::vec2>& uvs, std::vector<glm::vec3>& normals);
+		GLfloat* generateDataMatrix(const std::vector<glm::vec3>& positions, const std::vector<glm::vec2>& uvs, const std::vector<glm::vec3>& normals);
 	};
 
 

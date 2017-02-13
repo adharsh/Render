@@ -3,8 +3,8 @@
 
 namespace ginkgo {
 
-	Texture::Texture(const std::string& path, glm::vec4& c)
-		: fileName(path), color(c)
+	Texture::Texture(const std::string& path, glm::vec4& colorp)
+		: fileName(path), color(colorp)
 	{
 		if (fileName.compare(""))
 			tid = load();
@@ -13,8 +13,8 @@ namespace ginkgo {
 		this->specularPower = 32;
 	}
 
-	Texture::Texture(const std::string& path, glm::vec4& c, float specularIntensity, float specularPower)
-		: Texture(path, c)
+	Texture::Texture(const std::string& path, glm::vec4& colorp, float specularIntensity, float specularPower)
+		: Texture(path, colorp)
 	{
 		this->specularIntensity = specularIntensity;
 		this->specularPower = specularPower;
@@ -56,13 +56,13 @@ namespace ginkgo {
 		return result;
 	}
 
-	void Texture::bind()
+	void Texture::bind() const
 	{
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, tid);
 	}
 
-	void Texture::unbind()
+	void Texture::unbind() const
 	{
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}

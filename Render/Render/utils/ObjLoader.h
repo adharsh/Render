@@ -20,7 +20,7 @@ namespace ginkgo {
 		int index;
 		std::vector<ObjMaterial> materials;
 
-		ObjMaterial& getMaterialByName(std::string name);
+		ObjMaterial& getMaterialByName(const std::string& name);
 	};
 
 	struct Face
@@ -32,7 +32,7 @@ namespace ginkgo {
 		std::vector<glm::vec3> normals;
 		std::vector<unsigned int> indices;
 		
-		void triangulate(std::vector<unsigned int> vect);
+		void triangulate(const std::vector<unsigned int>& vect);
 	};
 
 	class ObjIntermediate
@@ -45,19 +45,19 @@ namespace ginkgo {
 		std::vector<MaterialLib> matLib;
 		std::vector<Face> face;
 		std::vector<unsigned int> indices;
-		std::vector<float> &createFloatChart(std::vector<float>& fList, std::string *tokens, unsigned int tSize);
+		std::vector<float>& createFloatChart(std::vector<float>& fList, std::string *tokens, unsigned int tSize);
 	public:
 		void LoadObj(std::string path);
-		void show(std::string* tokens, unsigned int size);
+		void show(std::string* tokens, unsigned int size) const;
 		void parseFace(std::string* tokens, unsigned int tSize, Face& faceOut, std::vector<glm::vec3>& vertexList, std::vector<glm::vec2>& uvList, std::vector<glm::vec3>& normalList);
 		void parseMaterial(std::string path, MaterialLib& outMaterial);
 
-		inline std::vector<glm::vec3>& getVertexList() { return vertex; }
-		inline std::vector<glm::vec2>& getUVList() { return UV; }
-		inline std::vector<glm::vec3>& getNomalList() { return normals; }
-		inline std::vector<MaterialLib>& getMatlibList() { return matLib; }
-		inline std::vector<Face>& getFaceList() const { face; }
-		inline std::vector<unsigned int>& getIndexList() { return indices; }
+		inline const std::vector<glm::vec3>& getVertexList() const { return vertex; }
+		inline const std::vector<glm::vec2>& getUVList() const { return UV; }
+		inline const std::vector<glm::vec3>& getNomalList() const { return normals; }
+		inline const std::vector<MaterialLib>& getMatlibList() const { return matLib; }
+		inline const std::vector<Face>& getFaceList() const { face; }
+		inline const std::vector<unsigned int>& getIndexList() const { return indices; }
 
 	};
 

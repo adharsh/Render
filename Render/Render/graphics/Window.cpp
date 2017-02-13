@@ -2,7 +2,7 @@
 #include <iostream>
 
 namespace ginkgo {
-		Window::Window(const char *name, int width, int height, glm::vec4& clear_color)
+		Window::Window(const char *name, int width, int height, const glm::vec4& clear_color)
 		{
 			this->title = name;
 			this->width = width;
@@ -112,7 +112,7 @@ namespace ginkgo {
 			glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
 		}
 
-		void Window::update()
+		void Window::update() const
 		{
 			glfwPollEvents();
 

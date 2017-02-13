@@ -3,6 +3,10 @@
 ******
 TODOs:
 
+change up all the paramters and make them const stuff
+getters return const stuff
+
+
 indices Mesh addData
 
 binding and unbinding textures
@@ -10,8 +14,6 @@ binding and unbinding textures
 references by Texture Class
 
 fragmentshader.fs todo, should i use glEnable(GL_TEXTURE2D) and glDisable(GL_TEXTURE2D)
-
-change up all the paramters and make them const stuff
 
 replace input() todo
 
@@ -36,8 +38,6 @@ change shader char* parameters to std::string&
 
 make get methods return const values
 
-make PhongShader class singleton
-
 rename vertices to positions
 
 rename variables in shaders to make it more comprehensible, in texturesVS, out texturesFS
@@ -61,6 +61,10 @@ Delegating constructors in Texture.cpp
 change base to baselight
 
 make specularExponent and specularPower consistent
+
+can't make color parameter in Texture class constant, why
+
+const method is just changing that object right, can still be changing parameter values
 
 **********
 Notes:

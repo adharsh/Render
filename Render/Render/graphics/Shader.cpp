@@ -64,7 +64,7 @@ namespace ginkgo {
 		shaders.push_back(shaderID);
 	}
 	
-	void Shader::compileShader()
+	void Shader::compileShader() const
 	{
 		glLinkProgram(program);
 
@@ -84,7 +84,7 @@ namespace ginkgo {
 	}
 
 
-	GLuint Shader::load(const char* vertexShader, const char* fragShader)
+	GLuint Shader::load(const char* vertexShader, const char* fragShader) const
 	{
 		GLuint program = glCreateProgram();
 		GLuint vertex = glCreateShader(GL_VERTEX_SHADER);
@@ -147,8 +147,6 @@ namespace ginkgo {
 		return program;
 	}
 
-
-
 	void Shader::bind() const
 	{
 		glUseProgram(program);
@@ -159,46 +157,46 @@ namespace ginkgo {
 		glUseProgram(0);
 	}
 
-	GLint Shader::getUniformLocation(const GLchar* name)
+	GLint Shader::getUniformLocation(const GLchar* name) const
 	{
 		return glGetUniformLocation(program, name);
 	}
 
-	void Shader::setUniform1f(const GLchar* name, float value)
+	void Shader::setUniform1f(const GLchar* name, float value) const
 	{
 		glUniform1f(getUniformLocation(name), value);
 	}
 
-	void Shader::setUniform1fv(const GLchar* name, float* value, int count)
+	void Shader::setUniform1fv(const GLchar* name, float* value, int count) const
 	{
 		glUniform1fv(getUniformLocation(name), count, value);
 	}
 
-	void Shader::setUniform1iv(const GLchar* name, int* value, int count)
+	void Shader::setUniform1iv(const GLchar* name, int* value, int count) const
 	{
 		glUniform1iv(getUniformLocation(name), count, value);
 	}
 
-	void Shader::setUniform1i(const GLchar* name, int value)
+	void Shader::setUniform1i(const GLchar* name, int value) const
 	{
 		glUniform1i(getUniformLocation(name), value);
 	}
 
-	void Shader::setUniform2f(const GLchar* name, const glm::vec2& vector)
+	void Shader::setUniform2f(const GLchar* name, const glm::vec2& vector) const
 	{
 		glUniform2f(getUniformLocation(name), vector.x, vector.y);
 	}
-	void Shader::setUniform3f(const GLchar* name, const glm::vec3& vector)
+	void Shader::setUniform3f(const GLchar* name, const glm::vec3& vector) const
 	{
 		glUniform3f(getUniformLocation(name), vector.x, vector.y, vector.z);
 	}
 
-	void Shader::setUniform4f(const GLchar* name, const glm::vec4& vector)
+	void Shader::setUniform4f(const GLchar* name, const glm::vec4& vector) const
 	{
 		glUniform4f(getUniformLocation(name), vector.x, vector.y, vector.z, vector.w);
 	}
 
-	void Shader::setUniformMat4(const GLchar* name, const glm::mat4& matrix)
+	void Shader::setUniformMat4(const GLchar* name, const glm::mat4& matrix) const
 	{
 		glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, &matrix[0][0]);
 	}

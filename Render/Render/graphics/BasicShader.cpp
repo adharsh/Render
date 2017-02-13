@@ -9,7 +9,7 @@ namespace ginkgo {
 		compileShader();
 	}
 
-	void BasicShader::updateUniforms(glm::mat4& projectionMatrix, Texture& texture)
+	void BasicShader::updateUniforms(const glm::mat4& projectionMatrix, Texture& texture)
 	{
 		if (texture.hasImage())
 			texture.bind();

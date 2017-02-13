@@ -23,12 +23,12 @@ namespace ginkgo {
 			double s_yoffset;
 			glm::vec4 clear_color;
 		public:
-			Window(const char *name, int width, int height, glm::vec4& clear_color);
+			Window(const char *name, int width, int height, const glm::vec4& clear_color);
 			Window() {
 				Window("Render", 800, 600, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 			}
 			~Window();
-			void update();
+			void update() const;
 			bool closed() const;
 			void clear() const;
 
@@ -36,7 +36,7 @@ namespace ginkgo {
 			inline int getHeight() const { return height; }
 			inline float getAspectRatio() const{ return (float)width / (float)height; }
 
-			inline void setClearColor(glm::vec4& color) { clear_color = color; }
+			inline void setClearColor(const glm::vec4& color) { clear_color = color; }
 
 			bool isKeyPressed(unsigned int keycode) const;
 			bool isMouseButtonPressed(unsigned int button) const;

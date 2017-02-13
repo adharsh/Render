@@ -25,7 +25,7 @@ namespace ginkgo {
 		return result;
 	}
 
-	Mesh* FileUtils::loadMesh(std::string filepath)
+	Mesh* FileUtils::loadMesh(const std::string& filepath)
 	{
 
 		if (filepath.substr(filepath.rfind(".obj")).compare(".obj"))

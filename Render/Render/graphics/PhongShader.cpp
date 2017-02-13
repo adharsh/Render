@@ -13,7 +13,7 @@ namespace ginkgo {
 	}
 
 
-	void PhongShader::updateUniforms(glm::mat4& model, glm::mat4& projectionMatrix, Texture& texture, glm::vec3& cameraPosition)
+	void PhongShader::updateUniforms(const glm::mat4& model, const glm::mat4& projectionMatrix, Texture& texture, const glm::vec3& cameraPosition)
 	{
 		if (texture.hasImage())
 			texture.bind();
@@ -50,6 +50,11 @@ namespace ginkgo {
 		this->pointLights = pointLights;
 	}
 
+	void PhongShader::changePointLightPosition(unsigned int index, const glm::vec3& pos)
+	{
+		pointLights[index].position = pos;
+	}
+
 	void PhongShader::setDirectionalLight(const DirectionalLight& directionalLight)
 	{
 		//DirectionalLight a = directionalLight; a.direction = glm::normalize(directionalLight.direction);
@@ -57,19 +62,19 @@ namespace ginkgo {
 	}
 
 
-	void PhongShader::setUniform(const std::string& name, BaseLight& baseLight)
+	void PhongShader::setUniform(const std::string& name, const BaseLight& baseLight) const
 	{
 		setUniform4f((name + ".color").c_str(), baseLight.color);
 		setUniform1f((name + ".intensity").c_str(), baseLight.intensity);
 	}
 
-	void PhongShader::setUniform(const std::string& name, DirectionalLight& directionalLight)
+	void PhongShader::setUniform(const std::string& name, const DirectionalLight& DirectionalLight) const
 	{
 		setUniform((name + ".base").c_str(), directionalLight.base);
 		setUniform3f((name + ".direction").c_str(), directionalLight.direction);
 	}
 
-	void PhongShader::setUniform(const std::string& name, PointLight& pointLight)
+	void PhongShader::setUniform(const std::string& name, const PointLight& pointLight) const
 	{
 		setUniform((name + ".base").c_str(), pointLight.base);
 		setUniform1f((name + ".attenuation.constant").c_str(), pointLight.attenuation.constant);

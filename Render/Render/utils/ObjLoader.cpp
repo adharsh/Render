@@ -26,7 +26,7 @@ namespace ginkgo {
 	//};
 
 
-	ObjMaterial& MaterialLib::getMaterialByName(std::string name)
+	ObjMaterial& MaterialLib::getMaterialByName(const std::string& name)
 	{
 		for (ObjMaterial material : materials)
 		{
@@ -44,7 +44,7 @@ namespace ginkgo {
 	//	int index;
 	//	float u, v;
 	//};
-	void Face::triangulate(std::vector<unsigned int> vect)
+	void Face::triangulate(const std::vector<unsigned int>& vect)
 	{
 		if (vertices.size() == 3)
 		{
@@ -172,7 +172,7 @@ namespace ginkgo {
 		this->indices = indices;
 	}
 
-	void ObjIntermediate::show(std::string* tokens, unsigned int size)
+	void ObjIntermediate::show(std::string* tokens, unsigned int size) const
 	{
 		for (unsigned int i = 0; i < size; i++)
 			std::cout << tokens[i].data() << " ";

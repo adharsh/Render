@@ -1,8 +1,8 @@
 #pragma once
 
 #include <gl\glew.h>
-#include "Mesh.h"
 #include <iostream>
+#include "Mesh.h"
 
 namespace ginkgo {
 
@@ -15,8 +15,13 @@ namespace ginkgo {
 		glGenBuffers(1, &EBO);
 	}
 
+	Mesh::~Mesh()
+	{
+		glDeleteVertexArrays(1, &VAO);
+		glDeleteBuffers(1, &VBO);
+	}
 
-	void Mesh::addData(std::vector<glm::vec3>& positions, std::vector<GLuint>& indices, std::vector<glm::vec2>& uvs, bool haveNormals)
+	void Mesh::addData(const std::vector<glm::vec3>& positions, const std::vector<GLuint>& indices, const std::vector<glm::vec2>& uvs, bool haveNormals)
 	{
 		//Generating Normals
 		std::vector<glm::vec3> normals;
@@ -58,14 +63,17 @@ namespace ginkgo {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), &indices[0], GL_STATIC_DRAW); //TODO: indices //? too
 
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
 
-		//delete data;
 	}
 
 	void Mesh::draw()
 	{
 		glBindVertexArray(VAO);
+		glBindBuffer(GL_ARRAY_BUFFER, VBO);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 
 		glEnableVertexAttribArray(0);
 		glEnableVertexAttribArray(1);
@@ -76,20 +84,22 @@ namespace ginkgo {
 
 		glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_INT, 0);
 
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
 	}
 
-	GLfloat* Mesh::generateDataMatrix(std::vector<glm::vec3>& positions, std::vector<glm::vec2>& uvs, std::vector<glm::vec3>& normals)
+	GLfloat* Mesh::generateDataMatrix(const std::vector<glm::vec3>& positions, const std::vector<glm::vec2>& uvs, const std::vector<glm::vec3>& normals)
 	{
 		data_size = positions.size() * 8;
 		GLfloat* data = new GLfloat[data_size];
 
-	/*	if (positions.size() != uvs.size() || positions.size() != normals.size())
+		if (positions.size() != uvs.size() || positions.size() != normals.size())
 		{
 			std::cout << "Incorrect amount of data. Should be the same number of sets of positions, uvs, and normals." << std::endl;
 			system("pause");
 			return NULL;
-		}*/
+		}
 	
 
 		for (GLuint i = 0; i < positions.size(); i++)

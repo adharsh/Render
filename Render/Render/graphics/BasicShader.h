@@ -11,7 +11,7 @@ namespace ginkgo {
 	{
 	public:
 		BasicShader();
-		void updateUniforms(glm::mat4& projectionMatrix, Texture& texture);
+		void updateUniforms(const glm::mat4& projectionMatrix, Texture& texture);
 	};
 
 

@@ -20,19 +20,20 @@ namespace ginkgo {
 		
 	public:
 		PhongShader();
-		void updateUniforms(glm::mat4& model, glm::mat4& projectionMatrix, Texture& texture, glm::vec3& cameraPosition);
+		void updateUniforms(const glm::mat4& model, const glm::mat4& projectionMatrix, Texture& texture, const glm::vec3& cameraPosition);
 
-		inline glm::vec4& getAmbientLight() { return ambientLight; }
+		inline const glm::vec4& getAmbientLight() const { return ambientLight; }
 		inline void setAmbientLight(const glm::vec4& ambientLight) { this->ambientLight = ambientLight; }
 
 		void setPointLights(const std::vector<PointLight>& pointLights);
-				
-		inline DirectionalLight& getDirectionalLight() { return directionalLight; }
+		void changePointLightPosition(unsigned int index, const glm::vec3& position);
+
+		inline const DirectionalLight& getDirectionalLight() const { return directionalLight; }
 		void setDirectionalLight(const DirectionalLight& directionalLight);
 		
-		void setUniform(const std::string& name, DirectionalLight& directionalLight);
-		void setUniform(const std::string& name, BaseLight& baseLight);
-		void setUniform(const std::string& name, PointLight& pointLight);
+		void setUniform(const std::string& name, const DirectionalLight& directionalLight) const;
+		void setUniform(const std::string& name, const BaseLight& baseLight) const;
+		void setUniform(const std::string& name, const PointLight& pointLight) const;
 	};
 
 
