@@ -1,6 +1,6 @@
 #pragma once
 
-#include <GL\GL.h>
+#include <GL\glew.h>
 #include <glm\glm.hpp>
 
 namespace ginkgo {
