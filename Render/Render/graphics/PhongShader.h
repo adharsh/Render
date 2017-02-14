@@ -22,13 +22,13 @@ namespace ginkgo {
 		PhongShader();
 		void updateUniforms(const glm::mat4& model, const glm::mat4& projectionMatrix, Texture& texture, const glm::vec3& cameraPosition);
 
-		inline const glm::vec4& getAmbientLight() const { return ambientLight; }
-		inline void setAmbientLight(const glm::vec4& ambientLight) { this->ambientLight = ambientLight; }
+		const glm::vec4& getAmbientLight() const { return ambientLight; }
+		void setAmbientLight(const glm::vec4& ambientLight) { this->ambientLight = ambientLight; }
 
 		void setPointLights(const std::vector<PointLight>& pointLights);
-		void changePointLightPosition(unsigned int index, const glm::vec3& position);
+		void setPointLightPosition(unsigned int index, const glm::vec3& position);
 
-		inline const DirectionalLight& getDirectionalLight() const { return directionalLight; }
+		const DirectionalLight& getDirectionalLight() const { return directionalLight; }
 		void setDirectionalLight(const DirectionalLight& directionalLight);
 		
 		void setUniform(const std::string& name, const DirectionalLight& directionalLight) const;

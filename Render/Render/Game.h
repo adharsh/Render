@@ -28,8 +28,7 @@ namespace ginkgo {
 		glm::mat4 projection;
 		glm::mat4 view;
 		glm::mat4 model;
-		glm::mat4 transform;
-
+		
 		glm::vec3 cameraPosition = glm::vec3(0.0f, 0.0f, 3.0f);
 		glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 		glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
@@ -189,7 +188,7 @@ namespace ginkgo {
 		void update()
 		{
 			temp += Time::getDelta();
-			float a = sin(temp*1.5)*0.001f;
+			float a = sin(temp*1.5);
 			float b = a / 0.9f + 1;
 			//std::cout << b << std::endl;
 			//texture->setColor(glm::vec4(sin(temp), -sin(temp), sin(temp), 1.0f));
@@ -203,6 +202,10 @@ namespace ginkgo {
 				cameraPosition,
 				cameraPosition + cameraFront,
 				cameraUp);
+
+			//a *= 10;
+			//shader.setPointLightPosition(1, glm::vec3(0, 0, a));
+			//std::cout << a << std::endl;
 
 			//shader.setAmbientLight(glm::vec4(0.3f, 0.3f, 0.3f, 1.0f));
 

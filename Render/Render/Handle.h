@@ -16,7 +16,7 @@ namespace ginkgo {
 			: window(a)
 		{}
 
-		inline Window& getWindow() { return window; }
+		Window& getWindow() { return window; }
 
 
 	};

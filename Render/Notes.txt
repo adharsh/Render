@@ -1,7 +1,32 @@
 
 
+
 ******
-TODOs:
+TODOS:
+
+understanding lvalue vs rvalue
+
+const texture color parameter thing
+
+input stuff
+function callback setups
+Camera class
+-input all convenient
+-has projection, view, and model
+-input method shoudl just have camera.input(), and update method should just have camera.update, proejection and view and model if possible
+-getters for each
+
+way to organize point lights in vector -> 
+getters for position
+popthem off
+add them back on
+
+cubemaps
+
+light deflection + refraction thing
+
+******
+Fixes:
 
 change up all the paramters and make them const stuff
 getters return const stuff

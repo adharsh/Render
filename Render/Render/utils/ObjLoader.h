@@ -52,12 +52,12 @@ namespace ginkgo {
 		void parseFace(std::string* tokens, unsigned int tSize, Face& faceOut, std::vector<glm::vec3>& vertexList, std::vector<glm::vec2>& uvList, std::vector<glm::vec3>& normalList);
 		void parseMaterial(std::string path, MaterialLib& outMaterial);
 
-		inline const std::vector<glm::vec3>& getVertexList() const { return vertex; }
-		inline const std::vector<glm::vec2>& getUVList() const { return UV; }
-		inline const std::vector<glm::vec3>& getNomalList() const { return normals; }
-		inline const std::vector<MaterialLib>& getMatlibList() const { return matLib; }
-		inline const std::vector<Face>& getFaceList() const { face; }
-		inline const std::vector<unsigned int>& getIndexList() const { return indices; }
+		const std::vector<glm::vec3>& getVertexList() const { return vertex; }
+		const std::vector<glm::vec2>& getUVList() const { return UV; }
+		const std::vector<glm::vec3>& getNomalList() const { return normals; }
+		const std::vector<MaterialLib>& getMatlibList() const { return matLib; }
+		const std::vector<Face>& getFaceList() const { face; }
+		const std::vector<unsigned int>& getIndexList() const { return indices; }
 
 	};
 

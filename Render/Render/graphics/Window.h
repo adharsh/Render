@@ -13,7 +13,7 @@ namespace ginkgo {
 			static const int MAX_BUTTONS = 32;
 		private:
 			const char *title;
-			int width, height;
+			unsigned int width, height;
 			GLFWwindow *window;
 			bool keys[MAX_KEYS];
 			bool mouseButtons[MAX_BUTTONS];
@@ -32,11 +32,11 @@ namespace ginkgo {
 			bool closed() const;
 			void clear() const;
 
-			inline int getWidth() const { return width; }
-			inline int getHeight() const { return height; }
-			inline float getAspectRatio() const{ return (float)width / (float)height; }
+			unsigned int getWidth() const { return width; }
+			unsigned int getHeight() const { return height; }
+			float getAspectRatio() const{ return (float)width / (float)height; }
 
-			inline void setClearColor(const glm::vec4& color) { clear_color = color; }
+			void setClearColor(const glm::vec4& color) { clear_color = color; }
 
 			bool isKeyPressed(unsigned int keycode) const;
 			bool isMouseButtonPressed(unsigned int button) const;

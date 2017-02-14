@@ -50,7 +50,7 @@ namespace ginkgo {
 		this->pointLights = pointLights;
 	}
 
-	void PhongShader::changePointLightPosition(unsigned int index, const glm::vec3& pos)
+	void PhongShader::setPointLightPosition(unsigned int index, const glm::vec3& pos)
 	{
 		pointLights[index].position = pos;
 	}

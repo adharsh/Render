@@ -26,18 +26,18 @@ namespace ginkgo {
 		~Texture();
 		void bind() const;
 		void unbind() const;
-		inline const bool hasImage() const { return fileName.compare(""); }
-		inline const unsigned int getWidth() const { return width; }
-		inline const unsigned int getHeight() const { return height; }
-		inline const unsigned int getID() const { return tid; }
-		inline const glm::vec4& getColor() const { return color; }
-		inline const float getSpecularIntensity() const { return specularIntensity; }
-		inline const float getSpecularPower() const { return specularPower; }
+		const bool hasImage() const { return fileName.compare(""); }
+		const unsigned int getWidth() const { return width; }
+		const unsigned int getHeight() const { return height; }
+		const unsigned int getID() const { return tid; }
+		const glm::vec4& getColor() const { return color; }
+		const float getSpecularIntensity() const { return specularIntensity; }
+		const float getSpecularPower() const { return specularPower; }
 
-		inline void setColor(const glm::vec4& color) { this->color = color; }
+		void setColor(const glm::vec4& color) { this->color = color; }
 
-		inline const void setSpecularIntensity() { this->specularIntensity = specularIntensity; }
-		inline const void setSpecularPower() { this->specularPower = specularPower; }
+		const void setSpecularIntensity() { this->specularIntensity = specularIntensity; }
+		const void setSpecularPower() { this->specularPower = specularPower; }
 	};
 
 }
