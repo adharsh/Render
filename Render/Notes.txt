@@ -5,7 +5,11 @@
 TODOS:
 
 Bugs:
-fix change focv scroll in
+*binding textures and unbinding textures
+*cubemaps
+*light deflection + refraction thing
+
+fix change fov scroll in
 const texture color parameter thing
 camera->getTransform()
 change scrolling so it stays the same even when cursor is out of focus
@@ -22,19 +26,25 @@ Camera class
 -mouse input fov
 -fov 45 or 90?
 
-binding textures and unbinding textures
-way to organize point lights in vector -> 
-getters for position
-popthem off
-add them back on
 
-cubemaps
-
-light deflection + refraction thing
 
 passing Tim::getDelta() as a double vs a float vs something even more accurate
 
 doesn't load all meshes without textures, just a color
+
+window class
+fullscreen method
+enable/disable mouse cursor
+
+Not necessary to do pointlights/spot lights, just as final touches
+-way to organize point lights in vector -> 
+getters for position
+popthem off
+add them back on
+-pointlights don't entirely work
+
+spot lights
+
 ******
 Fixes:
 
@@ -120,6 +130,10 @@ universal zero initializer -> = 0;
 emplace_back() better than put_back()
 
 const variables better than sending in a uniform in GLSL
+
+images -> no alpha
+
+mvp is calculated from left to right, thus mvp
 
 *******
 What to do when not drawing anything to the screen:

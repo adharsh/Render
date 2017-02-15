@@ -104,7 +104,7 @@ namespace ginkgo {
 
 			mesh.addData(positions, indices, uvs, true);
 #elif 1
-
+			window.disableMouseCursor();
 			float fieldDepth = 1.0f;
 			float fieldWidth = 1.0f;
 
@@ -186,41 +186,17 @@ namespace ginkgo {
 			temp += Time::getDelta();
 			float a = sin(temp*1.5);
 			float b = a / 0.9f + 1;
-			//std::cout << b << std::endl;
 			//texture->setColor(glm::vec4(sin(temp), -sin(temp), sin(temp), 1.0f));
 			//window.setClearColor(glm::vec4(sin(temp), sin(temp), sin(temp), sin(temp)));
-
 			camera->update(dt);
-
 			//shader.setPointLightPosition(1, glm::vec3(0, 0, a));
 			//shader.setAmbientLight(glm::vec4(0.3f, 0.3f, 0.3f, 1.0f));
 		}
 
 		void render()
 		{
-		/*	for (int i = 0; i < 4; i++)
-			{
-				for (int c = 0; c < 4; c++)
-					std::cout << (camera->getProjection() * camera->getView() * camera->getModel())[i][c] << " ";
-				std::cout << "\n";
-			}
-			std::cout << "\n";
-
-			glm::mat4 a = camera->getTransform();
-			for (int i = 0; i < 4; i++)
-			{
-				for (int c = 0; c < 4; c++)
-					std::cout << (a)[i][c] << " ";
-				std::cout << "\n";
-			}
-			std::cout << "\n";
-			system("pause"); 
-		*/	
 			shader.bind();
-			//shader.updateUniforms(camera->getModel(), camera->getTransform(), *texture, camera->getCameraPosition());
-			shader.updateUniforms(camera->getModel(), camera->getProjection() * camera->getView() * camera->getModel(), *texture, camera->getCameraPosition());
-			//shader.updateUniforms(camera->getModel(), projection * view * model, *texture, camera->getCameraPosition());
-			//shader.updateUniforms(model, projection * view * model, *texture, cameraPosition);
+			shader.updateUniforms(camera->getModel(), camera->getMVP(), *texture, camera->getCameraPosition());
 			mesh.draw();
 			shader.unbind();
 

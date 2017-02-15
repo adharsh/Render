@@ -8,8 +8,8 @@ namespace ginkgo {
 
 	const double Engine::FRAME_CAP = 5000.0;
 
-	Engine::Engine(Window& a)
-		: isRunning(false), window(a), game(a)
+	Engine::Engine(Window& win, Game& gam)
+		: isRunning(false), window(win), game(gam)
 	{ }
 
 	void Engine::start()

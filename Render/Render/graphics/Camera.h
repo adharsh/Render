@@ -14,6 +14,7 @@ namespace ginkgo {
 		glm::mat4 projection;
 		glm::mat4 view;
 		glm::mat4 model;
+		glm::mat4 mvp;
 		glm::vec3 cameraPosition;
 		glm::vec3 cameraFront;
 		glm::vec3 cameraUp;
@@ -36,7 +37,7 @@ namespace ginkgo {
 		const glm::mat4& getProjection() const { return projection; }
 		const glm::mat4& getView() const { return view; }
 		const glm::mat4& getModel() const { return model; }
-		const glm::mat4& getTransform() const { return projection * view * model; }
+		const glm::mat4& getMVP() { mvp = projection * view * model; return mvp; }
 		const glm::vec3& getCameraPosition() const { return cameraPosition; }
 		
 		void scaleModel(const glm::vec3& scale) { setModel(glm::scale(model, scale)); }

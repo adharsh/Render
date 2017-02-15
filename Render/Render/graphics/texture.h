@@ -19,10 +19,10 @@ namespace ginkgo {
 		float specularIntensity;
 		float specularPower;
 	private:
-		GLuint load();
+		GLuint load(); //images -> no alpha
 	public:
-		Texture(const std::string& path, glm::vec4& color);
-		Texture(const std::string& path, glm::vec4& color, float specularIntensity, float specularExponent);
+		Texture(const std::string& path, const glm::vec4& color);
+		Texture(const std::string& path, const glm::vec4& color, float specularIntensity, float specularExponent);
 		~Texture();
 		void bind() const;
 		void unbind() const;

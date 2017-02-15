@@ -2,13 +2,9 @@
 #include <iostream>
 
 namespace ginkgo {
-		Window::Window(const char *name, int width, int height, const glm::vec4& clear_color)
+		Window::Window(const char *name, int widthW, int heightW, const glm::vec4& clearcolor, bool wantFullScreen)
+			: title(name), width(widthW), height(heightW), clear_color(clearcolor), isFullScreen(wantFullScreen)
 		{
-			this->title = name;
-			this->width = width;
-			this->height = height;
-			this->clear_color = clear_color;
-
 			if (!init())
 				glfwTerminate();
 
@@ -22,6 +18,7 @@ namespace ginkgo {
 		Window::~Window()
 		{
 			glfwTerminate();
+			//glfwDestroyWindow(window);
 		}
 
 		bool Window::init()
@@ -32,7 +29,10 @@ namespace ginkgo {
 				return false;
 			}
 
-			window = glfwCreateWindow(width, height, title, NULL, NULL);
+			window = (isFullScreen) ?
+				glfwCreateWindow(width, height, title, glfwGetPrimaryMonitor(), NULL) :
+				glfwCreateWindow(width, height, title, NULL, NULL);
+			
 			if (!window)
 			{
 				glfwTerminate();
@@ -47,7 +47,6 @@ namespace ginkgo {
 			glfwSetMouseButtonCallback(window, mouse_button_callback);
 			glfwSetCursorPosCallback(window, cursor_position_callback);
 			glfwSetScrollCallback(window, scroll_callback);
-
 			//optimize for more than 60 fps
 			glfwSwapInterval(0);
 

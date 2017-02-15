@@ -13,7 +13,7 @@ namespace ginkgo {
 		fov = 45.0f;//fov 90 or 45?
 		cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 		cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-		
+
 		projection = glm::perspective(fov, window.getAspectRatio(), 0.1f, 1000.0f);
 		view = glm::lookAt(
 			cameraPosition,
@@ -36,25 +36,27 @@ namespace ginkgo {
 		if (window.isKeyPressed(GLFW_KEY_RIGHT))
 			cameraPosition += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 
-		static double xSave = window.getWidth() / 2.0f;
-		static double ySave = window.getHeight() / 2.0f;
-		double x, y;
-		window.getMousePosition(x, y);
-		double dx = x - xSave;
-		double dy = y - ySave;
+		static bool first = true;
+		if (first)
+		{
+			static double xSave = window.getWidth() / 2.0f;
+			static double ySave = window.getHeight() / 2.0f;
+			double x, y;
+			window.getMousePosition(x, y);
+			double dx = x - xSave;
+			double dy = y - ySave;
 
-		glm::vec3 look = cameraFront;
+			glm::vec3 look = cameraFront;
+			look = glm::rotateY(look, (float)glm::radians(-dx / mouseRotationSensitivity));
+			//look = glm::rotateX(look, (float)glm::radians(-dy / mouseRotationSensitivity));
+			look = glm::rotate(look, (float)glm::radians(-dy / mouseRotationSensitivity), glm::normalize(glm::cross(look, cameraUp)));
 
-		look = glm::rotateY(look, (float)glm::radians(-dx / mouseRotationSensitivity));
-		look = glm::rotate(look, (float)glm::radians(-dy / mouseRotationSensitivity), glm::normalize(glm::cross(look, cameraUp)));
-		//look = glm::rotateX(look, (float)glm::radians(dy/8));
+			cameraFront = look;
+			xSave = x;
+			ySave = y;
+		}
 
-		//look = glm::rotateY(look, (float)glm::radians(dx / 5.0f));
-		//look = glm::rotate(look, (float)glm::radians(dy / 5.0f), glm::normalize(glm::cross(look, cameraUp)));
 
-		cameraFront = look;
-		xSave = x;
-		ySave = y;
 
 		//static double oXS, oYS;
 		//static double xS, yS;

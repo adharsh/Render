@@ -13,7 +13,7 @@ namespace ginkgo{
 		Game game;
 		static const double FRAME_CAP;
 	public:
-		Engine(Window& a);
+		Engine(Window& window, Game& game);
 		void start();
 		void stop();
 

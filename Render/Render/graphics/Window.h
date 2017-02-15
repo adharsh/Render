@@ -22,8 +22,9 @@ namespace ginkgo {
 			double s_xoffset;
 			double s_yoffset;
 			glm::vec4 clear_color;
+			bool isFullScreen;
 		public:
-			Window(const char *name, int width, int height, const glm::vec4& clear_color);
+			Window(const char *name, int width, int height, const glm::vec4& clear_color, bool wantFullScreen = false);
 			Window() {
 				Window("Render", 800, 600, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 			}
@@ -42,6 +43,9 @@ namespace ginkgo {
 			bool isMouseButtonPressed(unsigned int button) const;
 			void getMousePosition(double& x, double& y) const;
 			void getScrollOffset(double& xoffset, double& yoffset) const;
+
+			void disableMouseCursor() { glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); }
+			void showMouseCursor() { glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); }
 		private:
 			bool init();
 
@@ -50,6 +54,7 @@ namespace ginkgo {
 			friend void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 			friend void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
 			friend void scroll_callback(GLFWwindow* window, double xpos, double ypos);
+
 		};
 
 

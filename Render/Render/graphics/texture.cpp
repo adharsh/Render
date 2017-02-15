@@ -3,7 +3,7 @@
 
 namespace ginkgo {
 
-	Texture::Texture(const std::string& path, glm::vec4& colorp)
+	Texture::Texture(const std::string& path, const glm::vec4& colorp)
 		: fileName(path), color(colorp)
 	{
 		if (fileName.compare(""))
@@ -13,7 +13,7 @@ namespace ginkgo {
 		this->specularPower = 32;
 	}
 
-	Texture::Texture(const std::string& path, glm::vec4& colorp, float specularIntensity, float specularPower)
+	Texture::Texture(const std::string& path, const glm::vec4& colorp, float specularIntensity, float specularPower)
 		: Texture(path, colorp)
 	{
 		this->specularIntensity = specularIntensity;
