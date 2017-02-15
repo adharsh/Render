@@ -62,8 +62,8 @@ namespace ginkgo {
 
 				Time::setDelta(frameTime);
 
-				game.input();
-				game.update();
+				game.input(Time::getDelta());
+				game.update(Time::getDelta());
 
 				if (frameCounter >= Time::SECOND)
 				{

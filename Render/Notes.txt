@@ -4,9 +4,13 @@
 ******
 TODOS:
 
-understanding lvalue vs rvalue
-
+Bugs:
+fix change focv scroll in
 const texture color parameter thing
+camera->getTransform()
+change scrolling so it stays the same even when cursor is out of focus
+
+undestand directions of placement of putting stuff in space...you get what I mean
 
 input stuff
 function callback setups
@@ -15,7 +19,10 @@ Camera class
 -has projection, view, and model
 -input method shoudl just have camera.input(), and update method should just have camera.update, proejection and view and model if possible
 -getters for each
+-mouse input fov
+-fov 45 or 90?
 
+binding textures and unbinding textures
 way to organize point lights in vector -> 
 getters for position
 popthem off
@@ -25,6 +32,9 @@ cubemaps
 
 light deflection + refraction thing
 
+passing Tim::getDelta() as a double vs a float vs something even more accurate
+
+doesn't load all meshes without textures, just a color
 ******
 Fixes:
 
