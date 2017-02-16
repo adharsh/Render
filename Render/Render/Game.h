@@ -24,20 +24,11 @@ namespace ginkgo {
 		Window& window;
 		PhongShader shader;
 		Mesh mesh;
+		Mesh mesh2;
 		Texture* texture;
 
 		Camera* camera;
-		glm::mat4 projection;
-		glm::mat4 view;
-		glm::mat4 model;
-		glm::vec3 cameraPosition;
-		glm::vec3 cameraFront;
-		glm::vec3 cameraUp;
 		
-		PointLight pLight1;
-		PointLight pLight2;
-		PointLight pLight3;
-
 	public:
 		Game(Window& win) : window(win)
 		{
@@ -51,7 +42,7 @@ namespace ginkgo {
 			std::vector<GLuint> indices = obj.getIndexList();
 			std::vector<glm::vec2> uvs = obj.getUVList();
 
-			/*		for (unsigned int i = 0; i < uvs.size(); i++)
+			/*for (unsigned int i = 0; i < uvs.size(); i++)
 			std::cout << uvs[i].x << ",  " << uvs[i].y << std::endl; */
 
 			/*for (unsigned int i = 0; i < vertices.size(); i++)
@@ -104,7 +95,7 @@ namespace ginkgo {
 
 			mesh.addData(positions, indices, uvs, true);
 #elif 1
-			window.disableMouseCursor();
+			//window.disableMouseCursor();
 			float fieldDepth = 1.0f;
 			float fieldWidth = 1.0f;
 
@@ -126,53 +117,29 @@ namespace ginkgo {
 			indices.push_back(2); indices.push_back(1); indices.push_back(3);
 
 			mesh.addData(positions, indices, uvs, true);
+
+		/*	float ab = 0.0f;
+
+			positions.clear();
+			positions.push_back(glm::vec3(-fieldWidth, ab, -fieldDepth));
+			positions.push_back(glm::vec3(-fieldWidth, ab, fieldDepth * 3));
+			positions.push_back(glm::vec3(fieldWidth * 3, ab, -fieldDepth));
+			positions.push_back(glm::vec3(fieldWidth * 3, ab, fieldDepth * 3));*/
+
+			mesh2.addData(positions, indices, uvs, true);
 #endif
 
-			texture = new Texture("Render/res/textures/white.png", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+			texture = new Texture("Render/res/textures/grid.jpg", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 			//texture = new Texture("", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-			DirectionalLight dLight(
-				BaseLight(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), 0.55f),
-				glm::vec3(1.0f, 1.0f, 1.0f));
-			//shader.setDirectionalLight(dLight);
-			shader.setAmbientLight(glm::vec4(0.1f, 0.1f, 0.1f, 0.1f));
 
-			pLight1 = PointLight(
-				BaseLight(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f), 1.0f),
-				Attenuation(0.0f, 0.0f, 1.0f),
-				glm::vec3(-4.0f, 0.0f, 7.0f));
-
-			pLight2 = PointLight(
-				BaseLight(glm::vec4(0.0f, 1.0f, 0.0f, 1.0f), 1.0f),
-				Attenuation(0.0f, 0.0f, 1.0f),
-				glm::vec3(0.0f, 0.0f, 7.0f));
-
-			pLight3 = PointLight(
-				BaseLight(glm::vec4(0.0f, 0.0f, 1.0f, 1.0f), 1.0f),
-				Attenuation(0.0f, 0.0f, 1.0f),
-				glm::vec3(4.0f, 0.0f, 7.0f));
-
-			shader.setPointLights({ pLight1, pLight2, pLight3 });
-
-			camera = new Camera(window, glm::vec3(0.0f, 0.0f, 3.0f));
-			camera->scaleModel(glm::vec3(1.1f, 1.1f, 1.1f));
-			camera->rotateModel(3.14f / 2.0f, glm::vec3(1.0f, 0.0f, 0.0f));
-			camera->translateModel(glm::vec3(-1.5f, 1.0f, -1.5f));
-			camera->translateModel(glm::vec3(0, 0, 0));
+			shader.setAmbientLight(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 			
-			cameraPosition = glm::vec3(0.0f, 0.0f, 3.0f);
-			cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-			cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-			projection = glm::perspective(45.0f, window.getAspectRatio(), 0.1f, 1000.0f);
-			view = glm::lookAt(
-				cameraPosition,
-				cameraPosition + cameraFront,
-				cameraUp);
-
-			GLfloat cameraSpeed = 5.0f * 700000000 * 10E-10;
-			cameraPosition -= cameraSpeed * cameraFront;
-			model = glm::scale(model, glm::vec3(1.1f, 1.1f, 1.1f));
-			model = glm::rotate(model, 3.14f / 2.0f, glm::vec3(1.0f, 0.0f, 0.0f));
-			model = glm::translate(model, glm::vec3(-1.5f, 1.0f, -1.5f));
+			camera = new Camera(window, glm::vec3(0.0f, 0.0f, 3.0f));
+	//		camera->rotateModel(glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+	//		camera->scaleModel(glm::vec3(1.1f, 1.1f, 1.1f));
+	//		camera->rotateModel(3.14f / 2.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+	//		camera->translateModel(glm::vec3(-1.5f, 1.0f, -1.5f));
+	//		camera->translateModel(glm::vec3(0, 0, 0));
 		}
 
 		void input(double dt)
@@ -180,24 +147,33 @@ namespace ginkgo {
 			camera->input(dt);
 		}
 
+		glm::mat4 modela;
 		void update(double dt)
 		{
 			static float temp = 0.0f;
-			temp += Time::getDelta();
+			temp += dt;
 			float a = sin(temp*1.5);
 			float b = a / 0.9f + 1;
 			//texture->setColor(glm::vec4(sin(temp), -sin(temp), sin(temp), 1.0f));
 			//window.setClearColor(glm::vec4(sin(temp), sin(temp), sin(temp), sin(temp)));
+			
+			//modela = glm::translate(glm::rotate(glm::mat4(), glm::radians(90.0f * sin(a)) , glm::vec3(1.0f, 0.0f, 0.0f)), glm::vec3(0.0f, -1.0f, 0.0f));
+			//modela = glm::rotate(glm::mat4(), glm::radians(100.0f * sin(a)), glm::vec3(0.0f, 1.0f, 0.0f));
+			modela = glm::translate(glm::mat4(), glm::vec3(0.0f, 1.0f, 0.0f));
 			camera->update(dt);
-			//shader.setPointLightPosition(1, glm::vec3(0, 0, a));
-			//shader.setAmbientLight(glm::vec4(0.3f, 0.3f, 0.3f, 1.0f));
 		}
 
 		void render()
 		{
+			glm::mat4 model;
+
 			shader.bind();
-			shader.updateUniforms(camera->getModel(), camera->getMVP(), *texture, camera->getCameraPosition());
+			shader.updateUniforms(model, camera->getMVP(model), *texture, camera->getCameraPosition());
 			mesh.draw();
+			
+			//camera->setModel(a);
+			shader.updateUniforms(modela, camera->getMVP(modela), *texture, camera->getCameraPosition());
+			mesh2.draw();
 			shader.unbind();
 
 		}

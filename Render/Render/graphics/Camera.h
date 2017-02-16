@@ -13,7 +13,6 @@ namespace ginkgo {
 		const Window& window;
 		glm::mat4 projection;
 		glm::mat4 view;
-		glm::mat4 model;
 		glm::mat4 mvp;
 		glm::vec3 cameraPosition;
 		glm::vec3 cameraFront;
@@ -28,21 +27,19 @@ namespace ginkgo {
 		
 		void setProjection(const glm::mat4& projection) { this->projection = projection; }
 		void setView(const glm::mat4& view) { this->view = view; }
-		void setModel(const glm::mat4& model) { this->model = model; }
 		void setCcameraSpeedSensitivity(float cameraSpeedSensitivity) { this->cameraSpeedSensitivity = cameraSpeedSensitivity; }
 		void setMouseRotationSensitivity(float mouseSensitivity) { this->mouseRotationSensitivity = mouseRotationSensitivity; }
-		void setFOV(const glm::mat4& model) { this->model = model; }
+		void setFOV(float fov) { this->fov= fov; }
 
 
 		const glm::mat4& getProjection() const { return projection; }
 		const glm::mat4& getView() const { return view; }
-		const glm::mat4& getModel() const { return model; }
-		const glm::mat4& getMVP() { mvp = projection * view * model; return mvp; }
+		const glm::mat4& getMVP(const glm::mat4& model) { mvp = projection * view * model; return mvp; }
 		const glm::vec3& getCameraPosition() const { return cameraPosition; }
 		
-		void scaleModel(const glm::vec3& scale) { setModel(glm::scale(model, scale)); }
-		void translateModel(const glm::vec3& translation) { setModel(glm::translate(model, translation)); }
-		void rotateModel(float angleInRadians, const glm::vec3& rotation) { setModel(glm::rotate(model, angleInRadians, rotation)); }
+//		void scaleModel(const glm::vec3& scale) { model = glm::scale(model, scale); }
+//		void translateModel(const glm::vec3& translation) { model = glm::translate(model, translation); }
+//		void rotateModel(float angleInRadians, const glm::vec3& rotation) { model = glm::rotate(model, angleInRadians, rotation); }
 
 		void input(double dt);
 		void update(double dt);

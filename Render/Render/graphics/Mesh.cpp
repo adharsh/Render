@@ -56,12 +56,18 @@ namespace ginkgo {
 		size = indices.size();
 
 		glBindVertexArray(VAO);
-
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glBufferData(GL_ARRAY_BUFFER, data_size * sizeof(GLfloat), data, GL_STATIC_DRAW); //&data[0]
-
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+		
+		glBufferData(GL_ARRAY_BUFFER, data_size * sizeof(GLfloat), data, GL_STATIC_DRAW); //&data[0]
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), &indices[0], GL_STATIC_DRAW); //TODO: indices //? too
+
+		glEnableVertexAttribArray(0);
+		glEnableVertexAttribArray(1);
+		glEnableVertexAttribArray(2);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), 0);
+		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(5 * sizeof(GLfloat)));
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -74,13 +80,6 @@ namespace ginkgo {
 		glBindVertexArray(VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-
-		glEnableVertexAttribArray(0);
-		glEnableVertexAttribArray(1);
-		glEnableVertexAttribArray(2);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), 0);
-		glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
-		glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (GLvoid*)(5 * sizeof(GLfloat)));
 
 		glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_INT, 0);
 
@@ -96,9 +95,23 @@ namespace ginkgo {
 
 		if (positions.size() != uvs.size() || positions.size() != normals.size())
 		{
-			std::cout << "Incorrect amount of data. Should be the same number of sets of positions, uvs, and normals." << std::endl;
-			system("pause");
-			return NULL;
+			//std::cout << "Incorrect amount of data. Should be the same number of sets of positions, uvs, and normals." << std::endl;
+			//system("pause");
+			//return NULL;
+
+
+			for (GLuint i = 0; i < positions.size(); i++)
+			{
+				data[i * 8 + 0] = positions[i].x;
+				data[i * 8 + 1] = positions[i].y;
+				data[i * 8 + 2] = positions[i].z;
+				data[i * 8 + 3] = 0;
+				data[i * 8 + 4] = 0;
+				data[i * 8 + 5] = normals[i].x;
+				data[i * 8 + 6] = normals[i].y;
+				data[i * 8 + 7] = normals[i].z;
+			}
+			return data;
 		}
 	
 

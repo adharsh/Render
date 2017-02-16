@@ -5,9 +5,14 @@
 TODOS:
 
 Bugs:
-*binding textures and unbinding textures
+*binding textures and unbinding textures, renderable class and stuff
+*doesn't load all meshes without textures, just a color
 *cubemaps
 *light deflection + refraction thing
+
+hud - text + fonts, other interactable stuff
+sounds
+browser
 
 fix change fov scroll in
 const texture color parameter thing
@@ -26,15 +31,9 @@ Camera class
 -mouse input fov
 -fov 45 or 90?
 
-
-
 passing Tim::getDelta() as a double vs a float vs something even more accurate
 
 doesn't load all meshes without textures, just a color
-
-window class
-fullscreen method
-enable/disable mouse cursor
 
 Not necessary to do pointlights/spot lights, just as final touches
 -way to organize point lights in vector -> 

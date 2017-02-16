@@ -27,13 +27,13 @@ namespace ginkgo {
 	void Camera::input(double dt)
 	{
 		GLfloat cameraSpeed = dt * cameraSpeedSensitivity;
-		if (window.isKeyPressed(GLFW_KEY_UP))
+		if (window.isKeyPressed(GLFW_KEY_W))
 			cameraPosition += cameraSpeed * cameraFront;
-		if (window.isKeyPressed(GLFW_KEY_DOWN))
+		if (window.isKeyPressed(GLFW_KEY_S))
 			cameraPosition -= cameraSpeed * cameraFront;
-		if (window.isKeyPressed(GLFW_KEY_LEFT))
+		if (window.isKeyPressed(GLFW_KEY_A))
 			cameraPosition -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-		if (window.isKeyPressed(GLFW_KEY_RIGHT))
+		if (window.isKeyPressed(GLFW_KEY_D))
 			cameraPosition += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 
 		static bool first = true;
