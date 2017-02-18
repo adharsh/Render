@@ -1,7 +1,6 @@
 #pragma once
 
 #include <GL\glew.h>
-#include <glm/gtc/matrix_transform.hpp>
 
 #include "Window.h"
 
@@ -37,10 +36,6 @@ namespace ginkgo {
 		const glm::mat4& getMVP(const glm::mat4& model) { mvp = projection * view * model; return mvp; }
 		const glm::vec3& getCameraPosition() const { return cameraPosition; }
 		
-//		void scaleModel(const glm::vec3& scale) { model = glm::scale(model, scale); }
-//		void translateModel(const glm::vec3& translation) { model = glm::translate(model, translation); }
-//		void rotateModel(float angleInRadians, const glm::vec3& rotation) { model = glm::rotate(model, angleInRadians, rotation); }
-
 		void input(double dt);
 		void update(double dt);
 

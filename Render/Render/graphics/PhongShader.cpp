@@ -13,7 +13,7 @@ namespace ginkgo {
 	}
 
 
-	void PhongShader::updateUniforms(const glm::mat4& model, const glm::mat4& projectionMatrix, Texture& texture, const glm::vec3& cameraPosition)
+	void PhongShader::updateUniforms(const glm::mat4& model, const glm::mat4& projectionMatrix, const Texture& texture, const glm::vec3& cameraPosition)
 	{
 		if (texture.hasImage())
 			texture.bind();

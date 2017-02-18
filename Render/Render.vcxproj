@@ -127,6 +127,7 @@
     <ClCompile Include="Render\Engine.cpp" />
     <ClCompile Include="Render\graphics\BasicShader.cpp" />
     <ClCompile Include="Render\graphics\Camera.cpp" />
+    <ClCompile Include="Render\graphics\Layer.cpp" />
     <ClCompile Include="Render\graphics\Mesh.cpp" />
     <ClCompile Include="Render\graphics\PhongShader.cpp" />
     <ClCompile Include="Render\graphics\Shader.cpp" />
@@ -141,9 +142,11 @@
     <ClInclude Include="Render\Game.h" />
     <ClInclude Include="Render\graphics\BasicShader.h" />
     <ClInclude Include="Render\graphics\Camera.h" />
+    <ClInclude Include="Render\graphics\Layer.h" />
     <ClInclude Include="Render\graphics\LightStructs.h" />
     <ClInclude Include="Render\graphics\Mesh.h" />
     <ClInclude Include="Render\graphics\PhongShader.h" />
+    <ClInclude Include="Render\graphics\Renderable.h" />
     <ClInclude Include="Render\graphics\Texture.h" />
     <ClInclude Include="Render\Handle.h" />
     <ClInclude Include="Render\graphics\Shader.h" />

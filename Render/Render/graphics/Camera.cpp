@@ -57,7 +57,6 @@ namespace ginkgo {
 		}
 
 
-
 		//static double oXS, oYS;
 		//static double xS, yS;
 		//double yOffset = yS - oYS;
@@ -65,7 +64,6 @@ namespace ginkgo {
 		//oYS = yS;
 		//window.getScrollOffset(xS, yS);
 		////std::cout << yOffset << std::endl;
-
 
 		//if (fov >= 1.0f && fov <= 45.0f)
 		//	fov -= yOffset;

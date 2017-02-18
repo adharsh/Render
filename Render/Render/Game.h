@@ -15,6 +15,9 @@
 #include "graphics/PhongShader.h"
 #include "utils/ObjLoader.h"
 #include "graphics\Camera.h"
+#include "graphics/Renderable.h"
+#include "graphics/Layer.h"
+
 
 namespace ginkgo {
 
@@ -22,124 +25,65 @@ namespace ginkgo {
 	{
 	private:
 		Window& window;
-		PhongShader shader;
-		Mesh mesh;
-		Mesh mesh2;
-		Texture* texture;
-
+		Layer* layer;
 		Camera* camera;
-		
+
 	public:
 		Game(Window& win) : window(win)
 		{
-
-#if 0
-			//No UVS generated from this, why?
-			ObjIntermediate obj;
-			obj.LoadObj("Render/res/models/cube.obj");
-
-			std::vector<glm::vec3> vertices = obj.getVertexList();
-			std::vector<GLuint> indices = obj.getIndexList();
-			std::vector<glm::vec2> uvs = obj.getUVList();
-
-			/*for (unsigned int i = 0; i < uvs.size(); i++)
-			std::cout << uvs[i].x << ",  " << uvs[i].y << std::endl; */
-
-			/*for (unsigned int i = 0; i < vertices.size(); i++)
-			std::cout << vertices[i].x << ",  " << vertices[i].y << ",  " << vertices[i].z << ",  " << std::endl;
-
-			for (unsigned int i = 0; i < indices.size(); i += 3)
-			std::cout << indices[i] << ", " << indices[i+1] << ", " << indices[i+2] << std::endl;*/
-
-			mesh.addData(vertices, indices, uvs, false);
-#endif
-
-#if 0
-			//ERROR when creating a plane
-			std::vector<glm::vec3> positions;
-			positions.push_back(glm::vec3(-1, -1, 0));
-			positions.push_back(glm::vec3(-1, 1, 0));
-			positions.push_back(glm::vec3(1, 1, 0));
-			positions.push_back(glm::vec3(1, -1, 0));
-
-			std::vector<glm::vec2> uvs;
-			uvs.push_back(glm::vec2(0.0f, 0.0f));
-			uvs.push_back(glm::vec2(0.5f, 0.0f));
-			uvs.push_back(glm::vec2(1.0f, 0.0f));
-			uvs.push_back(glm::vec2(0.0f, 0.5f));
-
-			std::vector<GLuint> indices;
-			indices.push_back(0); indices.push_back(1); indices.push_back(3);
-			indices.push_back(1); indices.push_back(3); indices.push_back(2);
-			indices.push_back(3); indices.push_back(2); indices.push_back(0);
-			indices.push_back(2); indices.push_back(0); indices.push_back(1);
-
-#elif 0
-			std::vector<glm::vec3> positions;
-			positions.push_back(glm::vec3(-1.0f, -1.0f, 0.5773f));
-			positions.push_back(glm::vec3(0.0f, -1.0f, -1.15475f));
-			positions.push_back(glm::vec3(1.0f, -1.0f, 0.5773f));
-			positions.push_back(glm::vec3(0.0f, 1.0f, 0.0f));
-
-			std::vector<glm::vec2> uvs;
-			uvs.push_back(glm::vec2(0.0f, 0.0f));
-			uvs.push_back(glm::vec2(0.5f, 0.0f));
-			uvs.push_back(glm::vec2(1.0f, 0.0f));
-			uvs.push_back(glm::vec2(0.0f, 0.5f));
-
-			std::vector<GLuint> indices;
-			indices.push_back(0); indices.push_back(3); indices.push_back(1);
-			indices.push_back(1); indices.push_back(3); indices.push_back(2);
-			indices.push_back(2); indices.push_back(3); indices.push_back(0);
-			indices.push_back(1); indices.push_back(2); indices.push_back(0);
-
-			mesh.addData(positions, indices, uvs, true);
-#elif 1
+			PhongShader* shader = new PhongShader();
+			camera = new Camera(window, glm::vec3(0.0f, 0.01f, 0.0f));
 			//window.disableMouseCursor();
-			float fieldDepth = 1.0f;
-			float fieldWidth = 1.0f;
 
+			float side = 1.0f;
 			std::vector<glm::vec3> positions;
 			std::vector<glm::vec2> uvs;
 			std::vector<GLuint> indices;
-
-			positions.push_back(glm::vec3(-fieldWidth, 0.0f, -fieldDepth));
-			positions.push_back(glm::vec3(-fieldWidth, 0.0f, fieldDepth * 3));
-			positions.push_back(glm::vec3(fieldWidth * 3, 0.0f, -fieldDepth));
-			positions.push_back(glm::vec3(fieldWidth * 3, 0.0f, fieldDepth * 3));
-
+			positions.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
+			positions.push_back(glm::vec3(0.0f, 0.0f, -side));
+			positions.push_back(glm::vec3(side, 0.0f, -side));
+			positions.push_back(glm::vec3(side, 0.0f, 0.0f));
 			uvs.push_back(glm::vec2(0.0f, 0.0f));
 			uvs.push_back(glm::vec2(0.0f, 1.0f));
-			uvs.push_back(glm::vec2(1.0f, 0.0f));
 			uvs.push_back(glm::vec2(1.0f, 1.0f));
-
+			uvs.push_back(glm::vec2(1.0f, 0.0f));
 			indices.push_back(0); indices.push_back(1); indices.push_back(2);
-			indices.push_back(2); indices.push_back(1); indices.push_back(3);
+			indices.push_back(2); indices.push_back(3); indices.push_back(0);
 
-			mesh.addData(positions, indices, uvs, true);
+			Mesh* mesh = new Mesh();
+			mesh->addData(positions, indices, uvs, true);
 
-		/*	float ab = 0.0f;
-
-			positions.clear();
-			positions.push_back(glm::vec3(-fieldWidth, ab, -fieldDepth));
-			positions.push_back(glm::vec3(-fieldWidth, ab, fieldDepth * 3));
-			positions.push_back(glm::vec3(fieldWidth * 3, ab, -fieldDepth));
-			positions.push_back(glm::vec3(fieldWidth * 3, ab, fieldDepth * 3));*/
-
-			mesh2.addData(positions, indices, uvs, true);
-#endif
-
-			texture = new Texture("Render/res/textures/grid.jpg", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-			//texture = new Texture("", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-
-			shader.setAmbientLight(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+			Texture* t0 = new Texture("Render/res/textures/Hi.png", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+			Texture* t1 = new Texture("Render/res/textures/white.png", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+			Texture* t2 = new Texture("Render/res/textures/coord.jpg", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+			Texture* t3 = new Texture("Render/res/textures/coord.png", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+			Texture* t4 = new Texture("Render/res/textures/prime.png", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+					
+			Renderable* r0 = new Renderable(*mesh, *t0);
+			Renderable* r1 = new Renderable(*mesh, *t0);
+			Renderable* r2 = new Renderable(*mesh, *t1);
+			Renderable* r3 = new Renderable(*mesh, *t2);
+			Renderable* r4 = new Renderable(*mesh, *t2);
+			Renderable* r5 = new Renderable(*mesh, *t3);
+			Renderable* r6 = new Renderable(*mesh, *t4);
 			
-			camera = new Camera(window, glm::vec3(0.0f, 0.0f, 3.0f));
-	//		camera->rotateModel(glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-	//		camera->scaleModel(glm::vec3(1.1f, 1.1f, 1.1f));
-	//		camera->rotateModel(3.14f / 2.0f, glm::vec3(1.0f, 0.0f, 0.0f));
-	//		camera->translateModel(glm::vec3(-1.5f, 1.0f, -1.5f));
-	//		camera->translateModel(glm::vec3(0, 0, 0));
+			std::vector<Renderable*> r = { r0, r1, r2, r3, r4, r5, r6};
+
+			layer = new Layer(r, *shader, *camera);
+
+			layer->addRenderable(new Renderable(*mesh, *t0));
+			layer->addRenderable(new Renderable(*mesh, *t2));
+			layer->addRenderable(new Renderable(*mesh, *t3));
+			layer->addRenderable(new Renderable(*mesh, *t4));
+
+			float a = 0;
+			for (int i = 0; i < layer->getSize(); i++)
+			{
+				layer->alterRenderable(i)->translateModel(glm::vec3(0.0f, a, 0.0f));
+				a += 0.2f;
+			}
+
+			shader->setAmbientLight(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 		}
 
 		void input(double dt)
@@ -147,35 +91,20 @@ namespace ginkgo {
 			camera->input(dt);
 		}
 
-		glm::mat4 modela;
 		void update(double dt)
 		{
-			static float temp = 0.0f;
-			temp += dt;
-			float a = sin(temp*1.5);
-			float b = a / 0.9f + 1;
 			//texture->setColor(glm::vec4(sin(temp), -sin(temp), sin(temp), 1.0f));
 			//window.setClearColor(glm::vec4(sin(temp), sin(temp), sin(temp), sin(temp)));
+			static float t = 0;
+			t += dt * 0.000001;
+			//layer->alterRenderable(0)->rotateModel(glm::radians(t), glm::vec3(1.0f, 0.0f, 0.0f));
 			
-			//modela = glm::translate(glm::rotate(glm::mat4(), glm::radians(90.0f * sin(a)) , glm::vec3(1.0f, 0.0f, 0.0f)), glm::vec3(0.0f, -1.0f, 0.0f));
-			//modela = glm::rotate(glm::mat4(), glm::radians(100.0f * sin(a)), glm::vec3(0.0f, 1.0f, 0.0f));
-			modela = glm::translate(glm::mat4(), glm::vec3(0.0f, 1.0f, 0.0f));
 			camera->update(dt);
 		}
 
 		void render()
 		{
-			glm::mat4 model;
-
-			shader.bind();
-			shader.updateUniforms(model, camera->getMVP(model), *texture, camera->getCameraPosition());
-			mesh.draw();
-			
-			//camera->setModel(a);
-			shader.updateUniforms(modela, camera->getMVP(modela), *texture, camera->getCameraPosition());
-			mesh2.draw();
-			shader.unbind();
-
+			layer->draw();
 		}
 
 	};

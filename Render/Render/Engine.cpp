@@ -92,7 +92,8 @@ namespace ginkgo {
 		glGetError();
 		window.clear();
 		
-		game.render();
+		game.render(); //3D
+		//game.postProcess(); 2D
 		GLenum error = glGetError();
 
 		if (error != GL_NO_ERROR)

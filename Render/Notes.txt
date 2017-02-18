@@ -5,11 +5,14 @@
 TODOS:
 
 Bugs:
-*binding textures and unbinding textures, renderable class and stuff
+*binding textures and unbinding textures, renderable class and stuff	, delete //probably going to be useless stuff, replace code with binary serach algorithm
 *doesn't load all meshes without textures, just a color
+*refactor code to have member variables have pointers instead of references
+*put classes in different folders to organize code
 *cubemaps
 *light deflection + refraction thing
 
+make load any kind of image format
 hud - text + fonts, other interactable stuff
 sounds
 browser
@@ -133,6 +136,18 @@ const variables better than sending in a uniform in GLSL
 images -> no alpha
 
 mvp is calculated from left to right, thus mvp
+
+construcot initializer list can use same variable names as parameter names
+
+better to use pointers instead of references as member variables
+-so in code you understand that you're using a reference and not an actual variable
+-better to have a vector of pointers than a vector of references
+
+vectors manage all the memory they allocate for you
+-everything is abstracted away from its copy constructor, destructor for cleaning, etc
+-just use normally (like in Java)
+
+allocated memory lasts for liftime of program unless its deleted
 
 *******
 What to do when not drawing anything to the screen:
