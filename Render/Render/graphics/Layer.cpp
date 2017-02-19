@@ -1,7 +1,8 @@
-#include "Layer.h"
-
 #include <algorithm>
 #include <vector>
+
+#include "Layer.h"
+
 
 namespace ginkgo {
 

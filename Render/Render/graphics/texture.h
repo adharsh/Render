@@ -18,13 +18,13 @@ namespace ginkgo {
 		glm::vec4 color;
 		float specularIntensity;
 		float specularPower;
+		static std::string whitepixelfilepath;
 	private:
 		GLuint load(); //images -> no alpha
 	public:
-		Texture(const std::string& path, const glm::vec4& color);
-		Texture(const std::string& path, const glm::vec4& color, float specularIntensity, float specularExponent);
+		Texture(const glm::vec4& color, const std::string& path = whitepixelfilepath);
+		Texture(const glm::vec4& color, float specularIntensity, float specularExponent, const std::string& path = whitepixelfilepath);
 		~Texture();
-		const bool hasImage() const { return fileName.compare(""); }
 		const unsigned int getWidth() const { return width; }
 		const unsigned int getHeight() const { return height; }
 		const GLuint getID() const { return tid; }
@@ -36,6 +36,8 @@ namespace ginkgo {
 
 		const void setSpecularIntensity() { this->specularIntensity = specularIntensity; }
 		const void setSpecularPower() { this->specularPower = specularPower; }
+
+		static void setWhitePixelFilePath(const std::string& filepath) { whitepixelfilepath = filepath; }
 	};
 
 }

@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Renderable.h"
-#include "PhongShader.h"
 #include "Camera.h"
+#include "shaders\PhongShader.h"
 
 namespace ginkgo {
 

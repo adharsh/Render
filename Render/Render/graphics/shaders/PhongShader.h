@@ -3,7 +3,7 @@
 #include <string>
 
 #include "Shader.h"
-#include "Texture.h"
+#include "../Texture.h"
 #include "LightStructs.h"
 
 namespace ginkgo {

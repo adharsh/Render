@@ -3,27 +3,26 @@
 
 namespace ginkgo {
 
-	Texture::Texture(const std::string& path, const glm::vec4& colorp)
-		: fileName(path), color(colorp)
+	std::string Texture::whitepixelfilepath = "Render/res/textures/white.png";
+
+	Texture::Texture(const glm::vec4& color, const std::string& path)
+		: fileName(path), color(color)
 	{
-		if (fileName.compare(""))
-			tid = load();
+		tid = load();
 
 		this->specularIntensity = 2;
 		this->specularPower = 32;
 	}
 
-	Texture::Texture(const std::string& path, const glm::vec4& colorp, float specularIntensity, float specularPower)
-		: Texture(path, colorp)
+	Texture::Texture(const glm::vec4& color, float specularIntensity, float specularPower, const std::string& path)
+		: Texture(color, path)
 	{
 		this->specularIntensity = specularIntensity;
 		this->specularPower = specularPower;
 	}
 	
 	Texture::~Texture()
-	{ 
-	
-	}
+	{ }
 
 	GLuint Texture::load()
 	{

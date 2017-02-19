@@ -1,8 +1,8 @@
+#include <iostream>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm\gtx\rotate_vector.hpp>
-#include "Camera.h"
 
-#include <iostream>
+#include "Camera.h"
 
 namespace ginkgo {
 	Camera::Camera(const Window* win, const glm::vec3& camera_position)

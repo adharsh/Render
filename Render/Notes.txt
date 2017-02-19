@@ -5,9 +5,9 @@
 TODOS:
 
 Bugs:
-*binding textures and unbinding textures, renderable class and stuff	, delete //probably going to be useless stuff, replace code with binary serach algorithm
-*refactor code to have member variables have pointers instead of references
-*doesn't load all meshes without textures, just a color
+*binding textures and unbinding textures, renderable class and stuff	, delete //probably going to be useless stuff, replace code with binary serach algorithm -> yup
+*refactor code to have member variables have pointers instead of references -> yup
+*doesn't load all meshes without textures, just a color -> yup
 *put classes in different folders to organize code
 *cubemaps
 *light deflection + refraction thing
@@ -151,6 +151,50 @@ vectors manage all the memory they allocate for you
 allocated memory lasts for liftime of program unless its deleted
 
 renderables can alter its own copy of its texture, can't alter the texture used by all renderables
+
+header files can have includes of other header files so even though you may not include one, it may still be covered
+
+*******
+Coding Guidelines:
+better to use pointers instead of references as member variables
+-so in code you understand that you're using a reference and not an actual variable
+-better to have a vector of pointers than a vector of references
+use pointers if it referes to something else
+use the actual variable if it is unique to each object
+-use const references as setter methods to set normal variable though
+
+use member initalizer lists, parameter names can be same as member variable names
+also delegated constructor "initalizers"
+
+if code for a method is not long (~1or2 lines), then just put code in header file
+
+always pass in const references instead of by value
+
+when having a "getter" that doesn't return a const reference, call it a "alterVariable" method that returns a reference to the member variable
+
+always keep in mind of the possiblity of default constructors
+
+empty methods in a .cpp file, do this: 
+~Class       void someMethod()
+{ }			 { }
+empty methods in header file, do this: someMethod(){} 
+
+when including files:
+#pragma once
+enter for line of space
+first standard c++ library includes
+then imported library includes
+enter for line of space
+then self made header file includes
+
+don't put all includes in the header file, only put ones that are necessary in header file, and put others required by .cpp file in the .cpp file
+makes it more efficient when compiling, takes less time to look at all those includes
+
+make header files have paramter names that are meaninful since those are the ones that are ultimately going to be looked at
+you can be a little more free in the .cpp files
+
+use folders to organize code
+if there are at least 5 classes (~10 files including header and .cpp files), then categorize and make a folder for each
 
 *******
 What to do when not drawing anything to the screen:

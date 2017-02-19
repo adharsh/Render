@@ -24,7 +24,7 @@ namespace ginkgo {
 			glm::vec4 clear_color;
 			bool isFullScreen;
 		public:
-			Window(const char* name, int width, int height, const glm::vec4& clear_color, bool wantFullScreen = false);
+			Window(const char* name, int width, int height, const glm::vec4& clear_color, bool isFullScreen = false);
 			Window() {
 				Window("Render", 800, 600, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 			}

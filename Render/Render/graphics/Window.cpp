@@ -1,9 +1,9 @@
-#include "window.h"
+#include "Window.h"
 #include <iostream>
 
 namespace ginkgo {
-		Window::Window(const char* name, int widthW, int heightW, const glm::vec4& clearcolor, bool wantFullScreen)
-			: title(name), width(widthW), height(heightW), clear_color(clearcolor), isFullScreen(wantFullScreen)
+		Window::Window(const char* name, int width, int height, const glm::vec4& clear_color, bool isFullScreen)
+			: title(name), width(width), height(height), clear_color(clear_color), isFullScreen(isFullScreen)
 		{
 			if (!init())
 				glfwTerminate();
