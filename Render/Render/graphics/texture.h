@@ -20,7 +20,7 @@ namespace ginkgo {
 		float specularPower;
 		static std::string whitepixelfilepath;
 	private:
-		GLuint load(); //images -> no alpha
+		GLuint load(); //images -> no alpha, remove transparency in Gimp Layer->Transparency->Remove Alpha Channel
 	public:
 		Texture(const glm::vec4& color, const std::string& path = whitepixelfilepath);
 		Texture(const glm::vec4& color, float specularIntensity, float specularExponent, const std::string& path = whitepixelfilepath);

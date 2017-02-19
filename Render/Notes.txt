@@ -8,7 +8,7 @@ Bugs:
 *binding textures and unbinding textures, renderable class and stuff	, delete //probably going to be useless stuff, replace code with binary serach algorithm -> yup
 *refactor code to have member variables have pointers instead of references -> yup
 *doesn't load all meshes without textures, just a color -> yup
-*put classes in different folders to organize code
+*put classes in different folders to organize code -> yup
 *cubemaps
 *light deflection + refraction thing
 
@@ -195,6 +195,11 @@ you can be a little more free in the .cpp files
 
 use folders to organize code
 if there are at least 5 classes (~10 files including header and .cpp files), then categorize and make a folder for each
+
+
+*******
+Some preconditions that must be satisifed before using this engine:
+Images should have the alpha channel removed
 
 *******
 What to do when not drawing anything to the screen:

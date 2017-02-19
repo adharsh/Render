@@ -52,18 +52,31 @@ namespace ginkgo {
 			Mesh* mesh = new Mesh();
 			mesh->addData(positions, indices, uvs, true);
 
-			Texture* t0 = new Texture(glm::vec4(0.0f, 1.0f, 1.0f, 1.0f));
-					
-			Renderable* r0 = new Renderable(mesh, *t0);
+			Texture* t0 = new Texture(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), "Render/res/textures/coord.png");
 			
-			layer = new Layer({r0}, shader, camera);
+			std::vector<Renderable*> r;
+			for(int i = 0; i < 4; i++)
+				r.push_back(new Renderable(mesh, *t0));
+			
+			layer = new Layer(r, shader, camera);
+			//layer->alterRenderable(0)->alterTexture().setColor(glm::vec4(1.0f, 1.0f, 0.0f, 1.0f));
+			
+			float a = 0;
+			for (int i = 0; i < layer->getSize(); i++)
+			{
+				layer->alterRenderable(i)->translateModel(glm::vec3(0.0f, a, 0.0f));
+				a += 0.2f;
+			}
 
 			shader->setAmbientLight(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+		
+			layer->translateModel(glm::vec3(0, 0, -2));
+			layer->rotateModel(glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 		}
 
 		void input(double dt)
 		{
-			camera->input(dt);
+			//camera->input(dt);
 		}
 
 		void update(double dt)
@@ -71,9 +84,13 @@ namespace ginkgo {
 			//texture->setColor(glm::vec4(sin(temp), -sin(temp), sin(temp), 1.0f));
 			//window->setClearColor(glm::vec4(1, 1, 1, 1));
 			static float t = 0;
-			t += dt * 0.000001;
+			t += dt * 0.01;
 			//layer->alterRenderable(0)->rotateModel(glm::radians(t), glm::vec3(1.0f, 0.0f, 0.0f));
 			
+			//layer->scaleModel(glm::vec3(1.0f + t, 1.0f + t, 1.0f + t));
+			layer->rotateModel(glm::radians(t), glm::vec3(1.0f, 0.0f, 0.0f));
+			//layer->translateModel(glm::vec3(t, 0, 0));
+
 			camera->update(dt);
 		}
 

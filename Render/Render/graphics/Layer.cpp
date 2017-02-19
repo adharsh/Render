@@ -6,11 +6,6 @@
 
 namespace ginkgo {
 
-	bool Layer::compareRenderables(Renderable* r1, Renderable* r2)
-	{
-		return r1->alterTexture().getID() < r2->alterTexture().getID();
-	}
-
 	Layer::Layer(const std::vector<Renderable*> renderablesL, PhongShader* shaderL, Camera* cameraL)
 		: renderables(renderablesL), shader(shaderL), camera(cameraL)
 	{
@@ -24,12 +19,16 @@ namespace ginkgo {
 			size++;
 			if ((c == renderables.size() - 1) || (renderables[c + 1]->alterTexture().getID() != tid))
 			{
-				textureIDs.push_back(tid);
 				sizeTextureIDs.push_back(size);
 				size = 0;
 			}
 		}
 
+	}
+
+	bool Layer::compareRenderables(Renderable* r1, Renderable* r2)
+	{
+		return r1->alterTexture().getID() < r2->alterTexture().getID();
 	}
 
 	void Layer::addRenderable(Renderable* renderable)
@@ -87,7 +86,7 @@ namespace ginkgo {
 			glBindTexture(GL_TEXTURE_2D, renderables[b]->alterTexture().getID());
 			for (int a = 0; a < sizeTextureIDs[i]; a++)
 			{
-				shader->updateUniforms(renderables[b]->getModel(), camera->getProjection() * camera->getView() * renderables[b]->getModel(), renderables[b]->alterTexture(), camera->getCameraPosition());
+				shader->updateUniforms(renderables[b]->getModel(), camera->getProjection() * camera->getView() * model * renderables[b]->getModel(), renderables[b]->alterTexture(), camera->getCameraPosition());
 				renderables[b]->draw();
 				b++;
 			}
