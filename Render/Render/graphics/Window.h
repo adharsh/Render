@@ -12,9 +12,9 @@ namespace ginkgo {
 			static const int MAX_KEYS = 1024;
 			static const int MAX_BUTTONS = 32;
 		private:
-			const char *title;
+			const char* title;
 			unsigned int width, height;
-			GLFWwindow *window;
+			GLFWwindow* window;
 			bool keys[MAX_KEYS];
 			bool mouseButtons[MAX_BUTTONS];
 			double mx;
@@ -24,7 +24,7 @@ namespace ginkgo {
 			glm::vec4 clear_color;
 			bool isFullScreen;
 		public:
-			Window(const char *name, int width, int height, const glm::vec4& clear_color, bool wantFullScreen = false);
+			Window(const char* name, int width, int height, const glm::vec4& clear_color, bool wantFullScreen = false);
 			Window() {
 				Window("Render", 800, 600, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
 			}
@@ -44,8 +44,8 @@ namespace ginkgo {
 			void getMousePosition(double& x, double& y) const;
 			void getScrollOffset(double& xoffset, double& yoffset) const;
 
-			void disableMouseCursor() { glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); }
-			void showMouseCursor() { glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); }
+			void disableMouseCursor() const { glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); }
+			void showMouseCursor() const { glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); }
 		private:
 			bool init();
 

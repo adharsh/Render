@@ -12,13 +12,13 @@ namespace ginkgo {
 		std::vector<Renderable*> renderables;
 		std::vector<GLuint> textureIDs;
 		std::vector<GLuint> sizeTextureIDs;
-		PhongShader& shader;
-		Camera& camera;
+		const PhongShader* shader;
+		const Camera* camera;
 
 		static bool compareRenderables(Renderable* r1, Renderable* r2);
 
 	public:
-		Layer(std::vector<Renderable*> renderables, PhongShader& shader, Camera& camera);
+		Layer(std::vector<Renderable*> renderables, PhongShader* shader, Camera* camera);
 
 		void addRenderable(Renderable* renderable);
 		void draw() const;

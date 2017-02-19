@@ -8,8 +8,8 @@ namespace ginkgo {
 
 	const double Engine::FRAME_CAP = 5000.0;
 
-	Engine::Engine(Window& win, Game& gam)
-		: isRunning(false), window(win), game(gam)
+	Engine::Engine(Game* game, Window* window)
+		: isRunning(false), window(window), game(game)
 	{ }
 
 	void Engine::start()
@@ -57,13 +57,13 @@ namespace ginkgo {
 
 				unprocessedTime -= frameTime;
 
-				if (window.closed())
+				if (window->closed())
 					stop();
 
 				Time::setDelta(frameTime);
 
-				game.input(Time::getDelta());
-				game.update(Time::getDelta());
+				game->input(Time::getDelta());
+				game->update(Time::getDelta());
 
 				if (frameCounter >= Time::SECOND)
 				{
@@ -90,16 +90,16 @@ namespace ginkgo {
 	void Engine::render()
 	{
 		glGetError();
-		window.clear();
+		window->clear();
 		
-		game.render(); //3D
+		game->render(); //3D
 		//game.postProcess(); 2D
 		GLenum error = glGetError();
 
 		if (error != GL_NO_ERROR)
 			std::cout << "OpenGL Error: " << error << " in Engine.cpp, most likely game.render()" << std::endl;
 		
-		window.update();
+		window->update();
 		error = glGetError();
 
 		if (error != GL_NO_ERROR)

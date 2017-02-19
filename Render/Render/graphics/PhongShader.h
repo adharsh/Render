@@ -20,7 +20,7 @@ namespace ginkgo {
 		
 	public:
 		PhongShader();
-		void updateUniforms(const glm::mat4& model, const glm::mat4& projectionMatrix, const Texture& texture, const glm::vec3& cameraPosition);
+		void updateUniforms(const glm::mat4& model, const glm::mat4& projectionMatrix, const Texture& texture, const glm::vec3& cameraPosition) const;
 
 		const glm::vec4& getAmbientLight() const { return ambientLight; }
 		void setAmbientLight(const glm::vec4& ambientLight) { this->ambientLight = ambientLight; }

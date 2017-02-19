@@ -5,7 +5,7 @@
 #include <iostream>
 
 namespace ginkgo {
-	Camera::Camera(const Window& win, const glm::vec3& camera_position)
+	Camera::Camera(const Window* win, const glm::vec3& camera_position)
 		: window(win), cameraPosition(camera_position)
 	{
 		yaw = -90.0f;
@@ -14,7 +14,7 @@ namespace ginkgo {
 		cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 		cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
-		projection = glm::perspective(fov, window.getAspectRatio(), 0.1f, 1000.0f);
+		projection = glm::perspective(fov, window->getAspectRatio(), 0.1f, 1000.0f);
 		view = glm::lookAt(
 			cameraPosition,
 			cameraPosition + cameraFront,
@@ -27,22 +27,22 @@ namespace ginkgo {
 	void Camera::input(double dt)
 	{
 		GLfloat cameraSpeed = dt * cameraSpeedSensitivity;
-		if (window.isKeyPressed(GLFW_KEY_W))
+		if (window->isKeyPressed(GLFW_KEY_W))
 			cameraPosition += cameraSpeed * cameraFront;
-		if (window.isKeyPressed(GLFW_KEY_S))
+		if (window->isKeyPressed(GLFW_KEY_S))
 			cameraPosition -= cameraSpeed * cameraFront;
-		if (window.isKeyPressed(GLFW_KEY_A))
+		if (window->isKeyPressed(GLFW_KEY_A))
 			cameraPosition -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-		if (window.isKeyPressed(GLFW_KEY_D))
+		if (window->isKeyPressed(GLFW_KEY_D))
 			cameraPosition += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 
 		static bool first = true;
 		if (first)
 		{
-			static double xSave = window.getWidth() / 2.0f;
-			static double ySave = window.getHeight() / 2.0f;
+			static double xSave = window->getWidth() / 2.0f;
+			static double ySave = window->getHeight() / 2.0f;
 			double x, y;
-			window.getMousePosition(x, y);
+			window->getMousePosition(x, y);
 			double dx = x - xSave;
 			double dy = y - ySave;
 
@@ -76,7 +76,7 @@ namespace ginkgo {
 
 	void Camera::update(double dt)
 	{
-		projection = glm::perspective(fov, window.getAspectRatio(), 0.1f, 1000.0f);
+		projection = glm::perspective(fov, window->getAspectRatio(), 0.1f, 1000.0f);
 		view = glm::lookAt(
 			cameraPosition,
 			cameraPosition + cameraFront,

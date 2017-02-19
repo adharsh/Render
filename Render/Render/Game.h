@@ -24,12 +24,12 @@ namespace ginkgo {
 	class Game
 	{
 	private:
-		Window& window;
+		Window* window;
 		Layer* layer;
 		Camera* camera;
 
 	public:
-		Game(Window& win) : window(win)
+		Game(Window* win) : window(win)
 		{
 			PhongShader* shader = new PhongShader();
 			camera = new Camera(window, glm::vec3(0.0f, 0.01f, 0.0f));
@@ -59,22 +59,24 @@ namespace ginkgo {
 			Texture* t3 = new Texture("Render/res/textures/coord.png", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 			Texture* t4 = new Texture("Render/res/textures/prime.png", glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 					
-			Renderable* r0 = new Renderable(*mesh, *t0);
-			Renderable* r1 = new Renderable(*mesh, *t0);
-			Renderable* r2 = new Renderable(*mesh, *t1);
-			Renderable* r3 = new Renderable(*mesh, *t2);
-			Renderable* r4 = new Renderable(*mesh, *t2);
-			Renderable* r5 = new Renderable(*mesh, *t3);
-			Renderable* r6 = new Renderable(*mesh, *t4);
+			Renderable* r0 = new Renderable(mesh, *t0);
+			Renderable* r1 = new Renderable(mesh, *t0);
+			Renderable* r2 = new Renderable(mesh, *t1);
+			Renderable* r3 = new Renderable(mesh, *t2);
+			Renderable* r4 = new Renderable(mesh, *t2);
+			Renderable* r5 = new Renderable(mesh, *t3);
+			Renderable* r6 = new Renderable(mesh, *t4);
 			
 			std::vector<Renderable*> r = { r0, r1, r2, r3, r4, r5, r6};
 
-			layer = new Layer(r, *shader, *camera);
+			layer = new Layer(r, shader, camera);
 
-			layer->addRenderable(new Renderable(*mesh, *t0));
-			layer->addRenderable(new Renderable(*mesh, *t2));
-			layer->addRenderable(new Renderable(*mesh, *t3));
-			layer->addRenderable(new Renderable(*mesh, *t4));
+			layer->addRenderable(new Renderable(mesh, *t0));
+			layer->addRenderable(new Renderable(mesh, *t2));
+			layer->addRenderable(new Renderable(mesh, *t3));
+			layer->addRenderable(new Renderable(mesh, *t4));
+
+			r0->alterTexture().setColor(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
 
 			float a = 0;
 			for (int i = 0; i < layer->getSize(); i++)

@@ -75,7 +75,7 @@ namespace ginkgo {
 
 	}
 
-	void Mesh::draw()
+	void Mesh::draw() const
 	{
 		glBindVertexArray(VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);

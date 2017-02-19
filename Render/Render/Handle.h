@@ -9,14 +9,14 @@ namespace ginkgo {
 	class Handle 
 	{
 	private:
-		Window& window;
+		Window* window;
 
 	public:
-		Handle(Window& a)
-			: window(a)
+		Handle(Window* window)
+			: window(window)
 		{}
 
-		Window& getWindow() { return window; }
+		Window* getWindow() { return window; }
 
 
 	};

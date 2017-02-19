@@ -24,8 +24,6 @@ namespace ginkgo {
 		Texture(const std::string& path, const glm::vec4& color);
 		Texture(const std::string& path, const glm::vec4& color, float specularIntensity, float specularExponent);
 		~Texture();
-		void bind() const; //probably going to be useless
-		void unbind() const; //probably going to be useless
 		const bool hasImage() const { return fileName.compare(""); }
 		const unsigned int getWidth() const { return width; }
 		const unsigned int getHeight() const { return height; }

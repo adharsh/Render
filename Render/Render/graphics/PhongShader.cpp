@@ -13,13 +13,8 @@ namespace ginkgo {
 	}
 
 
-	void PhongShader::updateUniforms(const glm::mat4& model, const glm::mat4& projectionMatrix, const Texture& texture, const glm::vec3& cameraPosition)
+	void PhongShader::updateUniforms(const glm::mat4& model, const glm::mat4& projectionMatrix, const Texture& texture, const glm::vec3& cameraPosition) const
 	{
-		if (texture.hasImage())
-			texture.bind();
-		//else
-		//	texture.unbind();
-
 		setUniformMat4("model", model);
 		setUniformMat4("transform", projectionMatrix);
 
@@ -34,9 +29,6 @@ namespace ginkgo {
 
 		for (unsigned int i = 0; i < pointLights.size(); i++)
 			setUniform("pointLights[" + std::to_string(i) + "]", pointLights[i]);
-
-		//if (texture.hasImage())
-		//	texture.unbind();
 	}
 
 	void PhongShader::setPointLights(const std::vector<PointLight>& pointLights)

@@ -6,14 +6,15 @@ TODOS:
 
 Bugs:
 *binding textures and unbinding textures, renderable class and stuff	, delete //probably going to be useless stuff, replace code with binary serach algorithm
-*doesn't load all meshes without textures, just a color
 *refactor code to have member variables have pointers instead of references
+*doesn't load all meshes without textures, just a color
 *put classes in different folders to organize code
 *cubemaps
 *light deflection + refraction thing
 
 make load any kind of image format
 hud - text + fonts, other interactable stuff
+transformations with layer
 sounds
 browser
 
@@ -148,6 +149,8 @@ vectors manage all the memory they allocate for you
 -just use normally (like in Java)
 
 allocated memory lasts for liftime of program unless its deleted
+
+renderables can alter its own copy of its texture, can't alter the texture used by all renderables
 
 *******
 What to do when not drawing anything to the screen:

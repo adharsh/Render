@@ -2,7 +2,7 @@
 #include <iostream>
 
 namespace ginkgo {
-		Window::Window(const char *name, int widthW, int heightW, const glm::vec4& clearcolor, bool wantFullScreen)
+		Window::Window(const char* name, int widthW, int heightW, const glm::vec4& clearcolor, bool wantFullScreen)
 			: title(name), width(widthW), height(heightW), clear_color(clearcolor), isFullScreen(wantFullScreen)
 		{
 			if (!init())
@@ -124,7 +124,7 @@ namespace ginkgo {
 			return glfwWindowShouldClose(window) == 1;
 		}
 
-		void window_resize(GLFWwindow *window, int width, int height)
+		void window_resize(GLFWwindow* window, int width, int height)
 		{
 			glViewport(0, 0, width, height);
 			Window* win = (Window *)glfwGetWindowUserPointer(window);

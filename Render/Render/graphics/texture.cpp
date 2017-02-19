@@ -56,15 +56,4 @@ namespace ginkgo {
 		return result;
 	}
 
-	void Texture::bind() const
-	{
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, tid);
-	}
-
-	void Texture::unbind() const
-	{
-		glBindTexture(GL_TEXTURE_2D, 0);
-	}
-
 }
