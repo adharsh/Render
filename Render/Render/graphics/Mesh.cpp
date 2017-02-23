@@ -1,7 +1,7 @@
 #pragma once
 
-#include <gl\glew.h>
 #include <iostream>
+
 #include "Mesh.h"
 
 namespace ginkgo {
@@ -98,8 +98,7 @@ namespace ginkgo {
 			//std::cout << "Incorrect amount of data. Should be the same number of sets of positions, uvs, and normals." << std::endl;
 			//system("pause");
 			//return NULL;
-
-
+			
 			for (GLuint i = 0; i < positions.size(); i++)
 			{
 				data[i * 8 + 0] = positions[i].x;

@@ -1,8 +1,8 @@
 #pragma once
 
 #include <vector>
-#include <gl\glew.h>
-#include <glm\glm.hpp>
+#include <gl/glew.h>
+#include <glm/glm.hpp>
 
 namespace ginkgo {
 

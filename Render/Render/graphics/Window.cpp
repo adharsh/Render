@@ -1,5 +1,6 @@
-#include "Window.h"
 #include <iostream>
+
+#include "Window.h"
 
 namespace ginkgo {
 		Window::Window(const char* name, int width, int height, const glm::vec4& clear_color, bool isFullScreen)

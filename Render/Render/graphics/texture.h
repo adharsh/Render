@@ -1,10 +1,10 @@
 #pragma once
 
 #include <string>
+
+#include <glm/glm.hpp>
 #include <GL/glew.h>
 #include <FreeImage/FreeImage.h>
-
-#include "../utils/FileUtils.h"
 
 namespace ginkgo {
 

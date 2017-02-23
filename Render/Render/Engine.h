@@ -1,9 +1,9 @@
 #pragma once
 
-#include "graphics/Window.h"
-#include "Game.h"
-
 namespace ginkgo{
+	
+	class Window;
+	class Game;
 
 	class Engine
 	{

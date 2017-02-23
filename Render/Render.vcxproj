@@ -125,10 +125,14 @@
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Render\Engine.cpp" />
+    <ClCompile Include="Render\Game.cpp" />
+    <ClCompile Include="Render\graphics\Material.cpp" />
+    <ClCompile Include="Render\graphics\Renderable.cpp" />
     <ClCompile Include="Render\graphics\shaders\BasicShader.cpp" />
     <ClCompile Include="Render\graphics\Camera.cpp" />
     <ClCompile Include="Render\graphics\Layer.cpp" />
     <ClCompile Include="Render\graphics\Mesh.cpp" />
+    <ClCompile Include="Render\graphics\shaders\CubeMapShader.cpp" />
     <ClCompile Include="Render\graphics\shaders\PhongShader.cpp" />
     <ClCompile Include="Render\graphics\shaders\Shader.cpp" />
     <ClCompile Include="Render\graphics\Texture.cpp" />
@@ -140,9 +144,11 @@
   <ItemGroup>
     <ClInclude Include="Render\Engine.h" />
     <ClInclude Include="Render\Game.h" />
+    <ClInclude Include="Render\graphics\Material.h" />
     <ClInclude Include="Render\graphics\shaders\BasicShader.h" />
     <ClInclude Include="Render\graphics\Camera.h" />
     <ClInclude Include="Render\graphics\Layer.h" />
+    <ClInclude Include="Render\graphics\shaders\CubeMapShader.h" />
     <ClInclude Include="Render\graphics\shaders\LightStructs.h" />
     <ClInclude Include="Render\graphics\Mesh.h" />
     <ClInclude Include="Render\graphics\shaders\PhongShader.h" />

@@ -1,7 +1,5 @@
-#define cerr(x) std::cerr << x << std::endl
 #pragma warning(disable:4996) 
 
-#include "ObjLoader.h"
 
 #include <iostream>
 #include <fstream>
@@ -9,6 +7,9 @@
 #include <boost/algorithm/string.hpp>
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/classification.hpp>
+
+#include "ObjLoader.h"
+
 
 namespace ginkgo {
 
@@ -99,7 +100,7 @@ namespace ginkgo {
 
 		if (fileStream.fail())
 		{
-			cerr("Failed to Open File specified.");
+			std::cerr << "Failed to Open File specified." << std::endl;
 			return;
 		}
 		std::vector<std::string> tokens;
@@ -197,7 +198,7 @@ namespace ginkgo {
 			//Vertex, UV, no Normal
 		}
 		else
-			crash = 1;	//Vertex, no UV, no Normal
+			crash = 1;  //Vertex, no UV, no Normal
 
 		if (crash == 1)
 		{
@@ -217,9 +218,9 @@ namespace ginkgo {
 			{
 				std::vector<std::string> tookens;
 				boost::split(tookens, tokens[a], boost::is_any_of("/"));
-				index.emplace_back(std::stoi(tookens[0]));
+				index.emplace_back(stoi(tookens[0]));
 				faceOut.vertices.emplace_back(vertexList[std::stoi(tookens[0]) - 1]);
-				faceOut.UVs.emplace_back(uvList[std::stoi(tookens[2]) - 1]);
+				faceOut.UVs.emplace_back(uvList[std::stoi(tookens[1]) - 1]);
 			}
 		}
 		else if (crash == 3)
@@ -230,9 +231,9 @@ namespace ginkgo {
 			{
 				std::vector<std::string> tookens;
 				boost::split(tookens, tokens[a], boost::is_any_of("//"));
-				index.emplace_back(std::stoi(tookens[0]));
+				index.emplace_back(stoi(tookens[0]));
 				faceOut.vertices.emplace_back(vertexList[std::stoi(tookens[0]) - 1]);
-				faceOut.normals.emplace_back(normalList[std::stoi(tookens[2]) - 1]);
+				faceOut.normals.emplace_back(normalList[std::stoi(tookens[1]) - 1]);
 			}
 		}
 		else if (crash == 4)
@@ -243,15 +244,14 @@ namespace ginkgo {
 			{
 				std::vector<std::string> tookens;
 				boost::split(tookens, tokens[a], boost::is_any_of("/"));
-				index.emplace_back(std::stoi(tookens[0]));
+				index.emplace_back(stoi(tookens[0]));
 				faceOut.vertices.emplace_back(vertexList[std::stoi(tookens[0]) - 1]);
-				faceOut.UVs.emplace_back(uvList[stoi(tookens[2]) - 1]);
-				faceOut.normals.emplace_back(normalList[stoi(tookens[4]) - 1]);
+				faceOut.UVs.emplace_back(uvList[stoi(tookens[1]) - 1]);
+				faceOut.normals.emplace_back(normalList[stoi(tookens[2]) - 1]);
 			}
 		}
 		faceOut.triangulate(index);
 	}
-
 	void ObjIntermediate::parseMaterial(std::string path, MaterialLib& outMaterial)
 	{
 		std::ifstream fileStream;
@@ -262,7 +262,7 @@ namespace ginkgo {
 		int currentMaterialIndex = -1;
 		if (fileStream.fail())
 		{
-			cerr("Failed to open file specified.");
+			std::cerr << "Failed to open file specified." << std::endl;
 			return;
 		}
 		while (fileStream.good())

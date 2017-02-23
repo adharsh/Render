@@ -2,6 +2,9 @@
 #include <Windows.h>
 
 #include "Engine.h"
+
+#include "graphics/Window.h"
+#include "Game.h"
 #include "Time.h"
 
 namespace ginkgo {
@@ -93,7 +96,7 @@ namespace ginkgo {
 		window->clear();
 		
 		game->render(); //3D
-		//game.postProcess(); 2D
+		game->postProcessing();// 2D
 		GLenum error = glGetError();
 
 		if (error != GL_NO_ERROR)
@@ -103,7 +106,7 @@ namespace ginkgo {
 		error = glGetError();
 
 		if (error != GL_NO_ERROR)
-			std::cout << "OpenGL Error: " << error << " in Engine.cpp, most likely window.update()" << std::endl;;
+			std::cout << "OpenGL Error: " << error << " in Engine.cpp, most likely window.update()" << std::endl;
 	}
 
 	void Engine::cleanUp()

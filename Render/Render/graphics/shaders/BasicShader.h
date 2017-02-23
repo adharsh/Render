@@ -1,17 +1,17 @@
 #pragma once
 
-#include <string>
-
+#include <glm/glm.hpp>
 #include "Shader.h"
-#include "../Texture.h"
 
 namespace ginkgo {
+
+	class Texture;
 
 	class BasicShader : public Shader
 	{
 	public:
 		BasicShader();
-		void updateUniforms(const glm::mat4& projectionMatrix, Texture& texture);
+		void updateUniforms(const glm::mat4& projectionMatrix, const Texture& texture);
 	};
 
 

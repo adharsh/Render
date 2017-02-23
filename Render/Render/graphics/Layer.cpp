@@ -1,12 +1,13 @@
-#include <algorithm>
-#include <vector>
-
 #include "Layer.h"
 
+#include "Camera.h"
+#include "shaders/PhongShader.h"
+#include "Renderable.h"
+#include "Texture.h"
 
 namespace ginkgo {
 
-	Layer::Layer(const std::vector<Renderable*> renderablesL, PhongShader* shaderL, Camera* cameraL)
+	Layer::Layer(const std::vector<Renderable*> renderablesL, const PhongShader* shaderL, const Camera* cameraL)
 		: renderables(renderablesL), shader(shaderL), camera(cameraL)
 	{
 		std::sort(renderables.begin(), renderables.end(), compareRenderables);

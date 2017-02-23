@@ -1,10 +1,10 @@
 #pragma once
 
-#include <GL\glew.h>
-
-#include "Window.h"
+#include <GL/glew.h>
 
 namespace ginkgo {
+
+	class Window;
 
 	class Camera
 	{

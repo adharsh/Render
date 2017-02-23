@@ -1,8 +1,6 @@
 #pragma once
 
 #include "graphics/Window.h"
-#include "Game.h"
-#include "Engine.h"
 
 namespace ginkgo {
 
@@ -17,7 +15,6 @@ namespace ginkgo {
 		{}
 
 		Window* getWindow() { return window; }
-
 
 	};
 

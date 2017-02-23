@@ -4,40 +4,31 @@
 ******
 TODOS:
 
-Bugs:
+Priority To Do List:
 *binding textures and unbinding textures, renderable class and stuff	, delete //probably going to be useless stuff, replace code with binary serach algorithm -> yup
 *refactor code to have member variables have pointers instead of references -> yup
 *doesn't load all meshes without textures, just a color -> yup
 *put classes in different folders to organize code -> yup
+*refactor code for forward declarations -> yup
+*Material Class - texture renderable should have its own copy of texture, how to do this with ref&point; Material has color, light stuff and a pointer to a texture, sepaetare changing stuff and nonchanging stuff
+*change use of pointers and references as member stuff
 *cubemaps
 *light deflection + refraction thing
 
-make load any kind of image format
-hud - text + fonts, other interactable stuff
-transformations with layer
+
+-loads obj uvs, but uvs are messed up -> next meeting;
+make load any kind of image format -> kinda, prerequisite of no alpha channel image
+post processing stuff -> hud - text + fonts, other interactable stuff
+transformations with layer -> kinda, don't know what else to do
+msaa in OpenGL etc.
 sounds
+should game and window in Engine.h be const, should Game methods be const too, effects throughout code okay?
 browser
 
 fix change fov scroll in
-const texture color parameter thing
-camera->getTransform()
 change scrolling so it stays the same even when cursor is out of focus
 
-undestand directions of placement of putting stuff in space...you get what I mean
-
-input stuff
-function callback setups
-Camera class
--input all convenient
--has projection, view, and model
--input method shoudl just have camera.input(), and update method should just have camera.update, proejection and view and model if possible
--getters for each
--mouse input fov
--fov 45 or 90?
-
 passing Tim::getDelta() as a double vs a float vs something even more accurate
-
-doesn't load all meshes without textures, just a color
 
 Not necessary to do pointlights/spot lights, just as final touches
 -way to organize point lights in vector -> 
@@ -54,10 +45,7 @@ Fixes:
 change up all the paramters and make them const stuff
 getters return const stuff
 
-
 indices Mesh addData
-
-binding and unbinding textures
 
 references by Texture Class
 
@@ -72,10 +60,6 @@ Watch Companion Video on Lighting
 Make-> float diffuseFactor = dot(direction, normal); //to see what happens, opposite shading?
 
 Control k+d for all files
-
-Optimize calculations for Mesh.cpp, instead of copying and pasting, do it all at once
-
-draw() method for Mesh excluding use of normals too
 
 change location of uniform variables in phongFragment.fs
 
@@ -94,11 +78,7 @@ Take out code in TODO in PhongShader.cpp
 
 substitute code from generateDataMatrix() directly into addData() method in Mesh.cpp
 
-replace data_size with positions.size() in Mesh.cpp
-
 no uvs generated from cube.obj, why?
-
-error generated from creating a plane
 
 make it so that if there is not texture, set it to a single color
 
@@ -109,8 +89,6 @@ Delegating constructors in Texture.cpp
 change base to baselight
 
 make specularExponent and specularPower consistent
-
-can't make color parameter in Texture class constant, why
 
 const method is just changing that object right, can still be changing parameter values
 
@@ -154,6 +132,27 @@ renderables can alter its own copy of its texture, can't alter the texture used 
 
 header files can have includes of other header files so even though you may not include one, it may still be covered
 
+always use forward delcares, declare class in header, and include includes in .cpp
+
+
+wait is it bad to use new like this all the time though
+why would it be? you'll be deleting them in the destructor i assume okay
+and also why do forward declarations have to use pointers (it can also be references)
+the compiler has no type information about the thing you're forward declaring in the header, so when it tries to create the
+structure of the class in memory, it doesnt know the contents, since 
+by forward declaring, you're only stating that a class/struct with that name exist
+you can make a pointer because that doesn't require type information, it only states that there is a pointer to some class with this name
+make sense? yeah lemme copy this down
+
+-use arrows underneath file top left corner of Visual Studio
+-1. use Visual Studio Filters as make-beieve folderss
+-2. manualy replace filters with folders
+-class redefinnition include error
+-forward declare a class and extended that error -> uses self include and remove forward declaration
+-trying to template undefined types
+-why const int& i = int& but not const int* i = int*, references are const naturally, can't "point" to something else
+
+
 *******
 Coding Guidelines:
 better to use pointers instead of references as member variables
@@ -179,12 +178,25 @@ empty methods in a .cpp file, do this:
 { }			 { }
 empty methods in header file, do this: someMethod(){} 
 
-when including files:
+when including files in .h:
 #pragma once
 enter for line of space
 first standard c++ library includes
 then imported library includes
 enter for line of space
+//use forward declares
+
+when including files in .cpp:
+first standard c++ library includes
+enter for line of space
+imported library includes (if necessary)
+enter for line of space
+include header of this file
+enter for line of space
+use header for files you made
+enter for line of space
+//use forward declares
+
 then self made header file includes
 
 don't put all includes in the header file, only put ones that are necessary in header file, and put others required by .cpp file in the .cpp file
@@ -196,10 +208,26 @@ you can be a little more free in the .cpp files
 use folders to organize code
 if there are at least 5 classes (~10 files including header and .cpp files), then categorize and make a folder for each
 
+pointers as member pointer variables using forward declaration
+pointers in paramterers only if class has that as its member pointer
+references in parameters only if class does not use that as its member pointer
+returns const references as usual -> dont have to allocate memory all the time, too much work
+vectors of pointers
 
+-includes for class's members -> more the better in forward declarations in header file, .cpp should have a lot of includes too
+-convention for code in header file, have only function prototypes, getters and setters for one to two lines, doesn't have to include self made headers
+-renderables const constructor, const getter but nonconst member
+
+namspaces should be used like this:
+namespace ginkgo {
+}
+instead of 
+namespace ginkgo
+{
+}
 *******
 Some preconditions that must be satisifed before using this engine:
-Images should have the alpha channel removed
+Images should have the alpha channel removed -> Gimp remove alpha channel
 
 *******
 What to do when not drawing anything to the screen:

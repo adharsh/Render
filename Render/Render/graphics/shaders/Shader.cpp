@@ -1,4 +1,7 @@
+#include <iostream>
+
 #include "Shader.h"
+
 #include "../../utils/FileUtils.h"
 
 
@@ -54,7 +57,7 @@ namespace ginkgo {
 			glGetShaderiv(shaderID, GL_INFO_LOG_LENGTH, &length);
 			std::vector<char> error(length);
 			glGetShaderInfoLog(shaderID, length, &length, &error[0]);
-			std::cout << "Failed to compile shader!\tType of Shader: " << type << std::endl << &error[0] << std::endl;
+			std::cout << "Failed to compile shader!/tType of Shader: " << type << std::endl << &error[0] << std::endl;
 			glDeleteShader(shaderID);
 			system("pause");
 			return;
@@ -73,7 +76,7 @@ namespace ginkgo {
 		if (!success)
 		{
 			glGetProgramInfoLog(program, 512, NULL, infoLog);
-			std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
+			std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED/n" << infoLog << std::endl;
 			system("PAUSE");
 		}
 

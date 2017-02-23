@@ -1,6 +1,9 @@
 #include <iostream>
+
 #include <glm/gtc/matrix_transform.hpp>
-#include <glm\gtx\rotate_vector.hpp>
+#include <glm/gtx/rotate_vector.hpp>
+
+#include "Window.h"
 
 #include "Camera.h"
 

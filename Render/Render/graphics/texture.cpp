@@ -1,5 +1,8 @@
 #include <iostream>
+
 #include "Texture.h"
+
+#include "../utils/FileUtils.h"
 
 namespace ginkgo {
 
