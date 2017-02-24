@@ -13,7 +13,7 @@ namespace ginkgo {
 		Window* window;
 		Layer* layer;
 		Camera* camera;
-		CubeMapShader* shader;
+		CubeMapShader* shaderCM;
 	public:
 		Game(Window* window);
 

@@ -22,7 +22,6 @@ namespace ginkgo {
 		void addProgram(const char* s, GLenum type);
 		void compileShader() const;
 
-		GLuint load(const char* vertexShader, const char* fragShader) const;
 
 		void setUniform1f(const GLchar* name, float value) const;
 		void setUniform1fv(const GLchar* name, float* value, int count) const;

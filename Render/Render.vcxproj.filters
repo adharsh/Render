@@ -130,5 +130,7 @@
     <None Include="Render\res\shaders\vertexshader.vs" />
     <None Include="Render\res\shaders\phongFragment.fs" />
     <None Include="Render\res\shaders\phongVertex.vs" />
+    <None Include="Render\res\shaders\cubemapFragment.fs" />
+    <None Include="Render\res\shaders\cubemapVertex.vs" />
   </ItemGroup>
 </Project>

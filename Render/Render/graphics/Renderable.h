@@ -21,7 +21,7 @@ namespace ginkgo {
 		Renderable(const Mesh* mesh, Material& material);
 
 		void setMesh(const Mesh* mesh) { this->mesh = mesh; }
-		void setMaterial(const Material material) { this->material = material; }
+		void setMaterial(const Material& material) { this->material = material; }
 		void setModel(const glm::mat4& model) { this->model = model; }
 		Material& alterMaterial() { return material; }
 		

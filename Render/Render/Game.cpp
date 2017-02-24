@@ -50,29 +50,26 @@ namespace ginkgo {
 		mesh->addData(positions, indices, uvs, true);
 
 		Material* t0 = new Material(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), new Texture("Render/res/textures/Hi.png"));
-		Material* t1 = new Material(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), new Texture("Render/res/textures/Hi.png"));
-		Material* t2 = new Material(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f), new Texture("Render/res/textures/Hi.png"));
-		Material* t3 = new Material(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), new Texture("Render/res/textures/Hi.png"));
 
-		std::vector<Renderable*> r;
-		r.push_back(new Renderable(mesh, *t0));
-		r.push_back(new Renderable(mesh, *t1));
-		r.push_back(new Renderable(mesh, *t2));
-		r.push_back(new Renderable(mesh, *t3));
-		layer = new Layer(r, shader, camera);
-
-		for (int i = 0; i < layer->getSize(); i++)
-			layer->alterRenderable(i)->translateModel(glm::vec3(0, (float)(i) / 2.0f, 0));
-
-		layer->alterRenderable(2)->alterMaterial().setColor(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+		Renderable* r0 = new Renderable(mesh, *t0);
+		layer = new Layer({ r0 }, shader, camera);
 
 		shader->setAmbientLight(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+
+		std::vector<const char*> skyboxImages;
+		skyboxImages.push_back("Render/res/textures/skybox/right.jpg");
+		skyboxImages.push_back("Render/res/textures/skybox/left.jpg");
+		skyboxImages.push_back("Render/res/textures/skybox/top.jpg");
+		skyboxImages.push_back("Render/res/textures/skybox/bottom.jpg");
+		skyboxImages.push_back("Render/res/textures/skybox/front.jpg");
+		skyboxImages.push_back("Render/res/textures/skybox/back.jpg");
+
+		shaderCM = new CubeMapShader(skyboxImages, 500.0f);
 	}
 
 	void Game::input(double dt)
 	{
 		camera->input(dt);
-//		shader = new CubeMapShader();
 	}
 
 	void Game::update(double dt)
@@ -93,7 +90,9 @@ namespace ginkgo {
 
 	void Game::render()
 	{
-		layer->draw();
+		glm::mat4 transformProjectionView = camera->getProjection() * camera->getView();
+		layer->draw(transformProjectionView, camera->getCameraPosition());
+		shaderCM->draw(transformProjectionView);
 	}
 
 	void Game::postProcessing()

@@ -9,7 +9,7 @@
 namespace ginkgo {
 
 	Layer::Layer(const std::vector<Renderable*> renderablesL, const PhongShader* shaderL, const Camera* cameraL)
-		: renderables(renderablesL), shader(shaderL), camera(cameraL)
+		: renderables(renderablesL), shader(shaderL)
 	{
 		std::sort(renderables.begin(), renderables.end(), compareRenderables);
 
@@ -77,7 +77,7 @@ namespace ginkgo {
 		}
 	}
 
-	void Layer::draw() const
+	void Layer::draw(const glm::mat4& transformProjectionView, const glm::vec3& cameraPosition) const
 	{
 		shader->bind();
 
@@ -90,9 +90,9 @@ namespace ginkgo {
 			{
 				shader->updateUniforms(
 					renderables[b]->getModel(), 
-					camera->getProjection() * camera->getView() * model * renderables[b]->getModel(),
+					transformProjectionView * model * renderables[b]->getModel(),
 					renderables[b]->getMaterial(), 
-					camera->getCameraPosition());
+					cameraPosition);
 				renderables[b]->draw();
 				b++;
 			}

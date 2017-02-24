@@ -18,7 +18,6 @@ namespace ginkgo {
 		std::vector<Renderable*> renderables;
 		std::vector<unsigned int> sizeTextureIDs;
 		const PhongShader* shader;
-		const Camera* camera;
 		glm::mat4 model;
 	
 		static bool compareRenderables(Renderable* r1, Renderable* r2);
@@ -26,7 +25,7 @@ namespace ginkgo {
 		Layer(std::vector<Renderable*> renderables, const PhongShader* shader, const Camera* camera);
 
 		void addRenderable(Renderable* renderable);
-		void draw() const;
+		void draw(const glm::mat4& transformProjectionView, const glm::vec3& cameraPosition) const;
 
 		Renderable* alterRenderable(unsigned int index) { if (index < 0 || index >= renderables.size()) return nullptr; return renderables[index]; }
 

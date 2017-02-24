@@ -87,69 +87,6 @@ namespace ginkgo {
 	}
 
 
-	GLuint Shader::load(const char* vertexShader, const char* fragShader) const
-	{
-		GLuint program = glCreateProgram();
-		GLuint vertex = glCreateShader(GL_VERTEX_SHADER);
-		GLuint fragment = glCreateShader(GL_FRAGMENT_SHADER);
-
-		//use c_str() like this so string is not immediately destroyed and pointer is not able to be found
-		std::string vertSourceString = FileUtils::read_file(vertexShader);
-		std::string fragSourceString = FileUtils::read_file(fragShader);
-
-		const char* vertSource = vertSourceString.c_str();
-		const char* fragSource = fragSourceString.c_str();
-
-		//*********Vertex Shader
-		glShaderSource(vertex, 1, &vertSource, NULL);
-		glCompileShader(vertex);
-
-		GLint result;
-		glGetShaderiv(vertex, GL_COMPILE_STATUS, &result);
-		if (result == GL_FALSE)
-		{
-			GLint length;
-			glGetShaderiv(vertex, GL_INFO_LOG_LENGTH, &length);
-			std::vector<char> error(length);
-			glGetShaderInfoLog(vertex, length, &length, &error[0]);
-			std::cout << "Failed to compile vertex shader!" << std::endl << &error[0] << std::endl;
-			glDeleteShader(vertex);
-			system("pause");
-			return EXIT_FAILURE;
-		}
-
-		//*********Fragment Shader
-		glShaderSource(fragment, 1, &fragSource, NULL);
-		glCompileShader(fragment);
-
-		glGetShaderiv(fragment, GL_COMPILE_STATUS, &result);
-		if (result == GL_FALSE)
-		{
-			GLint length;
-			glGetShaderiv(fragment, GL_INFO_LOG_LENGTH, &length);
-			std::vector<char> error(length);
-			glGetShaderInfoLog(fragment, length, &length, &error[0]);
-			std::cout << "Failed to compile fragment shader!" << std::endl << &error[0] << std::endl;
-			glDeleteShader(fragment);
-			system("pause");
-			return EXIT_FAILURE;
-		}
-		std::cout << "Program: " << program << std::endl;
-		std::cout << "Vertex Shader: " << vertex << std::endl;
-		std::cout << "Fragment Shader: " << fragment << std::endl;
-
-		glAttachShader(program, vertex);
-		glAttachShader(program, fragment);
-
-		glLinkProgram(program);
-		glValidateProgram(program);
-
-		glDeleteShader(vertex);
-		glDeleteShader(fragment);
-
-		return program;
-	}
-
 	void Shader::bind() const
 	{
 		glUseProgram(program);

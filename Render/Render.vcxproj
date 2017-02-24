@@ -164,6 +164,8 @@
   <ItemGroup>
     <None Include="Render\res\shaders\basicFragment.fs" />
     <None Include="Render\res\shaders\basicVertex.vs" />
+    <None Include="Render\res\shaders\cubemapFragment.fs" />
+    <None Include="Render\res\shaders\cubemapVertex.vs" />
     <None Include="Render\res\shaders\fragmentshader.fs" />
     <None Include="Render\res\shaders\phongFragment.fs" />
     <None Include="Render\res\shaders\phongVertex.vs" />
