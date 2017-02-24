@@ -1,39 +1,36 @@
 #pragma once
 
 #include <gl/glew.h>
-#include <glm/gtc/matrix_transform.hpp>
-
-#include "Material.h"
+#include <glm\glm.hpp>
 
 namespace ginkgo {
 
 	class Mesh;
 	class Material;
+	class Transform;
 
 	class Renderable
 	{
 	private:
 		const Mesh* mesh;
-		Material& material;
-		glm::mat4 model;
+		Material* material;
+		Transform* model;
 	public:
-		Renderable(const Mesh* mesh, Material& material, const glm::mat4& model);
-		Renderable(const Mesh* mesh, Material& material);
+		Renderable(const Mesh* mesh, Material* material, const glm::mat4& model = glm::mat4());
+		~Renderable();
 
 		void setMesh(const Mesh* mesh) { this->mesh = mesh; }
-		void setMaterial(const Material& material) { this->material = material; }
-		void setModel(const glm::mat4& model) { this->model = model; }
-		Material& alterMaterial() { return material; }
+		void setMaterial(Material* material) { this->material = material; }
+		Material* alterMaterial() const { return material; }
 		
+		const glm::mat4& getModel() const;
+		Transform* alterModel() const { return model; }
+
 		const Mesh& getMesh() const { return *mesh; }
-		const Material& getMaterial() const { return material; }
-		const glm::mat4& getModel() const { return model; }
+		const Material& getMaterial() const { return *material; }
 
 		void draw() const;
 
-		void scaleModel(const glm::vec3& scale) { model = glm::scale(model, scale); }
-		void translateModel(const glm::vec3& translation) { model = glm::translate(model, translation); }
-		void rotateModel(float angleInRadians, const glm::vec3& rotation) { model = glm::rotate(model, angleInRadians, rotation); }
 	};
 
 }

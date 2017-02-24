@@ -5,7 +5,6 @@
 #include "graphics/Window.h" //window include must be before glfw include to prevent #error: gl.h included before glew.h
 #include <GLFW/glfw3.h>
 
-#include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/transform.hpp>
 
@@ -20,7 +19,7 @@
 #include "graphics/Renderable.h"
 #include "graphics/Layer.h"
 #include "utils/ObjLoader.h"
-
+#include "graphics/Transform.h"
 
 namespace ginkgo {
 
@@ -51,8 +50,8 @@ namespace ginkgo {
 
 		Material* t0 = new Material(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), new Texture("Render/res/textures/Hi.png"));
 
-		Renderable* r0 = new Renderable(mesh, *t0);
-		layer = new Layer({ r0 }, shader, camera);
+		Renderable* r0 = new Renderable(mesh, t0);
+		layer = new Layer({ r0 }, shader);
 
 		shader->setAmbientLight(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
@@ -65,6 +64,11 @@ namespace ginkgo {
 		skyboxImages.push_back("Render/res/textures/skybox/back.jpg");
 
 		shaderCM = new CubeMapShader(skyboxImages, 500.0f);
+
+		shaderCM->alterModel()->rotateMatrix(glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		layer->alterRenderable(0)->alterModel()->translateMatrix(glm::vec3(0.0f, 1.0f, 0.0f));
+		layer->alterRenderable(0)->alterModel()->scaleMatrix(glm::vec3((20, 20, 20)));
+		layer->alterModel()->translateMatrix(glm::vec3(0.0f, 0.2f, 0.0f));
 	}
 
 	void Game::input(double dt)
@@ -77,11 +81,13 @@ namespace ginkgo {
 		//texture->setColor(glm::vec4(sin(temp), -sin(temp), sin(temp), 1.0f));
 		//window->setClearColor(glm::vec4(1, 1, 1, 1));
 		static float t = 0;
-		t += dt * 0.01f;
-//		layer->alterRenderable(0)->rotateModel(glm::radians(t), glm::vec3(1.0f, 0.0f, 0.0f));
+		t += dt * 0.001f;
+
+		//layer->alterRenderable(0)->alterModel()->scaleMatrix(glm::vec3((t, t, t)));
+		//layer->alterRenderable(0)->alterModel()->rotateMatrix(glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
 		//layer->scaleModel(glm::vec3(1.0f + t, 1.0f + t, 1.0f + t));
-		//layer->rotateModel(glm::radians(t), glm::vec3(1.0f, 0.0f, 0.0f));
+		layer->alterModel()->rotateMatrix(glm::radians(t), glm::vec3(1.0f, 0.0f, 0.0f));
 		//layer->alterRenderable(3)->rotateModel(glm::radians(t), glm::vec3(1.0f, 0.0f, 0.0f));
 		//layer->translateModel(glm::vec3(t, 0, 0));
 

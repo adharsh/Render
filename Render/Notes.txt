@@ -14,11 +14,12 @@ Priority To Do List:
 *light deflection + refraction thing
 
 -Material reference in Renderable.h - Material Class - texture renderable should have its own copy of texture, how to do this with ref&point; Material has color, light stuff and a pointer to a texture, sepaetare changing stuff and nonchanging stuff
--find where I use new and make sure I properly deallocate memory
+-find where I use new and make sure I properly deallocate memory -> okay to do so?
 -loads obj uvs, but uvs are messed up -> next meeting;
 make load any kind of image format -> kinda, prerequisite of no alpha channel image
 post processing stuff -> hud - text + fonts, other interactable stuff
-transformations with layer -> kinda, don't know what else to do
+transformations with layer -> kinda, don't know what else to do -> yup
+Transform class templated in the future for any kind of glm data type
 msaa in OpenGL etc.
 sounds
 should game and window in Engine.h be const, should Game methods be const too, effects throughout code okay?

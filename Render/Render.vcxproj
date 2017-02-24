@@ -154,6 +154,7 @@
     <ClInclude Include="Render\graphics\shaders\PhongShader.h" />
     <ClInclude Include="Render\graphics\Renderable.h" />
     <ClInclude Include="Render\graphics\Texture.h" />
+    <ClInclude Include="Render\graphics\Transform.h" />
     <ClInclude Include="Render\Handle.h" />
     <ClInclude Include="Render\graphics\shaders\Shader.h" />
     <ClInclude Include="Render\Time.h" />

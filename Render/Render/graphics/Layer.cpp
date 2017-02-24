@@ -5,12 +5,15 @@
 #include "Renderable.h"
 #include "Material.h"
 #include "Texture.h"
+#include "Transform.h"
 
 namespace ginkgo {
 
-	Layer::Layer(const std::vector<Renderable*> renderablesL, const PhongShader* shaderL, const Camera* cameraL)
+	Layer::Layer(const std::vector<Renderable*> renderablesL, const PhongShader* shaderL, const glm::mat4& model)
 		: renderables(renderablesL), shader(shaderL)
 	{
+		this->model = new Transform(model);
+
 		std::sort(renderables.begin(), renderables.end(), compareRenderables);
 
 		GLuint tid = 0;
@@ -28,9 +31,19 @@ namespace ginkgo {
 
 	}
 
+	Layer::~Layer()
+	{
+		delete model;
+	}
+
 	bool Layer::compareRenderables(Renderable* r1, Renderable* r2)
 	{
 		return r1->getMaterial().getTexture().getID() < r2->getMaterial().getTexture().getID();
+	}
+
+	const glm::mat4& Layer::getModel() const 
+	{
+		return model->getMatrix(); 
 	}
 
 	void Layer::addRenderable(Renderable* renderable)
@@ -90,7 +103,7 @@ namespace ginkgo {
 			{
 				shader->updateUniforms(
 					renderables[b]->getModel(), 
-					transformProjectionView * model * renderables[b]->getModel(),
+					transformProjectionView * model->getMatrix() * renderables[b]->getModel(),
 					renderables[b]->getMaterial(), 
 					cameraPosition);
 				renderables[b]->draw();

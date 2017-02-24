@@ -122,6 +122,9 @@
     <ClInclude Include="Render\graphics\Material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Render\graphics\Transform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Render\res\shaders\basicVertex.vs" />

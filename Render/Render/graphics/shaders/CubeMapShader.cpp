@@ -1,12 +1,15 @@
 #include <GL/glew.h>
 
-#include "../../utils/FileUtils.h"
 #include "CubeMapShader.h"
+
+#include "../../utils/FileUtils.h"
+#include "../Transform.h"
 
 namespace ginkgo {
 
-	CubeMapShader::CubeMapShader(std::vector<const char*> faces, float scale)
+	CubeMapShader::CubeMapShader(std::vector<const char*> faces, float scale, const glm::mat4& model)
 	{
+		this->model = new Transform(model);
 		addVertexShader("Render/res/shaders/cubemapVertex.vs");
 		addFragmentShader("Render/res/shaders/cubemapFragment.fs");
 		compileShader();
@@ -54,14 +57,20 @@ namespace ginkgo {
 	CubeMapShader::~CubeMapShader() {
 		glDeleteVertexArrays(1, &VAO);
 		glDeleteBuffers(1, &VBO);
+
+		delete model;
+	}
+
+	const glm::mat4& CubeMapShader::getModel() const
+	{
+		return model->getMatrix();
 	}
 
 	void CubeMapShader::draw(const glm::mat4& transformProjectionView) const
 	{
 		bind();
 
-		setUniformMat4("transform", transformProjectionView);
-
+		setUniformMat4("transform", transformProjectionView * model->getMatrix());
 		glBindVertexArray(VAO);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
