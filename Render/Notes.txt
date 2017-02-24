@@ -10,12 +10,11 @@ Priority To Do List:
 *doesn't load all meshes without textures, just a color -> yup
 *put classes in different folders to organize code -> yup
 *refactor code for forward declarations -> yup
-*Material Class - texture renderable should have its own copy of texture, how to do this with ref&point; Material has color, light stuff and a pointer to a texture, sepaetare changing stuff and nonchanging stuff
-*change use of pointers and references as member stuff
 *cubemaps
 *light deflection + refraction thing
 
-
+-Material reference in Renderable.h - Material Class - texture renderable should have its own copy of texture, how to do this with ref&point; Material has color, light stuff and a pointer to a texture, sepaetare changing stuff and nonchanging stuff
+-find where I use new and make sure I properly deallocate memory
 -loads obj uvs, but uvs are messed up -> next meeting;
 make load any kind of image format -> kinda, prerequisite of no alpha channel image
 post processing stuff -> hud - text + fonts, other interactable stuff
@@ -166,6 +165,7 @@ use member initalizer lists, parameter names can be same as member variable name
 also delegated constructor "initalizers"
 
 if code for a method is not long (~1or2 lines), then just put code in header file
+except if code is a constructor, must be defined seperately in .cpp file
 
 always pass in const references instead of by value
 
@@ -205,8 +205,9 @@ makes it more efficient when compiling, takes less time to look at all those inc
 make header files have paramter names that are meaninful since those are the ones that are ultimately going to be looked at
 you can be a little more free in the .cpp files
 
-use folders to organize code
+use folders to organize code -> Ultimately if making opensource
 if there are at least 5 classes (~10 files including header and .cpp files), then categorize and make a folder for each
+or use Visual Studio filters
 
 pointers as member pointer variables using forward declaration
 pointers in paramterers only if class has that as its member pointer
@@ -215,7 +216,7 @@ returns const references as usual -> dont have to allocate memory all the time, 
 vectors of pointers
 
 -includes for class's members -> more the better in forward declarations in header file, .cpp should have a lot of includes too
--convention for code in header file, have only function prototypes, getters and setters for one to two lines, doesn't have to include self made headers
+-convention for code in header file, have only function prototypes, getters and setters for one to two lines except if its constructors must be defined seperately in .cpp file, doesn't have to include self made headers
 -renderables const constructor, const getter but nonconst member
 
 namspaces should be used like this:
@@ -230,9 +231,14 @@ Some preconditions that must be satisifed before using this engine:
 Images should have the alpha channel removed -> Gimp remove alpha channel
 
 *******
+Bugs:
+READ ALL ERRORS
+Consider possiblities of waterfall error
+
 What to do when not drawing anything to the screen:
 check uniforms
 check size of each collection of data when allocating
 generateDataMatrix is wrong
 check if its just drawing it not on screen
 check normals and vertices size 
+

@@ -13,6 +13,7 @@
 
 #include "graphics/Mesh.h"
 #include "graphics/Texture.h"
+#include "graphics/Material.h"
 #include "graphics/shaders/PhongShader.h"
 #include "graphics/shaders/CubeMapShader.h"
 #include "graphics/Camera.h"
@@ -32,6 +33,7 @@ namespace ginkgo {
 
 		float side = 1.0f;
 
+		Mesh* mesh = new Mesh();
 		std::vector<glm::vec3> positions;
 		positions.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
 		positions.push_back(glm::vec3(0.0f, 0.0f, -side));
@@ -45,17 +47,24 @@ namespace ginkgo {
 		std::vector<GLuint> indices;
 		indices.push_back(0); indices.push_back(1); indices.push_back(2);
 		indices.push_back(2); indices.push_back(3); indices.push_back(0);
-		Mesh* mesh = new Mesh();
 		mesh->addData(positions, indices, uvs, true);
 
-		Texture* t0 = new Texture(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), "Render/res/textures/Hi.png");
+		Material* t0 = new Material(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), new Texture("Render/res/textures/Hi.png"));
+		Material* t1 = new Material(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), new Texture("Render/res/textures/Hi.png"));
+		Material* t2 = new Material(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f), new Texture("Render/res/textures/Hi.png"));
+		Material* t3 = new Material(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), new Texture("Render/res/textures/Hi.png"));
 
 		std::vector<Renderable*> r;
-		Renderable* r0 = new Renderable(mesh, t0);
-		for (int i = 0; i < 1; i++)
-			r.push_back(new Renderable(mesh, t0));
+		r.push_back(new Renderable(mesh, *t0));
+		r.push_back(new Renderable(mesh, *t1));
+		r.push_back(new Renderable(mesh, *t2));
+		r.push_back(new Renderable(mesh, *t3));
+		layer = new Layer(r, shader, camera);
 
-		layer = new Layer({ r0 }, shader, camera);
+		for (int i = 0; i < layer->getSize(); i++)
+			layer->alterRenderable(i)->translateModel(glm::vec3(0, (float)(i) / 2.0f, 0));
+
+		layer->alterRenderable(2)->alterMaterial().setColor(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
 
 		shader->setAmbientLight(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 	}
@@ -72,7 +81,7 @@ namespace ginkgo {
 		//window->setClearColor(glm::vec4(1, 1, 1, 1));
 		static float t = 0;
 		t += dt * 0.01f;
-		//layer->alterRenderable(0)->rotateModel(glm::radians(t), glm::vec3(1.0f, 0.0f, 0.0f));
+//		layer->alterRenderable(0)->rotateModel(glm::radians(t), glm::vec3(1.0f, 0.0f, 0.0f));
 
 		//layer->scaleModel(glm::vec3(1.0f + t, 1.0f + t, 1.0f + t));
 		//layer->rotateModel(glm::radians(t), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -93,3 +102,13 @@ namespace ginkgo {
 	}
 
 }
+
+/*
+Allocate memory for things that last lifetime of program "beyond/outside brackets" of that method
+
+game and window don't have to be allocated since its not used "beyond/outside brackets" of main
+materials, meshes, textures, and renderables have to be allocated
+
+
+
+*/

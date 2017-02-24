@@ -15,10 +15,10 @@ int main()
 {
 
 	//Window window = Window("Render", 800, 600, glm::vec4(0.4f, 0.5f, 0.5f, 1.0f));
-	Window* window = new Window("Render", 800, 600, glm::vec4(0.0f, 0.0f, 0.0f, 0.0f));
-	Game* game = new Game(window);
+	Window window = Window("Render", 800, 600, glm::vec4(0.0f, 0.0f, 0.0f, 0.0f));
+	Game game = Game(&window);
 
-	Engine engine = Engine(game, window);
+	Engine engine = Engine(&game, &window);
 	engine.start();
 
 	return 0;

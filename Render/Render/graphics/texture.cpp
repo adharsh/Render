@@ -8,28 +8,18 @@ namespace ginkgo {
 
 	std::string Texture::whitepixelfilepath = "Render/res/textures/white.png";
 
-	Texture::Texture(const glm::vec4& color, const std::string& path)
-		: fileName(path), color(color)
+	Texture::Texture(const std::string& path)
+		: filepath(path)
 	{
 		tid = load();
-
-		this->specularIntensity = 2;
-		this->specularPower = 32;
 	}
 
-	Texture::Texture(const glm::vec4& color, float specularIntensity, float specularPower, const std::string& path)
-		: Texture(color, path)
-	{
-		this->specularIntensity = specularIntensity;
-		this->specularPower = specularPower;
-	}
-	
 	Texture::~Texture()
 	{ }
 
 	GLuint Texture::load()
 	{
-		BYTE* pixels = FileUtils::loadImage(fileName.c_str(), &width, &height);
+		BYTE* pixels = FileUtils::loadImage(filepath.c_str(), &width, &height);
 		GLenum err;
 		err = glGetError();
 		if (err != GL_NO_ERROR)

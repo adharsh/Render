@@ -3,7 +3,7 @@
 
 #include "PhongShader.h"
 
-#include "../Texture.h"
+#include "../Material.h"
 #include "LightStructs.h"
 
 
@@ -20,17 +20,17 @@ namespace ginkgo {
 	}
 
 
-	void PhongShader::updateUniforms(const glm::mat4& model, const glm::mat4& projectionMatrix, const Texture& texture, const glm::vec3& cameraPosition) const
+	void PhongShader::updateUniforms(const glm::mat4& model, const glm::mat4& projectionMatrix, const Material& material, const glm::vec3& cameraPosition) const
 	{
 		setUniformMat4("model", model);
 		setUniformMat4("transform", projectionMatrix);
 
-		setUniform4f("baseColor", texture.getColor());
+		setUniform4f("baseColor", material.getColor());
 		setUniform4f("ambientLight", ambientLight); 
 		setUniform("directionalLight", *directionalLight);
 
-		setUniform1f("specularIntensity", texture.getSpecularIntensity());
-		setUniform1f("specularPower", texture.getSpecularPower());
+		setUniform1f("specularIntensity", material.getSpecularIntensity());
+		setUniform1f("specularPower", material.getSpecularPower());
 
 		setUniform3f("eyePos", cameraPosition);
 

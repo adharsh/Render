@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "shaders/PhongShader.h"
 #include "Renderable.h"
+#include "Material.h"
 #include "Texture.h"
 
 namespace ginkgo {
@@ -16,9 +17,9 @@ namespace ginkgo {
 		unsigned int size = 0;
 		for (unsigned int c = 0; c < renderables.size(); c++)
 		{
-			tid = renderables[c]->alterTexture().getID();
+			tid = renderables[c]->getMaterial().getTexture().getID();
 			size++;
-			if ((c == renderables.size() - 1) || (renderables[c + 1]->alterTexture().getID() != tid))
+			if ((c == renderables.size() - 1) || (renderables[c + 1]->getMaterial().getTexture().getID() != tid))
 			{
 				sizeTextureIDs.push_back(size);
 				size = 0;
@@ -29,7 +30,7 @@ namespace ginkgo {
 
 	bool Layer::compareRenderables(Renderable* r1, Renderable* r2)
 	{
-		return r1->alterTexture().getID() < r2->alterTexture().getID();
+		return r1->getMaterial().getTexture().getID() < r2->getMaterial().getTexture().getID();
 	}
 
 	void Layer::addRenderable(Renderable* renderable)
@@ -39,12 +40,12 @@ namespace ginkgo {
 
 		int middle = 0;
 		bool found = false;
-		unsigned int value = renderable->alterTexture().getID();
+		unsigned int value = renderable->getMaterial().getTexture().getID();
 
 		while (left <= right)
 		{
 			middle = (left + right) / 2;
-			unsigned int find = renderables[middle]->alterTexture().getID();
+			unsigned int find = renderables[middle]->getMaterial().getTexture().getID();
 			if (find == value)
 			{
 				found = true;
@@ -84,10 +85,14 @@ namespace ginkgo {
 		for (unsigned int i = 0; i < sizeTextureIDs.size(); i++)
 		{
 			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, renderables[b]->alterTexture().getID());
+			glBindTexture(GL_TEXTURE_2D, renderables[b]->getMaterial().getTexture().getID());
 			for (int a = 0; a < sizeTextureIDs[i]; a++)
 			{
-				shader->updateUniforms(renderables[b]->getModel(), camera->getProjection() * camera->getView() * model * renderables[b]->getModel(), renderables[b]->alterTexture(), camera->getCameraPosition());
+				shader->updateUniforms(
+					renderables[b]->getModel(), 
+					camera->getProjection() * camera->getView() * model * renderables[b]->getModel(),
+					renderables[b]->getMaterial(), 
+					camera->getCameraPosition());
 				renderables[b]->draw();
 				b++;
 			}

@@ -1,6 +1,6 @@
 #include "BasicShader.h"
 
-#include "../Texture.h"
+#include "../Material.h"
 
 namespace ginkgo {
 
@@ -11,10 +11,10 @@ namespace ginkgo {
 		compileShader();
 	}
 
-	void BasicShader::updateUniforms(const glm::mat4& projectionMatrix, const Texture& texture)
+	void BasicShader::updateUniforms(const glm::mat4& projectionMatrix, const Material& material)
 	{
 		setUniformMat4("transform", projectionMatrix);
-		setUniform4f("color", texture.getColor());
+		setUniform4f("color", material.getColor());
 	}
 
 }

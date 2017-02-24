@@ -6,12 +6,13 @@
 namespace ginkgo {
 
 	class Texture;
+	class Material;
 
 	class BasicShader : public Shader
 	{
 	public:
 		BasicShader();
-		void updateUniforms(const glm::mat4& projectionMatrix, const Texture& texture);
+		void updateUniforms(const glm::mat4& projectionMatrix, const Material& material);
 	};
 
 

@@ -3,27 +3,30 @@
 #include <gl/glew.h>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "Material.h"
+
 namespace ginkgo {
 
 	class Mesh;
-	class Texture;
+	class Material;
 
 	class Renderable
 	{
 	private:
 		const Mesh* mesh;
-		const Texture* texture;
+		Material& material;
 		glm::mat4 model;
 	public:
-		Renderable(const Mesh* mesh, const Texture* texture, const glm::mat4& model);
-		Renderable(const Mesh* mesh, const Texture* texture);
+		Renderable(const Mesh* mesh, Material& material, const glm::mat4& model);
+		Renderable(const Mesh* mesh, Material& material);
 
 		void setMesh(const Mesh* mesh) { this->mesh = mesh; }
-		void setTexture(const Texture* texture) { this->texture = texture; }
+		void setMaterial(const Material material) { this->material = material; }
 		void setModel(const glm::mat4& model) { this->model = model; }
-
+		Material& alterMaterial() { return material; }
+		
 		const Mesh& getMesh() const { return *mesh; }
-		const Texture& alterTexture() { return *texture; }
+		const Material& getMaterial() const { return material; }
 		const glm::mat4& getModel() const { return model; }
 
 		void draw() const;
@@ -34,3 +37,16 @@ namespace ginkgo {
 	};
 
 }
+
+/*
+Renderables all share a 
+Mesh (pointer)
+but each have a unique Material
+but (possible) share the Material's const Texture
+
+change to one Mesh changes all Rendrables
+change to one Material changes one Rendrables
+cannot change Material's const Texture
+
+cannot change Material of a mesh?
+*/
