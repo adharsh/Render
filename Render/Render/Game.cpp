@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include <cmath>
+#include <map>
 
 #include "graphics/Window.h" //window include must be before glfw include to prevent #error: gl.h included before glew.h
 #include <GLFW/glfw3.h>
@@ -14,7 +15,7 @@
 #include "graphics/Texture.h"
 #include "graphics/Material.h"
 #include "graphics/shaders/PhongShader.h"
-#include "graphics/shaders/CubeMapShader.h"
+#include "graphics/shaders/CubeMap.h"
 #include "graphics/Camera.h"
 #include "graphics/Renderable.h"
 #include "graphics/Layer.h"
@@ -28,7 +29,7 @@ namespace ginkgo {
 	{
 		PhongShader* shader = new PhongShader();
 		camera = new Camera(window, glm::vec3(0.0f, 0.01f, 0.0f));
-		//window.disableMouseCursor();
+		//window->disableMouseCursor();
 
 		float side = 1.0f;
 
@@ -48,27 +49,36 @@ namespace ginkgo {
 		indices.push_back(2); indices.push_back(3); indices.push_back(0);
 		mesh->addData(positions, indices, uvs, true);
 
-		Material* t0 = new Material(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), new Texture("Render/res/textures/Hi.png"));
+		Texture* t0 = new Texture("Render/res/textures/Hi.png");
+		Texture* t1 = new Texture("Render/res/textures/prime.png");
 
-		Renderable* r0 = new Renderable(mesh, t0);
-		layer = new Layer({ r0 }, shader);
+		Material* m0 = new Material(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), t0);
+		Material* m1 = new Material(glm::vec4(1.0f, 0.0f, 0.0f, 1.0f), t0);
+		Material* m2 = new Material(glm::vec4(0.0f, 1.0f, 1.0f, 1.0f), t1);
+
+		std::vector<Renderable*> r;
+		for (int i = 0; i < 4; i++)
+			r.push_back(new Renderable(mesh, m0));
+		r.push_back(new Renderable(mesh, m1));
+		r.push_back(new Renderable(mesh, m2));
+		layer = new Layer(r, shader);
+
+		for (int i = 0; i < layer->getSize(); i++)
+			layer->alterRenderable(i)->alterModel()->translateMatrix(glm::vec3(0, i / 2.0f, 0));
 
 		shader->setAmbientLight(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
-		std::vector<const char*> skyboxImages;
-		skyboxImages.push_back("Render/res/textures/skybox/right.jpg");
-		skyboxImages.push_back("Render/res/textures/skybox/left.jpg");
-		skyboxImages.push_back("Render/res/textures/skybox/top.jpg");
-		skyboxImages.push_back("Render/res/textures/skybox/bottom.jpg");
-		skyboxImages.push_back("Render/res/textures/skybox/front.jpg");
-		skyboxImages.push_back("Render/res/textures/skybox/back.jpg");
+		std::map<unsigned int, const char*> skyboxImages;
+		skyboxImages[CubeMap::LEFT] = "Render/res/textures/skybox/left.jpg";
+		skyboxImages[CubeMap::RIGHT] = "Render/res/textures/skybox/right.jpg";
+		skyboxImages[CubeMap::TOP] = "Render/res/textures/skybox/top.jpg";
+		skyboxImages[CubeMap::FRONT] = "Render/res/textures/skybox/front.jpg";
+		skyboxImages[CubeMap::BOTTOM] = "Render/res/textures/skybox/bottom.jpg";
+		skyboxImages[CubeMap::BACK] = "Render/res/textures/skybox/back.jpg";
+		
+		skybox = new CubeMap(skyboxImages, 500);
+		skybox->alterModel()->rotateMatrix(glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
-		shaderCM = new CubeMapShader(skyboxImages, 500.0f);
-
-		shaderCM->alterModel()->rotateMatrix(glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		layer->alterRenderable(0)->alterModel()->translateMatrix(glm::vec3(0.0f, 1.0f, 0.0f));
-		layer->alterRenderable(0)->alterModel()->scaleMatrix(glm::vec3((20, 20, 20)));
-		layer->alterModel()->translateMatrix(glm::vec3(0.0f, 0.2f, 0.0f));
 	}
 
 	void Game::input(double dt)
@@ -80,17 +90,10 @@ namespace ginkgo {
 	{
 		//texture->setColor(glm::vec4(sin(temp), -sin(temp), sin(temp), 1.0f));
 		//window->setClearColor(glm::vec4(1, 1, 1, 1));
-		static float t = 0;
-		t += dt * 0.001f;
-
-		//layer->alterRenderable(0)->alterModel()->scaleMatrix(glm::vec3((t, t, t)));
-		//layer->alterRenderable(0)->alterModel()->rotateMatrix(glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-
-		//layer->scaleModel(glm::vec3(1.0f + t, 1.0f + t, 1.0f + t));
-		layer->alterModel()->rotateMatrix(glm::radians(t), glm::vec3(1.0f, 0.0f, 0.0f));
-		//layer->alterRenderable(3)->rotateModel(glm::radians(t), glm::vec3(1.0f, 0.0f, 0.0f));
-		//layer->translateModel(glm::vec3(t, 0, 0));
-
+		dt = 0;
+		layer->alterModel()->rotateMatrix(glm::radians(dt*100.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		for (int i = 0; i < layer->getSize(); i++)
+			layer->alterRenderable(i)->alterModel()->rotateMatrix(glm::radians((i * 10 + 10)*dt*10.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 		camera->update(dt);
 	}
 
@@ -98,7 +101,7 @@ namespace ginkgo {
 	{
 		glm::mat4 transformProjectionView = camera->getProjection() * camera->getView();
 		layer->draw(transformProjectionView, camera->getCameraPosition());
-		shaderCM->draw(transformProjectionView);
+		skybox->draw(transformProjectionView);
 	}
 
 	void Game::postProcessing()

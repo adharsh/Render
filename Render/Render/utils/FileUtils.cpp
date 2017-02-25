@@ -80,7 +80,7 @@ namespace ginkgo {
 	}
 
 
-	BYTE* FileUtils::loadImage(const char* filename, GLsizei* width, GLsizei* height)
+	BYTE* FileUtils::loadImage(const char* filename, GLsizei* width, GLsizei* height, double rotationAngleInDegrees)
 	{
 		FREE_IMAGE_FORMAT fif = FIF_UNKNOWN;
 		FIBITMAP *dib = nullptr;
@@ -96,6 +96,12 @@ namespace ginkgo {
 		if (!dib)
 			return nullptr;
 
+		if(fmod(rotationAngleInDegrees,360) != 0)
+			dib = FreeImage_Rotate(dib, rotationAngleInDegrees);
+
+		if (FreeImage_GetBPP(dib) != 24)
+			dib = FreeImage_ConvertTo24Bits(dib);
+
 		BYTE* pixels = FreeImage_GetBits(dib);
 		*width = FreeImage_GetWidth(dib);
 		*height = FreeImage_GetHeight(dib);
@@ -105,6 +111,7 @@ namespace ginkgo {
 		BYTE* result = new BYTE[size];
 		memcpy(result, pixels, size);
 		FreeImage_Unload(dib);
+
 
 		return result;
 	}

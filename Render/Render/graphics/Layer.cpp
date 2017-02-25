@@ -99,7 +99,7 @@ namespace ginkgo {
 		{
 			glActiveTexture(GL_TEXTURE0);
 			glBindTexture(GL_TEXTURE_2D, renderables[b]->getMaterial().getTexture().getID());
-			for (int a = 0; a < sizeTextureIDs[i]; a++)
+			for (unsigned int a = 0; a < sizeTextureIDs[i]; a++)
 			{
 				shader->updateUniforms(
 					renderables[b]->getModel(), 

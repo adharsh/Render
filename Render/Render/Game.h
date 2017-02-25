@@ -5,7 +5,7 @@ namespace ginkgo {
 	class Window;
 	class Layer;
 	class Camera;
-	class CubeMapShader;
+	class CubeMap;
 
 	class Game
 	{
@@ -13,7 +13,7 @@ namespace ginkgo {
 		Window* window;
 		Layer* layer;
 		Camera* camera;
-		CubeMapShader* shaderCM;
+		CubeMap* skybox;
 	public:
 		Game(Window* window);
 

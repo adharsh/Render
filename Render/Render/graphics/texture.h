@@ -16,8 +16,6 @@ namespace ginkgo {
 		GLsizei width;
 		GLsizei height;
 		static std::string whitepixelfilepath;
-	private:
-		GLuint load(); //images -> no alpha, remove transparency in Gimp Layer->Transparency->Remove Alpha Channel
 	public:
 		Texture(const std::string& path = whitepixelfilepath);
 		~Texture();
@@ -29,3 +27,8 @@ namespace ginkgo {
 	};
 
 }
+
+
+/*
+images -> no alpha, remove transparency in Gimp Layer->Transparency->Remove Alpha Channel
+*/

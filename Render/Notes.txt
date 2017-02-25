@@ -10,11 +10,21 @@ Priority To Do List:
 *doesn't load all meshes without textures, just a color -> yup
 *put classes in different folders to organize code -> yup
 *refactor code for forward declarations -> yup
-*cubemaps
+*cubemaps -> yup
 *light deflection + refraction thing
+*text rendering -> understand texture atlasing
+*use texture atlasing for cubemaps
+*use texture atlasing for multitude of images
+*explore universe with images thing
+*use CUDA with this
 
--Material reference in Renderable.h - Material Class - texture renderable should have its own copy of texture, how to do this with ref&point; Material has color, light stuff and a pointer to a texture, sepaetare changing stuff and nonchanging stuff
--find where I use new and make sure I properly deallocate memory -> okay to do so?
+-how to initialize Transform without allocating memory for it
+-allowed to use copy constructor, dependant on 
+-tester for Textures, materials, yes
+-add dictionary for vector, static const values for each type -> yup
+-change CubeMapShader name to CubeMap -> yup
+-Material reference in Renderable.h - Material Class - texture renderable should have its own copy of texture, how to do this with ref&point; Material has color, light stuff and a pointer to a texture, sepaetare changing stuff and nonchanging stuff -> yup
+-find where I use new and make sure I properly deallocate memory -> okay to do so? -> yup
 -loads obj uvs, but uvs are messed up -> next meeting;
 make load any kind of image format -> kinda, prerequisite of no alpha channel image
 post processing stuff -> hud - text + fonts, other interactable stuff
