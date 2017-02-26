@@ -51,8 +51,28 @@ namespace ginkgo {
 		}
 
 		//Loading Data
-		GLfloat* data = generateDataMatrix(positions, uvs, normals);
+		data_size = positions.size() * 8;
+		GLfloat* data = new GLfloat[data_size];
 
+		if (positions.size() != uvs.size() || positions.size() != normals.size())
+		{
+			std::cout << "Incorrect amount of data. Should be the same number of sets of positions, uvs, and normals." << std::endl;
+			system("pause");
+		}
+
+		for (GLuint i = 0; i < positions.size(); i++)
+		{
+			data[i * 8 + 0] = positions[i].x;
+			data[i * 8 + 1] = positions[i].y;
+			data[i * 8 + 2] = positions[i].z;
+			data[i * 8 + 3] = uvs[i].x;
+			data[i * 8 + 4] = uvs[i].y;
+			data[i * 8 + 5] = normals[i].x;
+			data[i * 8 + 6] = normals[i].y;
+			data[i * 8 + 7] = normals[i].z;
+		}
+
+		//Binding Data
 		size = indices.size();
 
 		glBindVertexArray(VAO);
@@ -73,6 +93,8 @@ namespace ginkgo {
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
 
+		delete[] data;
+
 	}
 
 	void Mesh::draw() const
@@ -88,45 +110,5 @@ namespace ginkgo {
 		glBindVertexArray(0);
 	}
 
-	GLfloat* Mesh::generateDataMatrix(const std::vector<glm::vec3>& positions, const std::vector<glm::vec2>& uvs, const std::vector<glm::vec3>& normals)
-	{
-		data_size = positions.size() * 8;
-		GLfloat* data = new GLfloat[data_size];
-
-		if (positions.size() != uvs.size() || positions.size() != normals.size())
-		{
-			//std::cout << "Incorrect amount of data. Should be the same number of sets of positions, uvs, and normals." << std::endl;
-			//system("pause");
-			//return NULL;
-			
-			for (GLuint i = 0; i < positions.size(); i++)
-			{
-				data[i * 8 + 0] = positions[i].x;
-				data[i * 8 + 1] = positions[i].y;
-				data[i * 8 + 2] = positions[i].z;
-				data[i * 8 + 3] = 0;
-				data[i * 8 + 4] = 0;
-				data[i * 8 + 5] = normals[i].x;
-				data[i * 8 + 6] = normals[i].y;
-				data[i * 8 + 7] = normals[i].z;
-			}
-			return data;
-		}
-	
-
-		for (GLuint i = 0; i < positions.size(); i++)
-		{
-			data[i * 8 + 0] = positions[i].x;
-			data[i * 8 + 1] = positions[i].y;
-			data[i * 8 + 2] = positions[i].z;
-			data[i * 8 + 3] = uvs[i].x;
-			data[i * 8 + 4] = uvs[i].y;
-			data[i * 8 + 5] = normals[i].x;
-			data[i * 8 + 6] = normals[i].y;
-			data[i * 8 + 7] = normals[i].z;
-		}
-
-		return data;
-	}
 
 }

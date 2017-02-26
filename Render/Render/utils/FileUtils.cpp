@@ -112,7 +112,6 @@ namespace ginkgo {
 		memcpy(result, pixels, size);
 		FreeImage_Unload(dib);
 
-
 		return result;
 	}
 

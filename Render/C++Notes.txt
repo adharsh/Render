@@ -1,0 +1,402 @@
+Possible Bugs -> Fixes:
+  Change include file location
+  Change project configurations
+
+
+-------------------------------------------------------------------------------------
+f(nullptr);  // would be ambiguous without void f(nullptr_t)
+    // f(NULL);
+
+Does making a struct const make all its members const?
+Yes, and for volatile
+
+http://stackoverflow.com/questions/4437527/why-do-we-use-volatile-keyword-in-c -> volatile us
+The modifier volatile tells the compiler that a variable's value may be changed in ways not explicitly specified by the program.
+
+The register should only be used for variables that require quick access such as counters. It should also be noted that defining 'register' does not mean that the variable will be stored in a register. It means that it MIGHT be stored in a register depending on hardware and implementation restrictions.
+
+The static storage class instructs the compiler to keep a local variable in existence during the life-time of the program instead of creating and destroying it each time it comes into and goes out of scope. Therefore, making local variables static allows them to maintain their values between function calls.
+The static modifier may also be applied to global variables. When this is done, it causes that variable's scope to be restricted to the file in which it is declared.
+In C++, when static is used on a class data member, it causes only one copy of that member to be shared by all objects of its class.
+
+The extern storage class is used to give a reference of a global variable that is visible to ALL the program files. When you use 'extern' the variable cannot be initialized as all it does is point the variable name at a storage location that has been previously defined.
+When you have multiple files and you define a global variable or function, which will be used in other files also, then extern will be used in another file to give reference of defined variable or function. Just for understanding extern is used to declare a global variable or function in another file.
+The extern modifier is most commonly used when there are two or more files sharing the same global variables or functions as explained below.
+
+p	q	p & q	p | q	p ^ q
+0	0	0	0	0
+0	1	0	1	1
+1	1	1	1	0
+1	0	0	1	1
+
+
+A = 0011 1100
+
+B = 0000 1101
+
+-----------------
+
+A&B = 0000 1100
+
+A|B = 0011 1101
+
+A^B = 0011 0001
+
+~A  = 1100 0011
+
+
+Inline:
+How does this make the program go faster? Simple, function calls are simply more time consuming than writing all of the code without functions. To go through your program and replace a function you have used 100 times with the code from the function would be time consuming not too bright. Of course, by using the inline function to replace the function calls with code you will also greatly increase the size of your program. 
+
+Using the inline keyword is simple, just put it before the name of a function. Then, when you use that function, pretend it is a non-inline function. 
+
+Example Inline Function
+
+#include <iostream>
+
+using namespace std;
+
+inline void hello()
+{ 
+  cout<<"hello";
+}
+int main()
+{
+  hello(); //Call it like a normal function...
+  cin.get();
+}
+However, once the program is compiled, the call to hello(); will be replaced by the code making up the function. 
+
+A WORD OF WARNING: Inline functions are very good for saving time, but if you use them too often or with large functions you will have a tremendously large program. Sometimes large programs are actually less efficient, and therefore they will run more slowly than before. Inline functions are best for small functions that are called often. 
+
+Finally, note that the compiler may choose, in its infinite wisdom, to ignore your attempt to inline a function. So if you do make a mistake and inline a monster fifty-line function that gets called thousands of times, the compiler may ignore you. 
+
+
+char greeting[6] = {'H', 'e', 'l', 'l', 'o', '\0'};
+char greeting[] = "Hello";
+
+<string> includes all <cstring> and more
+<cstring>
+strcpy( str3, str1) 
+strcat( str1, str2)
+strlen(str1)
+
+char like strings is for cstring
+but string also includes cstring -> for java like string manipulations
+
+
+pointer++ is for moving pointer to next location
+*(arrayPointer + 2) = 500; //arrayPointer+ illegal because array pointer cannot be changed
+
+c structs can be accessed from ex:<ctime> tm_time *time; time = time(0);
+
+cerr and clog for error
+
+typedef int a = 6;
+typdef enum colors{ a, b, c};
+
+http://www.tutorialspoint.com/cplusplus/cpp_class_access_modifiers.htm -> classes and inhertiance
+child class is SmallBox:  SmallBox:Box 
+out of scopeobjects are estruct4ed with: ~Line()
+
+Very helpful for copy constuctor and use of allocating and freeing data: http://www.tutorialspoint.com/cplusplus/cpp_copy_constructor.htm
+
+http://www.tutorialspoint.com/cplusplus/cpp_classes_objects.htm
+
+http://gcc.gnu.org/onlinedocs/libstdc++/manual/io_and_c.html -> Using c++ IO and no C streams? Just use:
+std::ios::sync_with_stdio(false); -> C++ doesn't sync with C io library, C++ library is layered on top of C I/O library (for 3.0 default and above)
+http://stackoverflow.com/questions/1042110/using-scanf-in-c-programs-is-faster-than-using-cin/15939289#15939289
+All optimizations to be used in C++ -> http://stackoverflow.com/questions/17468088/performance-difference-between-c-and-c-style-file-io
+
+
+Scope Resolution: http://stackoverflow.com/questions/4269034/what-is-the-meaning-of-prepended-double-colon-to-class-name
+int count = 0;
+
+int main(void) {
+  int count = 0;
+  ::count = 1;  // set global count to 1
+  count = 2;    // set local count to 2
+  return 0;
+}
+explicitly reference scope resolution count in line 108 
+
+Function Pointers: http://www.learncpp.com/cpp-tutorial/78-function-pointers/
+
+Stack: http://www.learncpp.com/cpp-tutorial/79-the-stack-and-the-heap/
+
+
+const doesn't actually matter where you put it, so before following 123, place const after stuff
+Think of it like reading it backwards. Example below is:
+cstring is a const pointer to a string, so reference can't change but pointed value(/string) can be changed
+typedef string *pstring;
+const pstring cstring = &str;
+pstring const cstring = &str;
+string* const cstring = &str;
+
+typeid(int).name() -> i etc
+
+constructors can also initialize values in give notation:
+Sales_item() : units_sold(0), revenue(0.0) {}
+
+ int* pj = const_cast<int*>(&j); 
+ int* pj = static_cast<int*>(&j);
+
+ extern void ff(unsigned int);
+
+void (*pf) (unsigned int) = &ff; // or ff
+
+
+Using const in functions:
+#include <iostream>
+
+class MyClass
+{
+private:
+    mutable int counter;
+public:
+
+    MyClass() : counter(0) {}
+
+    void Foo()
+    {
+        counter++;
+        std::cout << "Foo" << std::endl;    
+    }
+
+    void Foo() const
+    {
+        counter++;
+        std::cout << "Foo const" << std::endl;
+    }
+
+    int GetInvocations() const
+    {
+        return counter;
+    }
+};
+
+int main(void)
+{
+    MyClass cc;
+    const MyClass& ccc = cc;
+    cc.Foo();
+    ccc.Foo();
+    std::cout << "The MyClass instance has been invoked " << ccc.GetInvocations() << " times" << endl;
+}
+In later versions of C++, the ‘mutable’ keyword was added which enables ‘const’ to be overridden for this purpose but it totally relies on trusting the programmer to only use it for that purpose so, if you have to write a program using someone else's class which uses ‘mutable’ then you cannot guarantee that ‘mutable’ things will really be constant which renders ‘const’ virtually useless.
+One cannot simply avoid using ‘const’ on class methods because ‘const’ is infectious. An object which has been made ‘const’, for example by being passed as a parameter in the ‘const &’ way, can only have those of its methods that are explicitly declared ‘const’ called (because C++’s calling system is too simple to work out which methods not explicitly declared ‘const’ don’t actually change anything). Therefore class methods that don’t change the object are best declared ‘const’ so that they are not prevented from being called when an object of the class has somehow acquired ‘const’ status. In later versions of C++, an object or variable which has been declared ‘const’ can be converted to changeable by use of ‘const_cast’ which is a similar bodge to ‘mutable’ and using it likewise renders ‘const’ virtually useless.
+
+
+struct Foo{
+  
+  float r, i;
+  
+  Foo (float a, float b) : r(a), i(b) {}
+
+  };
+
+
+int lol(const int& a){
+  int& best = const_cast<int&>(a); //  Very Naughty
+  best++;
+  return best;
+  } //returns a + 1
+
+---------------------------------
+if the function is not declared in the headerfile, it is assumed global
+Therefore, if using must use class::variable, since you must define scope since it is in global and cannot be seen 
+friend functions ARE NOT defined with class::methodName since it should be global
+---------------------------------
+static methods cannot be const
+static members are declared in header file
+static members have to be defined and initialized in .cpp file 
+---------------------------------
+operator overloaded functions (sometimes) have to be outside of object
+Ex.:  <<, bc you don't say cout.(vector) you just do cout << vector 
+---------------------------------
+To use deprecate functions, go to C/C++::Preprocessor
+and type in _CRT_SECURE_NO_WARNINGS
+---------------------------------
+Header File Convections
+For abstract classes, usually one writes out entire thing in just header file
+First scope gaurds for variables
+Then scope gaurds for functions
+---------------------------------
+Therefore, function duplicate is able to access the members width and height (which are private) of different objects of type Rectangle. Notice though that neither in the declaration of duplicate nor in its later use in main, function duplicate is considered a member of class Rectangle. It isn't! It simply has access to its private and protected members without being a member.
+ ---------------------------------
+Inheritance:
+
+class Rectangle: public Polygon { /* ... */ }
+
+
+This public keyword after the colon (:) denotes the most accessible level the members inherited from the class that follows it (in this case Polygon) will have from the derived class (in this case Rectangle). Since public is the most accessible level, by specifying this keyword the derived class will inherit all the members with the same levels they had in the base class.
+
+With protected, all public members of the base class are inherited as protected in the derived class. Conversely, if the most restricting access level is specified (private), all the base class members are inherited as private.
+
+For example, if daughter were a class derived from mother that we defined as:
+
+ 
+class Daughter: protected Mother;
+---------------------------------
+
+Big Endian: more natural order of bits with most significant bit at smallest address
+Little Endian: order of bits with most significant bit at largest address, reverse order of Big Endian
+Different Platforms have different endians
+---------------------------------
+#include <windows.h>
+
+Sleep.(100); //sleeps for 1000 milliseconds or 1 second 
+
+---------------------------------
+//B is a class
+B a; //Default constructor is called, and a is insantiated
+
+---------------------------------
+http://stackoverflow.com/a/628079, http://stackoverflow.com/a/4757718, http://stackoverflow.com/a/10422050, http://stackoverflow.com/a/10422049
+forward define 
+
+***************************************************************************************
+***************************************************************************************
+***************************************************************************************
+***************************************************************************************
+***************************************************************************************
+
+Remove default constructor of Texture since its not necessary -> Make pointer if should not need to initialize when declared
+
+filesutils.cpp: return pixels instead of return result -> Library should clean up other stuff by itself, not just variables present
+
+okay to use new, manage memory yourself
+
+texture = Texture("res/textures/Hi.png"); vs texture("res/textures/Hi.png"); //second has error -> Visual Studio Directory
+
+default argument should only be present when declared, only variable (without = value) should be present in implementation
+
+universal zero initializer -> = 0;
+
+emplace_back() better than put_back()
+
+const variables better than sending in a uniform in GLSL
+
+mvp is calculated from left to right, thus proj * view * model
+
+construcot initializer list can use same variable names as parameter names
+
+better to use pointers instead of references as member variables
+-so in code you understand that you're using a reference and not an actual variable
+-better to have a vector of pointers than a vector of references
+
+vectors manage all the memory they allocate for you
+-everything is abstracted away from its copy constructor, destructor for cleaning, etc
+-just use normally (like in Java)
+
+allocated memory lasts for liftime of program unless its deleted
+
+renderables can alter its own copy of its texture, can't alter the texture used by all renderables
+
+header files can have includes of other header files so even though you may not include one, it may still be covered
+
+always use forward delcares, declare class in header, and include includes in .cpp
+
+
+wait is it bad to use new like this all the time though
+why would it be? you'll be deleting them in the destructor i assume okay
+and also why do forward declarations have to use pointers (it can also be references)
+the compiler has no type information about the thing you're forward declaring in the header, so when it tries to create the
+structure of the class in memory, it doesnt know the contents, since 
+by forward declaring, you're only stating that a class/struct with that name exist
+you can make a pointer because that doesn't require type information, it only states that there is a pointer to some class with this name
+make sense? yeah lemme copy this down
+
+-use arrows underneath file top left corner of Visual Studio
+-1. use Visual Studio Filters as make-beieve folderss
+-2. manualy replace filters with folders
+-class redefinnition include error
+-forward declare a class and extended that error -> uses self include and remove forward declaration
+-trying to template undefined types
+-why const int& i = int& but not const int* i = int*, references are const naturally, can't "point" to something else
+
+-allowed to use copy constructor, dependant on flow of program: ex. if only created beginning of program and not during program, then it won't be inefficient
+
+how do 24 bit depth images work with unsigned char* ? each byte is an unsigned char? duh...
+
+
+
+*****************************************************************************************
+*****************************************************************************************
+
+
+
+Coding Guidelines:
+better to use pointers instead of references as member variables
+-so in code you understand that you're using a reference and not an actual variable
+-better to have a vector of pointers than a vector of references
+use pointers if it referes to something else
+use the actual variable if it is unique to each object
+-use const references as setter methods to set normal variable though
+
+use member initalizer lists, parameter names can be same as member variable names
+also delegated constructor "initalizers"
+
+if code for a method is not long (~1or2 lines), then just put code in header file
+except if code is a constructor, must be defined seperately in .cpp file
+
+always pass in const references instead of by value
+
+when having a "getter" that doesn't return a const reference, call it a "alterVariable" method that returns a reference to the member variable
+
+always keep in mind of the possiblity of default constructors
+
+empty methods in a .cpp file, do this: 
+~Class       void someMethod()
+{ }			 { }
+empty methods in header file, do this: someMethod(){} 
+
+when including files in .h:
+#pragma once
+enter for line of space
+first standard c++ library includes
+then imported library includes
+enter for line of space
+//use forward declares
+
+when including files in .cpp:
+first standard c++ library includes
+enter for line of space
+imported library includes (if necessary)
+enter for line of space
+include header of this file
+enter for line of space
+use header for files you made
+enter for line of space
+//use forward declares
+
+then self made header file includes
+
+don't put all includes in the header file, only put ones that are necessary in header file, and put others required by .cpp file in the .cpp file
+makes it more efficient when compiling, takes less time to look at all those includes
+
+make header files have paramter names that are meaninful since those are the ones that are ultimately going to be looked at
+you can be a little more free in the .cpp files
+
+use folders to organize code -> Ultimately if making opensource
+if there are at least 5 classes (~10 files including header and .cpp files), then categorize and make a folder for each
+or use Visual Studio filters
+
+pointers as member pointer variables using forward declaration
+pointers in paramterers only if class has that as its member pointer
+references in parameters only if class does not use that as its member pointer
+or just use pointers all the time...lol cuz its much more flexible cuz if you know what you're doing, then you're fine -> also references require initalizations immediately which can become a pain
+returns const references as usual -> dont have to allocate memory all the time, too much work
+vectors of pointers
+
+-includes for class's members -> more the better in forward declarations in header file, .cpp should have a lot of includes too
+-convention for code in header file, have only function prototypes, getters and setters for one to two lines except if its constructors must be defined seperately in .cpp file, doesn't have to include self made headers
+-renderables const constructor, const getter but nonconst member
+
+namspaces should be used like this:
+namespace ginkgo {
+}
+instead of 
+namespace ginkgo
+{
+}

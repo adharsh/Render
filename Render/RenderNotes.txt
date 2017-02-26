@@ -1,0 +1,118 @@
+TODOS:
+
+Priority To Do List:
+*light deflection + refraction thing
+*text rendering -> understand texture atlasing
+*use texture atlasing for cubemaps
+*use texture atlasing for multitude of images
+*explore universe with images thing
+*use CUDA with this
+
+*how to orient mouse position when first starts up
+post processing stuff -> hud - text + fonts, other interactable stuff -> https://www.opengl.org/discussion_boards/showthread.php/124875-How-to-draw-a-line-using-OpenGL-programme, https://learnopengl.com/#!In-Practice/Text-Rendering, https://learnopengl.com/#!Advanced-OpenGL/Framebuffers
+loads obj uvs, but uvs are messed up -> next meeting; -> http://blender.stackexchange.com/questions/1022/adding-uv-mapping-to-mesh, https://en.wikibooks.org/wiki/Blender_3D:_Noob_to_Pro/UV_Map_Basics
+msaa in OpenGL etc. -> https://learnopengl.com/#!Advanced-OpenGL/Anti-Aliasing
+sounds -> maybe gorilla audio library
+should game and window in Engine.h be const, should Game methods be const too, effects throughout code okay?
+browser -> http://kripken.github.io/emscripten-site/
+
+fix change fov scroll in
+change scrolling so it stays the same even when cursor is out of focus
+
+passing Tim::getDelta() as a double vs a float vs something even more accurate
+
+Not necessary to do pointlights/spot lights, just as final touches
+-way to organize point lights in vector -> 
+getters for position
+popthem off
+add them back on
+-pointlights don't entirely work
+
+spot lights
+
+******
+Yups:
+*binding textures and unbinding textures, renderable class and stuff	, delete //probably going to be useless stuff, replace code with binary serach algorithm -> yup
+*refactor code to have member variables have pointers instead of references -> yup
+*doesn't load all meshes without textures, just a color -> yup
+*put classes in different folders to organize code -> yup
+*refactor code for forward declarations -> yup
+*cubemaps -> yup
+
+-how to initialize Transform without allocating memory for it -> its fine -> yup
+-tester for Textures, materials, yes
+-add dictionary for vector, static const values for each type -> yup
+-change CubeMapShader name to CubeMap -> yup
+-Material reference in Renderable.h - Material Class - texture renderable should have its own copy of texture, how to do this with ref&point; Material has color, light stuff and a pointer to a texture, sepaetare changing stuff and nonchanging stuff -> yup
+-find where I use new and make sure I properly deallocate memory -> okay to do so? -> yup
+make load any kind of image format -> kinda, prerequisite of no alpha channel image -> yup
+transformations with layer -> kinda, don't know what else to do -> yup
+
+******
+Later Fixes:
+
+change up all the paramters and make them const stuff
+getters return const stuff
+
+indices Mesh addData
+
+references by Texture Class
+
+fragmentshader.fs todo, should i use glEnable(GL_TEXTURE2D) and glDisable(GL_TEXTURE2D)
+
+replace input() todo
+
+change up PhongShader and make it a singleton class
+make private variables all static
+
+Watch Companion Video on Lighting
+Make-> float diffuseFactor = dot(direction, normal); //to see what happens, opposite shading?
+
+Control k+d for all files
+
+change location of uniform variables in phongFragment.fs
+
+phongFragment todo
+
+refactor shader class so methods are all overloaded setUniform
+change shader char* parameters to std::string&
+
+make get methods return const values
+
+rename vertices to positions
+
+rename variables in shaders to make it more comprehensible, in texturesVS, out texturesFS
+
+Take out code in TODO in PhongShader.cpp
+
+substitute code from generateDataMatrix() directly into addData() method in Mesh.cpp
+
+make it so that if there is not texture, set it to a single color
+
+why does model * normal make the light stay the same with it?
+
+Delegating constructors in Texture.cpp
+
+change base to baselight
+
+make specularExponent and specularPower consistent
+
+const method is just changing that object right, can still be changing parameter values
+
+
+*******
+Some preconditions that must be satisifed before using this engine:
+
+
+*******
+When Bugs Happen:
+READ ALL ERRORS
+Consider possiblities of waterfall error
+
+What to do when not drawing anything to the screen:
+check uniforms
+check size of each collection of data when allocating
+generateDataMatrix is wrong
+check if its just drawing it not on screen
+check normals and vertices size 
+

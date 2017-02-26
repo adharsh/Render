@@ -19,8 +19,6 @@ namespace ginkgo {
 		~Mesh();
 		void addData(const std::vector<glm::vec3>& positions, const std::vector<GLuint>& indices, const std::vector<glm::vec2>& uvs, bool haveNormals = true);
 		void draw() const;
-	private:
-		GLfloat* generateDataMatrix(const std::vector<glm::vec3>& positions, const std::vector<glm::vec2>& uvs, const std::vector<glm::vec3>& normals);
 	};
 
 

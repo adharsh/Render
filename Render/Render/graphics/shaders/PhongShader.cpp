@@ -18,7 +18,11 @@ namespace ginkgo {
 		ambientLight = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
 		directionalLight = new DirectionalLight(BaseLight(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), 0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
 	}
-
+	
+	PhongShader::~PhongShader()
+	{
+		delete directionalLight;
+	}
 
 	void PhongShader::updateUniforms(const glm::mat4& model, const glm::mat4& projectionMatrix, const Material& material, const glm::vec3& cameraPosition) const
 	{

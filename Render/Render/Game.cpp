@@ -30,6 +30,7 @@ namespace ginkgo {
 		PhongShader* shader = new PhongShader();
 		camera = new Camera(window, glm::vec3(0.0f, 0.01f, 0.0f));
 		//window->disableMouseCursor();
+		window->setMousePosition(window->getWidth() / 2.0f, window->getHeight() / 2.0f);
 
 		float side = 1.0f;
 
@@ -77,7 +78,6 @@ namespace ginkgo {
 		skyboxImages[CubeMap::BACK] = "Render/res/textures/skybox/back.jpg";
 		
 		skybox = new CubeMap(skyboxImages, 500);
-		skybox->alterModel()->rotateMatrix(glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
 	}
 

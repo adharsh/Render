@@ -1,0 +1,168 @@
+http://visualstudioshortcuts.com/2015/
+https://msdn.microsoft.com/en-us/library/vstudio/dd831853(v=vs.120).aspx
+https://msdn.microsoft.com/en-us/library/da5kh0wa.aspx
+
+Control + F5 for running without debugging mode
+
+File -> New Project -> Templates -> NVIDIA -> CUDA 7.0 -> (Enter Name etc)
+
+Reset Window Layout -> Alt + W, R
+
+Line Numers -> Tools -> Options -> All Languages
+
+Visual Studio is not Eclipse -> use namespaces or not to determine which main method to run
+
+Debugger mode, red circles on left, arrow shows about to be executed line of code, f5, condition on breakpoints
+
+red squiggles denote syntax errors
+blue squiggles denote compiler errors
+green squiggles denote warnings 
+purple squiggles denote other types of error
+
+Ctrl K, C -> Commenting
+Ctrl K, U -> Uncommenting
+Ctrl K -> Bookmark, View -> Bookmark Window to view all bookmarks
+Ctrl K, D -> Autoformat document
+----------------------------------------------
+
+Show all files button, shows all files
+Can Include or exclude filse in directory -> pretty useful when testing several files with main methods 
+
+Class View to Show Hiarchy of Classes
+
+Can go to Error List, right click and select deselc Intellisense
+Shift + F12 -> Find all References (of a variable, object)
+Control + Shift + F -> Find keyword in solution, project, computer, source file, etc.
+
+Alt line -> moves a single line of code
+
+Control + Delete -> deletes word before it
+
+Right click on Blue file to show containing folder
+
+F12 -> Go to Definition
+Alt + F12 -> Peak at Definition
+
+Can add several projects in same solution
+
+F2 to rename folder
+Alt right left to go into/out of root
+Control + Shift + N -> new folder
+Alt + Enter -> Properties
+Home key and End key Go to Beginning of Line and Start of Line Respectively
+Control + Home -> go to Beginning of Document
+Control + End -> go to End of Document
+Tools->Customize. Select "Keyboard". Look for the command Edit.LineDelete to assign it to whichever keyboard shortcut you like.
+
+----------------------------------------------
+How to make your own API and then make it into a Dynamically linked Library and Statically Linked Library and Use it
+
+Static: Debugging and writign code with )API) -> developing
+Dynamically: binary to provide which is dynamicly linked to an exe -> to run once its built
+Need both
+
+Build Project in Same Mode with IDE, otherwise hell
+Do for both static and dynamic (lib and dll will be found in Solution's lib folder)
+
+Need header files, libs, and dll's
+
+ConfigurationProperties->
+	General:
+			Output Directory: $(SolutionDir)bin\$(Configuration)\
+			Intermediate Directory: $(SolutionDir)bin\$(Configuration)\Intermediates\
+	- VC++ Directories::Library Directories (lib's)
+	- VC++ Directories::Include Directories (header files)
+	- //(Not Necessary)C/C++::General::Additional Include Directories (header files)
+	- Linker::Input::Additional Dependencies (lib's)
+	- Place dll next to .exe file (dll's)
+
+----------------------------------------------
+
+To Massively Optimize Code, but makes it harder to Debug so do it after finished product -> in C/C++::Optimization and C/C++::CodeGeneration
+----------------------------------------------
+Debugging: 
+
+Go to Dissambly to know what Compiler is doing
+Debugging in Debug is different than Release
+Release will Optimize your Code, by evaluating and optimizing it by diong what's important and now what isn't
+
+"Release" is just a configuration name. The optimization settings in the build configuration are what actually changes the compiler's behavior.
+
+Putting breakpoints at points of code to determine whether or it is being used
+When Debugging, there's Autos, Locals, Watch1
+Auto puts variables you think are important
+Locals ...everything local
+Watch1 selective variables that can be "dragged and dropped in" by highlighting
+A lot more windows in Debug option like for threads, etc.
+Line pointed to is not executed yet
+
+Clicking F5 goes directly to next breakpoint
+isTrue -> breaks if its true
+hasChanged -> breaks if value has changed to satisfy condition
+whenHit -> to print message to Output
+CAN CHANGE BREAKPOINTS DURING EXECUTION
+Debug (Top Screen) -> enter memory stuff to see memory of variable and stuff
+Callback, next to Output and Error List, shows when line was called by method... you know
+Chronolgical Order is Bottom to Top
+
+Pressing Control C, V, or X without selecting anything copies that line
+
+
+Assembly
+Github
+----------------------------------------------
+To use static lib (glew32s.lib) -> change Preprocessor Definitions in C/C++::Preprocessor
+to "GLEW_STATIC", so it compiles it to one exe, takes more time, plugins are dll's, dll's are good for quick updates, etc, use static lib for things that won't change, like function pointers to OpenGL (AKA GLEW)
+
+Configuration Properties:
+Output Directory: $(SolutionDir)bin\$(Configuration)\		//-> Debug, Release configurations will appear as different files
+Intermediates: $(SolutionDir)bin\$(Configuration)\Intermediates		//-> any other Intermediates will appear as a subfolder
+If Changing to this, you can delete prexisting Debug/Release Folders in $(SolutionDir)
+
+----------------------------------------------
+For Optimization when creating your own API, take out includes from header files and paste them into the .cpp files since too much overhead when compiling API, and header file doesn't need it, just the .cpp file
+----------------------------------------------
+Control + Shift + Spacebar to see function's parameters
+----------------------------------------------
+Optimization in Release Mode:
+
+C/C++::Optimization 
+					-> Optimization -> Maxmize Speed
+					-> Inline Function Expansion -> Any Suitable
+					-> Enable Intrinsi Functions -> Yes
+					-> Favor Size of Speed -> Favor fast code
+		Code Generation
+					-> Enable Function-Level Linking -> Yes
+					-> Enable Enhanced Instruction Set -> Streaming SIMD Extensions 2 (/arch:SSE2)
+					-> Floating Point Model -> Fast
+
+Optimization in Debug Mode:
+		Code Generation:
+					-> Basic Runtime Checks -> Uninitialized Variables
+----------------------------------------------
+Profiling:
+Analyze -> New Performance Session
+In Targets -> add Target Project
+Actions: Start with Profiling Paused
+
+Hot Path:
+	Hotter something is, the more time it takes
+nvoglv32.dll -> NVIDIA's OpenGL driver
+Episode 10 for Profiling
+	Disable inline to understand better
+	Just a relational percentage, lower numbers may not be better and can still be pretty big in milliseconds
+----------------------------------------------
+Visual Assist:
+Shift + Alt + 0 -> Search for file in Visual Studio
+Alt + G -> Goto function thing
+----------------------------------------------
+Ctrl + K + D -> auto format code
+
+
+***************************************************************************************
+***************************************************************************************
+***************************************************************************************
+***************************************************************************************
+***************************************************************************************
+
+Window->Reset Window LayoutWindow->Reset Window Layout

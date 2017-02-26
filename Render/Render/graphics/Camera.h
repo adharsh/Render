@@ -15,8 +15,6 @@ namespace ginkgo {
 		glm::vec3 cameraPosition;
 		glm::vec3 cameraFront;
 		glm::vec3 cameraUp;
-		GLfloat yaw;
-		GLfloat pitch;
 		GLfloat fov;
 		float cameraSpeedSensitivity;
 		float mouseRotationSensitivity;
