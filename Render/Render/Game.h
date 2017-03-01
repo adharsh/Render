@@ -6,6 +6,8 @@ namespace ginkgo {
 	class Layer;
 	class Camera;
 	class CubeMap;
+	class PhongShader;
+	class ReflectionShader;
 
 	class Game
 	{
@@ -14,6 +16,8 @@ namespace ginkgo {
 		Layer* layer;
 		Camera* camera;
 		CubeMap* skybox;
+		ReflectionShader* reflectionShader;
+		PhongShader* phongShader;
 	public:
 		Game(Window* window);
 

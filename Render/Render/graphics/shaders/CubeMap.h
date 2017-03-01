@@ -32,17 +32,8 @@ namespace ginkgo {
 		void draw(const glm::mat4& transformProjectionView) const;
 		const glm::mat4& getModel() const;
 		Transform* alterModel() const { return model; }
+		void bindCubeMapTexture(int textureNumber) const;
+		void unbindCubeMapTexture() const;
 	};
-
-
+	
 }
-
-/*
-vector of images must be in following order:
-right.jpg
-left.jpg
-top.jpg
-bottom.jpg
-back.jpg
-front.jpg
-*/

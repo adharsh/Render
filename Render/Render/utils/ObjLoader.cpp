@@ -55,21 +55,30 @@ namespace ginkgo {
 		}
 		else if (vertices.size() == 4)
 		{
-			/*indices.emplace_back(vect[0]);
-			indices.emplace_back(vect[1]);
-			indices.emplace_back(vect[2]);
-
-			indices.emplace_back(vect[3]);
-			indices.emplace_back(vect[1]);
-			indices.emplace_back(vect[2]);*/
-
+			//indices.emplace_back(vect[0]);
+			//indices.emplace_back(vect[1]);
+			//indices.emplace_back(vect[3]);
+			//
+			//indices.emplace_back(vect[2]);
+			//indices.emplace_back(vect[1]);
+			//indices.emplace_back(vect[3]); 
+		
 			indices.emplace_back(vect[0]);
 			indices.emplace_back(vect[1]);
-			indices.emplace_back(vect[3]);
+			indices.emplace_back(vect[2]);
 			
 			indices.emplace_back(vect[2]);
-			indices.emplace_back(vect[1]);
-			indices.emplace_back(vect[3]); 
+			indices.emplace_back(vect[3]);
+			indices.emplace_back(vect[0]);
+
+			//indices.emplace_back(vect[0]);
+			//indices.emplace_back(vect[3]);
+			//indices.emplace_back(vect[2]);
+			//
+			//indices.emplace_back(vect[2]);
+			//indices.emplace_back(vect[1]);
+			//indices.emplace_back(vect[0]);
+
 		}
 	}
 
@@ -100,7 +109,7 @@ namespace ginkgo {
 
 		if (fileStream.fail())
 		{
-			std::cerr << "Failed to Open File specified." << std::endl;
+			std::cout << "Failed to Open File specified." << std::endl;
 			return;
 		}
 		std::vector<std::string> tokens;
@@ -262,7 +271,7 @@ namespace ginkgo {
 		int currentMaterialIndex = -1;
 		if (fileStream.fail())
 		{
-			std::cerr << "Failed to open file specified." << std::endl;
+			std::cout << "Failed to open file specified." << std::endl;
 			return;
 		}
 		while (fileStream.good())

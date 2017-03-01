@@ -1,7 +1,5 @@
 #pragma once
 
-#include <iostream>
-
 #include "Mesh.h"
 
 namespace ginkgo {
@@ -41,13 +39,14 @@ namespace ginkgo {
 
 				glm::vec3 normal = glm::normalize(glm::cross(v1, v2));
 
-				normals[i0] = normals[i0] + normal;
-				normals[i1] = normals[i1] + normal;
-				normals[i2] = normals[i2] + normal;
+		//		std::cout << normal.x << " " << normal.y << " " << normal.z << std::endl;
+				normals[i0] += normal;
+				normals[i1] += normal;
+				normals[i2] += normal;
 			}
-
-			for (int i = 0; i < positions.size(); i++)
+			for (int i = 0; i < normals.size(); i++)
 				normals[i] = glm::normalize(normals[i]);
+
 		}
 
 		//Loading Data
@@ -56,8 +55,18 @@ namespace ginkgo {
 
 		if (positions.size() != uvs.size() || positions.size() != normals.size())
 		{
-			std::cout << "Incorrect amount of data. Should be the same number of sets of positions, uvs, and normals." << std::endl;
-			system("pause");
+			for (GLuint i = 0; i < positions.size(); i++)
+			{
+				data[i * 8 + 0] = positions[i].x;
+				data[i * 8 + 1] = positions[i].y;
+				data[i * 8 + 2] = positions[i].z;
+				data[i * 8 + 3] = 0;
+				data[i * 8 + 4] = 0;
+				data[i * 8 + 5] = normals[i].x;
+				data[i * 8 + 6] = normals[i].y;
+				data[i * 8 + 7] = normals[i].z;
+			}
+
 		}
 
 		for (GLuint i = 0; i < positions.size(); i++)
@@ -78,7 +87,7 @@ namespace ginkgo {
 		glBindVertexArray(VAO);
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-		
+
 		glBufferData(GL_ARRAY_BUFFER, data_size * sizeof(GLfloat), data, GL_STATIC_DRAW); //&data[0]
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), &indices[0], GL_STATIC_DRAW); //TODO: indices //? too
 
@@ -94,7 +103,6 @@ namespace ginkgo {
 		glBindVertexArray(0);
 
 		delete[] data;
-
 	}
 
 	void Mesh::draw() const
@@ -106,6 +114,77 @@ namespace ginkgo {
 		glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_INT, 0);
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindVertexArray(0);
+	}
+
+
+
+
+	void Mesh::addDataLOL()
+	{
+		GLfloat cubeVertices[] = {
+			// Positions          // Normals
+			-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+			0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+			0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+			0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+			-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+			-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+
+			-0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+			0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+			0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+			0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+			-0.5f,  0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+			-0.5f, -0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+
+			-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+			-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+			-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+			-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+			-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+			-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+
+			0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+			0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+			0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+			0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+			0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+			0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+
+			-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+			0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+			0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+			0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+			-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+			-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+
+			-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+			0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+			0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+			0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+			-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+			-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
+		};
+
+		//Binding Data
+
+		glBindVertexArray(VAO);
+		glBindBuffer(GL_ARRAY_BUFFER, VBO);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(cubeVertices), &cubeVertices, GL_STATIC_DRAW);
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)0);
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(GLfloat), (GLvoid*)(3 * sizeof(GLfloat)));
+		glBindVertexArray(0);
+	}
+
+	void Mesh::drawLOL() const
+	{
+		glBindVertexArray(VAO);
+		glBindBuffer(GL_ARRAY_BUFFER, VBO);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
 	}

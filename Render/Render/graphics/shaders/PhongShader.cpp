@@ -18,28 +18,34 @@ namespace ginkgo {
 		ambientLight = glm::vec4(0.1f, 0.1f, 0.1f, 1.0f);
 		directionalLight = new DirectionalLight(BaseLight(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), 0.0f), glm::vec3(0.0f, 0.0f, 0.0f));
 	}
-	
+
 	PhongShader::~PhongShader()
 	{
 		delete directionalLight;
 	}
 
-	void PhongShader::updateUniforms(const glm::mat4& model, const glm::mat4& projectionMatrix, const Material& material, const glm::vec3& cameraPosition) const
+	void PhongShader::updateUniforms(const glm::mat4& model, const glm::mat4& transformProjectionViewModel, const Material& material, const glm::vec3& cameraPosition) const
 	{
 		setUniformMat4("model", model);
-		setUniformMat4("transform", projectionMatrix);
+		setUniformMat4("transform", transformProjectionViewModel);
 
-		setUniform4f("baseColor", material.getColor());
-		setUniform4f("ambientLight", ambientLight); 
-		setUniform("directionalLight", *directionalLight);
+		if (material.hasTexture())
+		{
+			setUniform4f("baseColor", material.getColor());
+			setUniform4f("ambientLight", ambientLight);
+			setUniform("directionalLight", *directionalLight);
+			setUniform1f("specularIntensity", material.getSpecularIntensity());
+			setUniform1f("specularPower", material.getSpecularPower());
+		
+			for (unsigned int i = 0; i < pointLights.size(); i++)
+				setUniform("pointLights[" + std::to_string(i) + "]", *pointLights[i]);
+		}
 
-		setUniform1f("specularIntensity", material.getSpecularIntensity());
-		setUniform1f("specularPower", material.getSpecularPower());
+		setUniform3f("cameraPosition", cameraPosition);
 
-		setUniform3f("eyePos", cameraPosition);
-
-		for (unsigned int i = 0; i < pointLights.size(); i++)
-			setUniform("pointLights[" + std::to_string(i) + "]", *pointLights[i]);
+		setUniform1f("refractiveIndex", material.getRefractiveIndex());
+		setUniform1i("hasTexture", material.hasTexture());
+		setUniform1f("rIntensity", material.getRIntensity());
 	}
 
 	void PhongShader::setPointLights(const std::vector<PointLight*> pointLights)

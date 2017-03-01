@@ -6,11 +6,12 @@
 #include "Material.h"
 #include "Texture.h"
 #include "Transform.h"
+#include "shaders/CubeMap.h"
 
 namespace ginkgo {
 
-	Layer::Layer(const std::vector<Renderable*> renderablesL, const PhongShader* shaderL, const glm::mat4& model)
-		: renderables(renderablesL), shader(shaderL)
+	Layer::Layer(const std::vector<Renderable*> renderablesL, const glm::mat4& model)
+		: renderables(renderablesL)
 	{
 		this->model = new Transform(model);
 
@@ -20,9 +21,9 @@ namespace ginkgo {
 		unsigned int size = 0;
 		for (unsigned int c = 0; c < renderables.size(); c++)
 		{
-			tid = renderables[c]->getMaterial().getTexture().getID();
+			tid = determineTextureID(renderables[c]);
 			size++;
-			if ((c == renderables.size() - 1) || (renderables[c + 1]->getMaterial().getTexture().getID() != tid))
+			if ((c == renderables.size() - 1) || (determineTextureID(renderables[c + 1]) != tid))
 			{
 				sizeTextureIDs.push_back(size);
 				size = 0;
@@ -36,14 +37,21 @@ namespace ginkgo {
 		delete model;
 	}
 
-	bool Layer::compareRenderables(Renderable* r1, Renderable* r2)
+	GLuint Layer::determineTextureID(Renderable* r)
 	{
-		return r1->getMaterial().getTexture().getID() < r2->getMaterial().getTexture().getID();
+		return (r->getMaterial().getTexture() != nullptr) ?
+			r->getMaterial().getTexture()->getID() :
+			Layer::NO_TEXTURE;
 	}
 
-	const glm::mat4& Layer::getModel() const 
+	bool Layer::compareRenderables(Renderable* r1, Renderable* r2)
 	{
-		return model->getMatrix(); 
+		return determineTextureID(r1) < determineTextureID(r2);
+	}
+
+	const glm::mat4& Layer::getModel() const
+	{
+		return model->getMatrix();
 	}
 
 	void Layer::addRenderable(Renderable* renderable)
@@ -53,12 +61,12 @@ namespace ginkgo {
 
 		int middle = 0;
 		bool found = false;
-		unsigned int value = renderable->getMaterial().getTexture().getID();
+		unsigned int value = determineTextureID(renderable);
 
 		while (left <= right)
 		{
 			middle = (left + right) / 2;
-			unsigned int find = renderables[middle]->getMaterial().getTexture().getID();
+			unsigned int find = determineTextureID(renderables[middle]);
 			if (find == value)
 			{
 				found = true;
@@ -90,29 +98,96 @@ namespace ginkgo {
 		}
 	}
 
-	void Layer::draw(const glm::mat4& transformProjectionView, const glm::vec3& cameraPosition) const
+	void Layer::draw(const glm::mat4& transformProjectionView, const glm::vec3& cameraPosition, const PhongShader& phongShader, const CubeMap* cubeMap) const
 	{
-		shader->bind();
+		phongShader.bind();
 
-		unsigned int b = 0;
-		for (unsigned int i = 0; i < sizeTextureIDs.size(); i++)
+		if (renderables.size() > 0)
 		{
-			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, renderables[b]->getMaterial().getTexture().getID());
-			for (unsigned int a = 0; a < sizeTextureIDs[i]; a++)
+			if ((determineTextureID(renderables[0]) == Layer::NO_TEXTURE))
 			{
-				shader->updateUniforms(
-					renderables[b]->getModel(), 
-					transformProjectionView * model->getMatrix() * renderables[b]->getModel(),
-					renderables[b]->getMaterial(), 
-					cameraPosition);
-				renderables[b]->draw();
-				b++;
-			}
-			glBindTexture(GL_TEXTURE_2D, 0);
-		}
-		shader->unbind();
+				cubeMap->bindCubeMapTexture(0);
+				for (int i = 0; i < sizeTextureIDs[0]; i++)
+				{
+					phongShader.updateUniforms(
+						model->getMatrix() * renderables[i]->getModel(),
+						transformProjectionView * model->getMatrix() * renderables[i]->getModel(),
+						renderables[i]->getMaterial(),
+						cameraPosition);
+					renderables[i]->draw();
+				}
+				cubeMap->unbindCubeMapTexture();
 
+				unsigned int b = sizeTextureIDs[0];
+				for (unsigned int i = 1; i < sizeTextureIDs.size(); i++)
+				{
+					glActiveTexture(GL_TEXTURE0);
+					glBindTexture(GL_TEXTURE_2D, determineTextureID(renderables[b]));
+					for (unsigned int a = 0; a < sizeTextureIDs[i]; a++)
+					{
+						phongShader.updateUniforms(
+							model->getMatrix() * renderables[b]->getModel(),
+							transformProjectionView * model->getMatrix() * renderables[b]->getModel(),
+							renderables[b]->getMaterial(),
+							cameraPosition);
+						if (renderables[b]->getMaterial().getRefractiveIndex() >= 0) cubeMap->bindCubeMapTexture(1);
+						renderables[b]->draw();
+						if (renderables[b]->getMaterial().getRefractiveIndex() >= 0) cubeMap->unbindCubeMapTexture();
+						b++;
+					}
+					glBindTexture(GL_TEXTURE_2D, 0);
+				}
+			}
+			else
+			{
+				unsigned int b = 0;
+				for (unsigned int i = 0; i < sizeTextureIDs.size(); i++)
+				{
+					glActiveTexture(GL_TEXTURE0);
+					glBindTexture(GL_TEXTURE_2D, determineTextureID(renderables[b]));
+					for (unsigned int a = 0; a < sizeTextureIDs[i]; a++)
+					{
+						phongShader.updateUniforms(
+							model->getMatrix() * renderables[b]->getModel(),
+							transformProjectionView * model->getMatrix() * renderables[b]->getModel(),
+							renderables[b]->getMaterial(),
+							cameraPosition);
+						if (renderables[b]->getMaterial().getRefractiveIndex() >= 0) cubeMap->bindCubeMapTexture(1);
+						renderables[b]->draw();
+						if (renderables[b]->getMaterial().getRefractiveIndex() >= 0) cubeMap->unbindCubeMapTexture();
+						b++;
+					}
+					glBindTexture(GL_TEXTURE_2D, 0);
+				}
+			}
+
+			phongShader.unbind();
+		}
+	}
+
+
+	Renderable* Layer::alterRenderable(unsigned int index) const 
+	{
+		if (index < 0 || index >= renderables.size()) 
+			return nullptr; 
+
+		for (unsigned int i = 0; i < renderables.size(); i++)
+			if (renderables[i]->getIndex() == index)
+				return renderables[i];
+		
+		return nullptr; 
+	}
+
+	const Renderable* Layer::getRenderable(unsigned int index) const 
+	{
+		if (index < 0 || index >= renderables.size())
+			return nullptr;
+
+		for (unsigned int i = 0; i < renderables.size(); i++)
+			if (renderables[i]->getIndex() == index)
+				return renderables[i];
+
+		return nullptr;
 	}
 
 }

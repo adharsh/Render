@@ -58,20 +58,24 @@ namespace ginkgo {
 		
 		//float rotateOnYAxisAngle = (float)-dx / mouseRotationSensitivity * 800.0f / window->getWidth();
 		//float rotateAngle = (float)(-dy / mouseRotationSensitivity * 600.0f / window->getHeight());
-		
+		//
 		//rotateOnYAxisAngle = fmod(rotateOnYAxisAngle, 360.0f);
-		//float limitAngle = 180.0f;
+		//float limitAngle = 360.0f;
 		//rotateOnYAxisAngle = (rotateOnYAxisAngle > limitAngle) ?
 		//	limitAngle :
 		//	(rotateOnYAxisAngle < -limitAngle) ? -limitAngle : rotateOnYAxisAngle;
-
+		//
 		//rotateAngle = fmod(rotateAngle, 360.0f);
 		//rotateAngle = (rotateAngle > limitAngle) ?
 		//	limitAngle :
 		//	(rotateAngle < -limitAngle) ? -limitAngle : rotateAngle;
+		//
+		//look = glm::rotateY(look, (float)glm::radians(rotateOnYAxisAngle));
+		//look = glm::rotate(look, (float)glm::radians((float)(rotateAngle)), glm::normalize(glm::cross(look, cameraUp)));
 
 		look = glm::rotateY(look, (float)glm::radians((float)-dx / mouseRotationSensitivity * 800.0f / window->getWidth()));
-		look = glm::rotate(look, (float)glm::radians((float)(-dy / mouseRotationSensitivity * 600.0f / window->getHeight())), glm::normalize(glm::cross(look, cameraUp)));
+		look = glm::rotate(look, (float)glm::radians((float)((float)(-dy / mouseRotationSensitivity * 600.0f / window->getHeight()))), glm::normalize(glm::cross(look, cameraUp)));
+		//look = glm::rotateX(look, (float)glm::radians((float)-dy / mouseRotationSensitivity * 600.0f / window->getHeight()));
 
 		cameraFront = look;
 		xSave = x;

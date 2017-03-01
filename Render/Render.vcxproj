@@ -134,6 +134,7 @@
     <ClCompile Include="Render\graphics\Mesh.cpp" />
     <ClCompile Include="Render\graphics\shaders\CubeMap.cpp" />
     <ClCompile Include="Render\graphics\shaders\PhongShader.cpp" />
+    <ClCompile Include="Render\graphics\shaders\ReflectionShader.cpp" />
     <ClCompile Include="Render\graphics\shaders\Shader.cpp" />
     <ClCompile Include="Render\graphics\Texture.cpp" />
     <ClCompile Include="Render\Time.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="Render\graphics\Mesh.h" />
     <ClInclude Include="Render\graphics\shaders\PhongShader.h" />
     <ClInclude Include="Render\graphics\Renderable.h" />
+    <ClInclude Include="Render\graphics\shaders\ReflectionShader.h" />
     <ClInclude Include="Render\graphics\Texture.h" />
     <ClInclude Include="Render\graphics\Transform.h" />
     <ClInclude Include="Render\Handle.h" />
@@ -170,6 +172,8 @@
     <None Include="Render\res\shaders\fragmentshader.fs" />
     <None Include="Render\res\shaders\phongFragment.fs" />
     <None Include="Render\res\shaders\phongVertex.vs" />
+    <None Include="Render\res\shaders\reflectionFragment.fs" />
+    <None Include="Render\res\shaders\reflectionVertex.vs" />
     <None Include="Render\res\shaders\vertexshader.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

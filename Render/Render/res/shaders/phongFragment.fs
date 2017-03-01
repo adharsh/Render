@@ -3,12 +3,12 @@ precision highp float;
 
 const int MAX_POINT_LIGHTS = 4;
 
+in vec3 worldPos;
 in vec2 texCoord;
 in vec3 normalCoord;
-in vec3 worldPos;
+in vec3 Normal;
 
 out vec4 fragColor;
-
 
 struct BaseLight
 {
@@ -38,15 +38,14 @@ struct PointLight
 
 uniform vec4 baseColor;
 uniform vec4 ambientLight;
-uniform sampler2D sampler;
+uniform sampler2D diffuseTexture;
 
 uniform DirectionalLight directionalLight;
 uniform PointLight pointLights[MAX_POINT_LIGHTS];
 
-uniform vec3 eyePos;
+uniform vec3 cameraPosition;
 uniform float specularIntensity;
 uniform float specularPower;
-
 
 vec4 calcLight(BaseLight base, vec3 direction, vec3 normal)
 {
@@ -59,7 +58,7 @@ vec4 calcLight(BaseLight base, vec3 direction, vec3 normal)
 	{
 		diffuseColor = base.color * base.intensity * diffuseFactor;
 
-		vec3 directionToEye = normalize(eyePos - worldPos);
+		vec3 directionToEye = normalize(cameraPosition - worldPos);
 		vec3 reflectDirection = normalize(reflect(direction, normal));
 
 		float specularFactor = dot(directionToEye, reflectDirection);
@@ -95,22 +94,59 @@ vec4 calcPointLight(PointLight pointLight, vec3 normal)
 	return 15.0f * color / attenuation; 
 }
 
+uniform sampler2D environmentalMapping;
+uniform samplerCube skybox;
+uniform float refractiveIndex;
+uniform bool hasTexture;
+uniform float rIntensity;
+
 void main()
 {
-	vec4 totalLight = ambientLight;
-	vec4 color = baseColor;
-	vec4 textureColor = texture(sampler, texCoord.xy);
+	vec4 diffuse_color = vec4(0.0f, 0.0f, 0.0f, 0.0f);
+	vec4 r_color = vec4(0.0f, 0.0f, 0.0f, 0.0f);
 
-	if(textureColor != vec4(0.0f, 0.0f, 0.0f, 0.0f))
-		color *= textureColor;
+	if(hasTexture)
+	{
+		vec4 totalLight = ambientLight;
+		vec4 color = baseColor;
+		vec4 textureColor = texture(diffuseTexture, texCoord.xy);
+
+		if(textureColor != vec4(0.0f, 0.0f, 0.0f, 0.0f))
+			color *= textureColor;
 	
-	vec3 normal = normalize(normalCoord); //TODO: gaureentte its already normalized, so in the future take out this code
+		vec3 normal = normalize(normalCoord); //TODO: gaureentte its already normalized, so in the future take out this code
 
-	totalLight += calcDirectionalLight(directionalLight, normal);
+		totalLight += calcDirectionalLight(directionalLight, normal);
 
-	for(int i = 0; i < MAX_POINT_LIGHTS; i++)
-		totalLight += calcPointLight(pointLights[i], normal);
+		for(int i = 0; i < MAX_POINT_LIGHTS; i++)
+			totalLight += calcPointLight(pointLights[i], normal);
 
-	fragColor = color * totalLight;
-	//fragColor = vec4(1.0f, 0.0f, 0.0f, 1.0f);
+		diffuse_color = color * totalLight;
+	}
+
+	if(refractiveIndex >= 0.0f)
+	{
+		vec3 Incident = normalize(worldPos - cameraPosition);
+		vec3 R;
+		if(refractiveIndex > 1.0f) 
+			R = refract(Incident, normalize(Normal), 1.0f/refractiveIndex);
+		else 
+			R = reflect(Incident, normalize(Normal));
+		
+		r_color = texture(skybox, R) * rIntensity;
+
+ //   	if(hasTexture)
+//    	{
+//    		float reflect_intensity = texture(environmentalMapping, texCoord.xy).r;
+//    		if(reflect_intensity > 0.1) // Only sample reflections when above a certain treshold
+//    			r_color *= reflect_intensity;
+ //   	}
+	}
+
+	fragColor = diffuse_color + r_color;
+	//fragColor = r_color;
+//	if(refractiveIndex < 0) fragColor = vec4(0.0, 0.0, 1.0f, 1.0f);
+//	if(refractiveIndex == 0) fragColor = vec4(1.0, 0.0, 0.0f, 1.0f);
+//	if(refractiveIndex > 1) fragColor = vec4(0.0, 1.0, 0.0f, 1.0f);
+
 }

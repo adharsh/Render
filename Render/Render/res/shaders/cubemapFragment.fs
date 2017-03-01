@@ -14,4 +14,3 @@ void main()
 	//color = texture(skybox, TexCoords) * vec4(1.1f, 1.1f, 1.1f, 1.0f);
 	color = texture(skybox, texCoords);
 }
-  

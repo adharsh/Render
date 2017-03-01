@@ -1,14 +1,22 @@
 TODOS:
 
 Priority To Do List:
-*light deflection + refraction thing
 *text rendering -> understand texture atlasing
-*use texture atlasing for cubemaps
-*use texture atlasing for multitude of images
 *explore universe with images thing
 *use CUDA with this
 
-*how to orient mouse position when first starts up
+bind textures properly so that texture and cubemap come together -> Layer.cpp
+how to orient mouse position when in corners when changing window size
+cube doesn't work, indices work, normals work, something else maybe? vertices gone wrong?
+When I pass model matrix to shader, it's actually layer.model  * renderable.model together, that's supposed to happen right?
+transform should be a reference to the class, not a pointer
+.use texture atlasing for cubemaps
+.use texture atlasing for multitude of images
+some cool skyboxes: http://virtuallyprogramming.com/Content/Content.html
+make getters const even for data primitive types
+take out unnecessary includdes like iostream and gl/glew.h
+possible to make alterRenderable() or getRenderable() more efficient?
+
 post processing stuff -> hud - text + fonts, other interactable stuff -> https://www.opengl.org/discussion_boards/showthread.php/124875-How-to-draw-a-line-using-OpenGL-programme, https://learnopengl.com/#!In-Practice/Text-Rendering, https://learnopengl.com/#!Advanced-OpenGL/Framebuffers
 loads obj uvs, but uvs are messed up -> next meeting; -> http://blender.stackexchange.com/questions/1022/adding-uv-mapping-to-mesh, https://en.wikibooks.org/wiki/Blender_3D:_Noob_to_Pro/UV_Map_Basics
 msaa in OpenGL etc. -> https://learnopengl.com/#!Advanced-OpenGL/Anti-Aliasing
@@ -38,7 +46,9 @@ Yups:
 *put classes in different folders to organize code -> yup
 *refactor code for forward declarations -> yup
 *cubemaps -> yup
+*light deflection + refraction thing -> yup
 
+fix layer class so order matters even when renderable doesn't have a texture (it's nullptr) -> yup
 -how to initialize Transform without allocating memory for it -> its fine -> yup
 -tester for Textures, materials, yes
 -add dictionary for vector, static const values for each type -> yup
@@ -116,3 +126,5 @@ generateDataMatrix is wrong
 check if its just drawing it not on screen
 check normals and vertices size 
 
+ALWAYS REMEMBER TO UNBIND STUFF
+-unbind vao's, vbo's, ebo's, textures, etc...

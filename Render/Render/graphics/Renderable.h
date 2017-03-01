@@ -15,6 +15,8 @@ namespace ginkgo {
 		const Mesh* mesh;
 		Material* material;
 		Transform* model;
+		static unsigned int index;
+		unsigned int r_index;
 	public:
 		Renderable(const Mesh* mesh, Material* material, const glm::mat4& model = glm::mat4());
 		~Renderable();
@@ -28,6 +30,8 @@ namespace ginkgo {
 
 		const Mesh& getMesh() const { return *mesh; }
 		const Material& getMaterial() const { return *material; }
+
+		const unsigned int getIndex() const { return r_index; }
 
 		void draw() const;
 

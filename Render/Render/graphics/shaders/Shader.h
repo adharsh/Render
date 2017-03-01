@@ -16,10 +16,10 @@ namespace ginkgo {
 		Shader();
 		~Shader();
 
-		void addVertexShader(const char* s);
-		void addGeometryShader(const char* s);
-		void addFragmentShader(const char* s);
-		void addProgram(const char* s, GLenum type);
+		void addVertexShader(const char* filepath);
+		void addGeometryShader(const char* filepath);
+		void addFragmentShader(const char* filepath);
+		void addProgram(const char* filepath, GLenum type);
 		void compileShader() const;
 
 

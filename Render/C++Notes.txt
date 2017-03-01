@@ -323,10 +323,10 @@ how do 24 bit depth images work with unsigned char* ? each byte is an unsigned c
 
 *****************************************************************************************
 *****************************************************************************************
-
-
-
 Coding Guidelines:
+
+
+
 better to use pointers instead of references as member variables
 -so in code you understand that you're using a reference and not an actual variable
 -better to have a vector of pointers than a vector of references
@@ -400,3 +400,12 @@ instead of
 namespace ginkgo
 {
 }
+
+shaders:
+vertex shader has variables that have first letter lowercased
+fragment shader has variables that have first letter capital
+
+long ternary statements format:
+r1->getMaterial().getTexture() != nullptr) ?
+			r1->getMaterial().getTexture()->getID() :
+			Layer::NO_TEXTURE
