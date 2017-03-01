@@ -1,3 +1,9 @@
+matrix rotation
+rx ry rz 0
+ux uy uz 0
+fx fy fz 0
+0  0  0  1
+
 TODOS:
 
 Priority To Do List:
@@ -6,7 +12,7 @@ Priority To Do List:
 *explore universe with images thing
 *use CUDA with this
 
-disable changing screen sizes
+disable changing screen sizes -> camera update no projection
 framebuffer thing
 multiple objects reflection/refraction
 *return set float not const float ->  data primitive types

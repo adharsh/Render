@@ -1,6 +1,7 @@
 #pragma once
 
 #include <GL/glew.h>
+#include <glm/gtc/quaternion.hpp>
 
 namespace ginkgo {
 
@@ -13,8 +14,7 @@ namespace ginkgo {
 		glm::mat4 projection;
 		glm::mat4 view;
 		glm::vec3 cameraPosition;
-		glm::vec3 cameraFront;
-		glm::vec3 cameraUp;
+		glm::quat cameraRotation;
 		GLfloat fov;
 		float cameraSpeedSensitivity;
 		float mouseRotationSensitivity;
@@ -35,7 +35,10 @@ namespace ginkgo {
 		void input(double dt);
 		void update(double dt);
 
-	};
+	private:
 
+		double xSave;
+		double ySave;
+	};
 
 }

@@ -2,6 +2,7 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/rotate_vector.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 #include "Window.h"
 
@@ -12,38 +13,63 @@ namespace ginkgo {
 		: window(win), cameraPosition(camera_position)
 	{
 		fov = 45.0f;//fov 90 or 45?
-		cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-		cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+	/*	cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+		cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);*/
 
 		projection = glm::perspective(fov, window->getAspectRatio(), 0.1f, 1000.0f);
-		view = glm::lookAt(
-			cameraPosition,
-			cameraPosition + cameraFront,
-			cameraUp);
+
+		glm::quat pitch = glm::angleAxis(0.f, glm::vec3(1, 0, 0));
+		glm::quat yaw = glm::angleAxis(0.f, glm::vec3(0, 1, 0));
+
+		cameraRotation = glm::normalize(pitch * yaw);
+		view = glm::toMat4(cameraRotation);
 
 		cameraSpeedSensitivity = 3.0f; //3.0f
-		mouseRotationSensitivity = 2.f; //5.0f
+		mouseRotationSensitivity = 200.f; //5.0f
+
+		window->disableMouseCursor();
+		window->setMousePosition(window->getWidth() / 2.0f, window->getHeight() / 2.0f);
+
+		xSave = window->getWidth() / 2.0;
+		ySave = window->getHeight() / 2.0;
 	}
 
 	void Camera::input(double dt)
 	{
 		GLfloat cameraSpeed = dt * cameraSpeedSensitivity;
-		if (window->isKeyPressed(GLFW_KEY_W))
-			cameraPosition += cameraSpeed * cameraFront;
-		if (window->isKeyPressed(GLFW_KEY_S))
-			cameraPosition -= cameraSpeed * cameraFront;
-		if (window->isKeyPressed(GLFW_KEY_A))
-			cameraPosition -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
-		if (window->isKeyPressed(GLFW_KEY_D))
-			cameraPosition += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+		glm::vec3 r;
+		glm::vec3 f;
 
+		r.x = view[0][0];
+		r.y = view[1][0];
+		r.z = view[2][0];
+
+		f.x = -view[0][2];
+		f.y = -view[1][2];
+		f.z = -view[2][2];
+
+		r = glm::normalize(r);
+		f = glm::normalize(f);
+
+		//std::cout << r.x << " " << r.y << " " << r.z << "::" << f.x << " " << f.y << " " << f.z << std::endl;
+
+		if (window->isKeyPressed(GLFW_KEY_W))
+			cameraPosition += cameraSpeed * f;
+		if (window->isKeyPressed(GLFW_KEY_S))
+			cameraPosition -= cameraSpeed * f;
+		if (window->isKeyPressed(GLFW_KEY_A))
+			cameraPosition -= r * cameraSpeed;
+		if (window->isKeyPressed(GLFW_KEY_D))
+			cameraPosition += r * cameraSpeed;
+
+		static bool first = true;
 		double x, y;
 		window->getMousePosition(x, y);
 
-		static unsigned int width = window->getWidth();
-		static unsigned int height = window->getHeight();
-		static double xSave = x;
-		static double ySave = y;
+
+		static float _pitch = 0;
+		static float _yaw = 0;
+
 	/*	if (width != window->getWidth() || height != window->getHeight())
 		{
 			width = window->getWidth();
@@ -53,93 +79,58 @@ namespace ginkgo {
 			ySave = window->getHeight() / 2.0f;
 			return;
 		}*/
+		
+
 		double dx = x - xSave;
 		double dy = y - ySave;
 
-		//window->setMousePosition(window->getWidth() / 2.0f, window->getHeight() / 2.0f);
-		if(dx != 0 || dy != 0)
-		std::cout << dx << " " << dy << "\n";
+		if (x == 0 || y == 0)
+		{
+			return;
+		}
 
-		glm::vec3 look = cameraFront;
+		if (x != 0 && y != 0 && xSave == 0 && ySave == 0 && first)
+		{
+			first = false;
+			xSave = x;
+			ySave = y;
+			dx = 0;
+			dy = 0;
+		}
+
+		_pitch += (dy / mouseRotationSensitivity);
+		_yaw += (dx / mouseRotationSensitivity);
+
+		//window->setMousePosition(window->getWidth() / 2.0f, window->getHeight() / 2.0f);
+
+
+		glm::quat pitch = glm::angleAxis(_pitch, glm::vec3(1, 0, 0));
+		glm::quat yaw = glm::angleAxis(_yaw, glm::vec3(0, 1, 0));
+
+		cameraRotation = glm::normalize(pitch * yaw);
+
+		/*glm::vec3 look = cameraFront;
 		glm::vec3 side = glm::normalize(glm::cross(look, cameraUp));
 		look = glm::rotateY(look, (float)glm::radians((float)-dx / mouseRotationSensitivity * 800.0f / window->getWidth()));
 		
-		if(glm::length())
 		look = glm::rotate(look, (float)glm::radians((float)((float)(-dy / mouseRotationSensitivity * 600.0f / window->getHeight()))), side); //gimbal lock
-		
+		*/
 		//std::cout << print.x << " " << print.y << " " << print.z << std::endl;
 		//look = glm::rotateX(look, (float)glm::radians((float)-dy / mouseRotationSensitivity * 600.0f / window->getHeight()));
 
-		cameraFront = look;
+		//cameraFront = look;
 		xSave = x;
 		ySave = y;
-
-
-
-		//float rotateOnYAxisAngle = (float)-dx / mouseRotationSensitivity * 800.0f / window->getWidth();
-		//float rotateAngle = (float)(-dy / mouseRotationSensitivity * 600.0f / window->getHeight());
-		//
-		//rotateOnYAxisAngle = fmod(rotateOnYAxisAngle, 360.0f);
-		//float limitAngle = 360.0f;
-		//rotateOnYAxisAngle = (rotateOnYAxisAngle > limitAngle) ?
-		//	limitAngle :
-		//	(rotateOnYAxisAngle < -limitAngle) ? -limitAngle : rotateOnYAxisAngle;
-		//
-		//rotateAngle = fmod(rotateAngle, 360.0f);
-		//rotateAngle = (rotateAngle > limitAngle) ?
-		//	limitAngle :
-		//	(rotateAngle < -limitAngle) ? -limitAngle : rotateAngle;
-		//
-		//look = glm::rotateY(look, (float)glm::radians(rotateOnYAxisAngle));
-		//look = glm::rotate(look, (float)glm::radians((float)(rotateAngle)), glm::normalize(glm::cross(look, cameraUp)));
-
-
-		//static double xSave = 0;
-		//static double ySave = 0;
-		//double x, y;
-		//window->getMousePosition(x, y);
-		//static bool first = true;
-		//if (!first)
-		//{
-		//	double dx = x - xSave;
-		//	double dy = y - ySave;
-
-		//	glm::vec3 look = cameraFront;
-
-		//	look = glm::rotateY(look, (float)glm::radians(-dx / mouseRotationSensitivity));
-		//	look = glm::rotate(look, (float)glm::radians(-dy / mouseRotationSensitivity), glm::normalize(glm::cross(look, cameraUp)));
-
-		//	cameraFront = look;
-		//}
-		//first = false;
-		//xSave = x;
-		//ySave = y;
-
-
-		//static double oXS, oYS;
-		//static double xS, yS;
-		//double yOffset = yS - oYS;
-		//oXS = xS;
-		//oYS = yS;
-		//window.getScrollOffset(xS, yS);
-		////std::cout << yOffset << std::endl;
-
-		//if (fov >= 1.0f && fov <= 45.0f)
-		//	fov -= yOffset;
-		//if (fov <= 1.0f)
-		//	fov = 1.0f;
-		//if (fov >= 45.0f)
-		//	fov = 45.0f;
 
 	}
 
 	void Camera::update(double dt)
 	{
 		projection = glm::perspective(fov, window->getAspectRatio(), 0.1f, 1000.0f);
-		view = glm::lookAt(
-			cameraPosition,
-			cameraPosition + cameraFront,
-			cameraUp);
+		view = glm::toMat4(cameraRotation);
+		/*
+		lookat 3 vecs = one vec -> view
+		*/
 	}
 
 }

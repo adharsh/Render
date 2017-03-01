@@ -32,8 +32,6 @@ namespace ginkgo {
 	{
 		phongShader = new PhongShader();
 		camera = new Camera(window, glm::vec3(0.0f, 0.01f, 0.0f));
-		//window->disableMouseCursor();
-		window->setMousePosition(window->getWidth() / 2.0f, window->getHeight() / 2.0f);
 
 		float side = 1.0f;
 
@@ -87,7 +85,7 @@ namespace ginkgo {
 		skyboxImages[CubeMap::BOTTOM] = "Render/res/textures/skybox/bottom.jpg";
 		skyboxImages[CubeMap::BACK] = "Render/res/textures/skybox/back.jpg";
 
-		skybox = new CubeMap(skyboxImages, 1);
+		skybox = new CubeMap(skyboxImages, 10);
 		text = new Text(window->getWidth(), window->getHeight(), "Render/res/fonts/arial.ttf");
 	}
 
@@ -110,7 +108,13 @@ namespace ginkgo {
 
 	void Game::render()
 	{
-		glm::mat4 transformProjectionView = camera->getProjection() * camera->getView();
+		glm::mat4 translation;
+
+		translation[3][0] = -camera->getCameraPosition().x;
+		translation[3][1] = -camera->getCameraPosition().y;
+		translation[3][2] = -camera->getCameraPosition().z;
+
+		glm::mat4 transformProjectionView = camera->getProjection() * camera->getView() * translation;
 		layer->draw(transformProjectionView, camera->getCameraPosition(), *phongShader, skybox);
 		skybox->draw(transformProjectionView);
 		text->draw("Game Engine", 0.0f, window->getHeight() - 50.0f, 1.0f, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));

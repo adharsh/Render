@@ -8,6 +8,8 @@
 #include "Transform.h"
 #include "shaders/CubeMap.h"
 
+#include <iostream>
+
 namespace ginkgo {
 
 	Layer::Layer(const std::vector<Renderable*> renderablesL, const glm::mat4& model)
@@ -100,7 +102,6 @@ namespace ginkgo {
 	void Layer::draw(const glm::mat4& transformProjectionView, const glm::vec3& cameraPosition, const PhongShader& phongShader, const CubeMap* cubeMap) const
 	{
 		phongShader.bind();
-
 		if (renderables.size() > 0)
 		{
 			unsigned int b = 0;
