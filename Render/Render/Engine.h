@@ -4,7 +4,7 @@ namespace ginkgo{
 	
 	class Window;
 	class Game;
-
+	
 	class Engine
 	{
 	private:

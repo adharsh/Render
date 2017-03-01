@@ -13,8 +13,7 @@ namespace ginkgo {
 	Layer::Layer(const std::vector<Renderable*> renderablesL, const glm::mat4& model)
 		: renderables(renderablesL)
 	{
-		this->model = new Transform(model);
-
+		this->model = new Transform();
 		std::sort(renderables.begin(), renderables.end(), compareRenderables);
 
 		GLuint tid = 0;
@@ -104,9 +103,15 @@ namespace ginkgo {
 
 		if (renderables.size() > 0)
 		{
+			unsigned int b = 0;
+			unsigned int i = 0;
 			if ((determineTextureID(renderables[0]) == Layer::NO_TEXTURE))
 			{
-				cubeMap->bindCubeMapTexture(0);
+				phongShader.setUniform1i("skybox", 0);		   //dependant on phongFragment.fs
+				phongShader.setUniform1i("diffuseTexture", 1); //dependant on phongFragment.fs
+				
+				glActiveTexture(GL_TEXTURE0);
+				cubeMap->bindCubeMapTexture();
 				for (int i = 0; i < sizeTextureIDs[0]; i++)
 				{
 					phongShader.updateUniforms(
@@ -118,67 +123,47 @@ namespace ginkgo {
 				}
 				cubeMap->unbindCubeMapTexture();
 
-				unsigned int b = sizeTextureIDs[0];
-				for (unsigned int i = 1; i < sizeTextureIDs.size(); i++)
-				{
-					glActiveTexture(GL_TEXTURE0);
-					glBindTexture(GL_TEXTURE_2D, determineTextureID(renderables[b]));
-					for (unsigned int a = 0; a < sizeTextureIDs[i]; a++)
-					{
-						phongShader.updateUniforms(
-							model->getMatrix() * renderables[b]->getModel(),
-							transformProjectionView * model->getMatrix() * renderables[b]->getModel(),
-							renderables[b]->getMaterial(),
-							cameraPosition);
-						if (renderables[b]->getMaterial().getRefractiveIndex() >= 0) cubeMap->bindCubeMapTexture(1);
-						renderables[b]->draw();
-						if (renderables[b]->getMaterial().getRefractiveIndex() >= 0) cubeMap->unbindCubeMapTexture();
-						b++;
-					}
-					glBindTexture(GL_TEXTURE_2D, 0);
-				}
-			}
-			else
-			{
-				unsigned int b = 0;
-				for (unsigned int i = 0; i < sizeTextureIDs.size(); i++)
-				{
-					glActiveTexture(GL_TEXTURE0);
-					glBindTexture(GL_TEXTURE_2D, determineTextureID(renderables[b]));
-					for (unsigned int a = 0; a < sizeTextureIDs[i]; a++)
-					{
-						phongShader.updateUniforms(
-							model->getMatrix() * renderables[b]->getModel(),
-							transformProjectionView * model->getMatrix() * renderables[b]->getModel(),
-							renderables[b]->getMaterial(),
-							cameraPosition);
-						if (renderables[b]->getMaterial().getRefractiveIndex() >= 0) cubeMap->bindCubeMapTexture(1);
-						renderables[b]->draw();
-						if (renderables[b]->getMaterial().getRefractiveIndex() >= 0) cubeMap->unbindCubeMapTexture();
-						b++;
-					}
-					glBindTexture(GL_TEXTURE_2D, 0);
-				}
+				b = sizeTextureIDs[0];
+				i = 1;
 			}
 
-			phongShader.unbind();
+			phongShader.setUniform1i("diffuseTexture", 0); //dependant on phongFragment.fs
+			phongShader.setUniform1i("skybox", 1);		   //dependant on phongFragment.fs
+			for (; i < sizeTextureIDs.size(); i++)
+			{
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, determineTextureID(renderables[b]));
+				for (unsigned int a = 0; a < sizeTextureIDs[i]; a++)
+				{
+					phongShader.updateUniforms(
+						model->getMatrix() * renderables[b]->getModel(),
+						transformProjectionView * model->getMatrix() * renderables[b]->getModel(),
+						renderables[b]->getMaterial(),
+						cameraPosition);
+					if (renderables[b]->getMaterial().getRefractiveIndex() >= 0) { glActiveTexture(GL_TEXTURE1); cubeMap->bindCubeMapTexture(); }
+					renderables[b]->draw();
+					if (renderables[b]->getMaterial().getRefractiveIndex() >= 0) cubeMap->unbindCubeMapTexture();
+					b++;
+				}
+				glBindTexture(GL_TEXTURE_2D, 0);
+			}
 		}
+		phongShader.unbind();
 	}
 
-
-	Renderable* Layer::alterRenderable(unsigned int index) const 
+	Renderable* Layer::alterRenderable(unsigned int index) const
 	{
-		if (index < 0 || index >= renderables.size()) 
-			return nullptr; 
+		if (index < 0 || index >= renderables.size())
+			return nullptr;
 
 		for (unsigned int i = 0; i < renderables.size(); i++)
 			if (renderables[i]->getIndex() == index)
 				return renderables[i];
-		
-		return nullptr; 
+
+		return nullptr;
 	}
 
-	const Renderable* Layer::getRenderable(unsigned int index) const 
+	const Renderable* Layer::getRenderable(unsigned int index) const
 	{
 		if (index < 0 || index >= renderables.size())
 			return nullptr;

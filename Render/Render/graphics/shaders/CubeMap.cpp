@@ -5,9 +5,8 @@
 
 namespace ginkgo {
 
-	CubeMap::CubeMap(std::map<unsigned int, const char*> faces, float scale, const glm::mat4& model)
+	CubeMap::CubeMap(std::map<unsigned int, const char*> faces, float scale)
 	{
-		this->model = new Transform(model);
 		addVertexShader("Render/res/shaders/cubemapVertex.vs");
 		addFragmentShader("Render/res/shaders/cubemapFragment.fs");
 		compileShader();
@@ -72,26 +71,15 @@ namespace ginkgo {
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
-
-		//		this->model->rotateMatrix(glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	}
 
 	CubeMap::~CubeMap() {
 		glDeleteVertexArrays(1, &VAO);
 		glDeleteBuffers(1, &VBO);
-
-		delete model;
 	}
 
-	const glm::mat4& CubeMap::getModel() const
+	void CubeMap::bindCubeMapTexture() const
 	{
-		return model->getMatrix();
-	}
-
-	void CubeMap::bindCubeMapTexture(int textureNumber) const
-	{
-		glActiveTexture(GL_TEXTURE0 + textureNumber);
-		//glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
 	}
 
@@ -107,8 +95,10 @@ namespace ginkgo {
 		glDepthFunc(GL_LEQUAL);
 
 		glBindVertexArray(VAO);
-		bindCubeMapTexture(0);
-		setUniformMat4("transform", transformProjectionView * model->getMatrix());
+		
+		glActiveTexture(GL_TEXTURE0);
+		bindCubeMapTexture();
+		setUniformMat4("transform", transformProjectionView);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 		unbindCubeMapTexture();
 		glBindVertexArray(0);

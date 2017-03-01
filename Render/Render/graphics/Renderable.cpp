@@ -13,7 +13,7 @@ namespace ginkgo {
 	Renderable::Renderable(const Mesh* mesh, Material* material, const glm::mat4& model)
 		: mesh(mesh), material(material)
 	{
-		this->model = new Transform(model);
+		this->model = new Transform();
 		r_index = index;
 		index++;
 	}

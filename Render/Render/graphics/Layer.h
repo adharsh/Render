@@ -19,7 +19,7 @@ namespace ginkgo {
 		std::vector<Renderable*> renderables;
 		std::vector<unsigned int> sizeTextureIDs;
 		Transform* model;
-		static const unsigned int NO_TEXTURE = 0; //must be less than 0; if this is changed, then phongFragment.fs should be changed too
+		static const unsigned int NO_TEXTURE = 0; //must be equal than 0 -> created textures will never have an id of 0
 
 		static bool compareRenderables(Renderable* r1, Renderable* r2);
 		static unsigned int determineTextureID(Renderable* r1);

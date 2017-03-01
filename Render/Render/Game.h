@@ -8,6 +8,7 @@ namespace ginkgo {
 	class CubeMap;
 	class PhongShader;
 	class ReflectionShader;
+	class Text;
 
 	class Game
 	{
@@ -18,6 +19,7 @@ namespace ginkgo {
 		CubeMap* skybox;
 		ReflectionShader* reflectionShader;
 		PhongShader* phongShader;
+		Text* text;
 	public:
 		Game(Window* window);
 

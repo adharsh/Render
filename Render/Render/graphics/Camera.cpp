@@ -21,8 +21,8 @@ namespace ginkgo {
 			cameraPosition + cameraFront,
 			cameraUp);
 
-		cameraSpeedSensitivity = 3.0f;
-		mouseRotationSensitivity = 5.0f;
+		cameraSpeedSensitivity = 3.0f; //3.0f
+		mouseRotationSensitivity = 2.f; //5.0f
 	}
 
 	void Camera::input(double dt)
@@ -37,25 +37,45 @@ namespace ginkgo {
 		if (window->isKeyPressed(GLFW_KEY_D))
 			cameraPosition += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
 
+		double x, y;
+		window->getMousePosition(x, y);
+
 		static unsigned int width = window->getWidth();
 		static unsigned int height = window->getHeight();
-		static double xSave = width / 2.0f;
-		static double ySave = height / 2.0f;
-		if (width != window->getWidth() || height != window->getHeight())
+		static double xSave = x;
+		static double ySave = y;
+	/*	if (width != window->getWidth() || height != window->getHeight())
 		{
 			width = window->getWidth();
 			height = window->getHeight();
 			window->setMousePosition(window->getWidth() / 2.0f, window->getHeight() / 2.0f);
 			xSave = window->getWidth() / 2.0f;
 			ySave = window->getHeight() / 2.0f;
-		}
-		double x, y;
-		window->getMousePosition(x, y);
+			return;
+		}*/
 		double dx = x - xSave;
 		double dy = y - ySave;
 
+		//window->setMousePosition(window->getWidth() / 2.0f, window->getHeight() / 2.0f);
+		if(dx != 0 || dy != 0)
+		std::cout << dx << " " << dy << "\n";
+
 		glm::vec3 look = cameraFront;
+		glm::vec3 side = glm::normalize(glm::cross(look, cameraUp));
+		look = glm::rotateY(look, (float)glm::radians((float)-dx / mouseRotationSensitivity * 800.0f / window->getWidth()));
 		
+		if(glm::length())
+		look = glm::rotate(look, (float)glm::radians((float)((float)(-dy / mouseRotationSensitivity * 600.0f / window->getHeight()))), side); //gimbal lock
+		
+		//std::cout << print.x << " " << print.y << " " << print.z << std::endl;
+		//look = glm::rotateX(look, (float)glm::radians((float)-dy / mouseRotationSensitivity * 600.0f / window->getHeight()));
+
+		cameraFront = look;
+		xSave = x;
+		ySave = y;
+
+
+
 		//float rotateOnYAxisAngle = (float)-dx / mouseRotationSensitivity * 800.0f / window->getWidth();
 		//float rotateAngle = (float)(-dy / mouseRotationSensitivity * 600.0f / window->getHeight());
 		//
@@ -73,13 +93,6 @@ namespace ginkgo {
 		//look = glm::rotateY(look, (float)glm::radians(rotateOnYAxisAngle));
 		//look = glm::rotate(look, (float)glm::radians((float)(rotateAngle)), glm::normalize(glm::cross(look, cameraUp)));
 
-		look = glm::rotateY(look, (float)glm::radians((float)-dx / mouseRotationSensitivity * 800.0f / window->getWidth()));
-		look = glm::rotate(look, (float)glm::radians((float)((float)(-dy / mouseRotationSensitivity * 600.0f / window->getHeight()))), glm::normalize(glm::cross(look, cameraUp)));
-		//look = glm::rotateX(look, (float)glm::radians((float)-dy / mouseRotationSensitivity * 600.0f / window->getHeight()));
-
-		cameraFront = look;
-		xSave = x;
-		ySave = y;
 
 		//static double xSave = 0;
 		//static double ySave = 0;

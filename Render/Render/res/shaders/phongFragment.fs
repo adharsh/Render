@@ -5,7 +5,7 @@ const int MAX_POINT_LIGHTS = 4;
 
 in vec3 worldPos;
 in vec2 texCoord;
-in vec3 normalCoord;
+in vec3 normalCoord; //**
 in vec3 Normal;
 
 out vec4 fragColor;
@@ -94,7 +94,6 @@ vec4 calcPointLight(PointLight pointLight, vec3 normal)
 	return 15.0f * color / attenuation; 
 }
 
-uniform sampler2D environmentalMapping;
 uniform samplerCube skybox;
 uniform float refractiveIndex;
 uniform bool hasTexture;
@@ -134,19 +133,11 @@ void main()
 			R = reflect(Incident, normalize(Normal));
 		
 		r_color = texture(skybox, R) * rIntensity;
-
- //   	if(hasTexture)
-//    	{
-//    		float reflect_intensity = texture(environmentalMapping, texCoord.xy).r;
-//    		if(reflect_intensity > 0.1) // Only sample reflections when above a certain treshold
-//    			r_color *= reflect_intensity;
- //   	}
 	}
 
-	fragColor = diffuse_color + r_color;
+	fragColor = normalize(diffuse_color + r_color);
 	//fragColor = r_color;
 //	if(refractiveIndex < 0) fragColor = vec4(0.0, 0.0, 1.0f, 1.0f);
 //	if(refractiveIndex == 0) fragColor = vec4(1.0, 0.0, 0.0f, 1.0f);
 //	if(refractiveIndex > 1) fragColor = vec4(0.0, 1.0, 0.0f, 1.0f);
-
 }
