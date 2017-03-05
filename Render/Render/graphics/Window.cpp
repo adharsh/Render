@@ -30,10 +30,11 @@ namespace ginkgo {
 			return false;
 		}
 
+		//window resize
+		glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 		window = (isFullScreen) ?
 			glfwCreateWindow(width, height, title, glfwGetPrimaryMonitor(), NULL) :
 			glfwCreateWindow(width, height, title, NULL, NULL);
-
 		if (!window)
 		{
 			glfwTerminate();

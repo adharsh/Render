@@ -18,6 +18,8 @@ namespace ginkgo {
 		GLfloat fov;
 		float cameraSpeedSensitivity;
 		float mouseRotationSensitivity;
+		double xSave;
+		double ySave;
 	public:
 		Camera(const Window* window, const glm::vec3& camera_position);
 		
@@ -26,6 +28,7 @@ namespace ginkgo {
 		void setCameraSpeedSensitivity(float cameraSpeedSensitivity) { this->cameraSpeedSensitivity = cameraSpeedSensitivity; }
 		void setMouseRotationSensitivity(float mouseSensitivity) { this->mouseRotationSensitivity = mouseSensitivity; }
 		void setFOV(float fov) { this->fov= fov; }
+		void setCameraPosition(const glm::vec3& cameraPosition) { this->cameraPosition = cameraPosition; }
 
 
 		const glm::mat4& getProjection() const { return projection; }
@@ -34,11 +37,6 @@ namespace ginkgo {
 		
 		void input(double dt);
 		void update(double dt);
-
-	private:
-
-		double xSave;
-		double ySave;
 	};
 
 }

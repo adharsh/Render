@@ -27,7 +27,7 @@ namespace ginkgo {
 		Layer(std::vector<Renderable*> renderables, const glm::mat4& model = glm::mat4());
 		~Layer();
 
-		unsigned int getSize() const { return renderables.size(); }
+		unsigned int size() const { return renderables.size(); }
 
 		void addRenderable(Renderable* renderable);
 		Renderable* alterRenderable(unsigned int index) const;
@@ -36,7 +36,7 @@ namespace ginkgo {
 		const glm::mat4& getModel() const;
 		Transform* alterModel() const { return model; };
 
-		void draw(const glm::mat4& transformProjectionView, const glm::vec3& cameraPosition, const PhongShader& phongShader, const CubeMap* cubeMap) const;
+		void draw(const glm::mat4& transformProjectionView, const glm::vec3& cameraPosition, const PhongShader& phongShader, const CubeMap& cubeMap) const;
 	};
 
 }

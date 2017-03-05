@@ -8,7 +8,7 @@ namespace ginkgo{
 	private:
 		glm::mat4 matrix;
 	public:
-		Transform() { matrix = glm::mat4(); }
+		Transform()	: Transform(glm::mat4()){ }
 		Transform(const glm::mat4& matrix) { this->matrix = matrix; }
 		const glm::mat4& scaleMatrix(const glm::vec3& scale) { matrix = glm::scale(matrix, scale); return matrix; }
 		const glm::mat4& translateMatrix(const glm::vec3& translation) { matrix = glm::translate(matrix, translation); return matrix; }
@@ -20,6 +20,5 @@ namespace ginkgo{
 }
 
 /*
-templated in the future for any kind of glm data type
-
+templated in the future for any kind of glm data type as needed
 */

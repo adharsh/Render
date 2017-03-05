@@ -1,33 +1,29 @@
-matrix rotation
-rx ry rz 0
-ux uy uz 0
-fx fy fz 0
-0  0  0  1
-
 TODOS:
 
-Priority To Do List:
-*text rendering -> yup
-*reflect/refract other renderables too
-*explore universe with images thing
-*use CUDA with this
 
-disable changing screen sizes -> camera update no projection
-framebuffer thing
-multiple objects reflection/refraction
-*return set float not const float ->  data primitive types
+Priority To Do List:
+*implement soyo obj library
+*check if preprcoess project properties define for soyo put there
+*multiple objects reflection/refraction -> framebuffer -> so text is always in front
+*use texture map weird image and use freeimage to export into useable cubemap
+	-http://virtuallyprogramming.com/Content/Content.html
+	-http://wwwtyro.github.io/space-3d/
+*use CUDA with this
+*check if any leaked memory
+
+*transform reference
+bug: place two renderables next to each other like this: r.push_back(new Renderable(mesh, new Material(1.33f, 10.0f, glm::vec4(1.0f, 1.0f, 0.0f, 1.0f), new Texture()))); r.push_back(new Renderable(mesh, new Material(Material::REFLECT, -1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), new Texture())));
+invert colors material
 check if normalCoord and normal is the same thing
 cube doesn't work, indices work, normals work, something else maybe? vertices gone wrong?
 eventually take out drawLol and addDataLOL methods stuff 
 When I pass model matrix to shader, it's actually layer.model  * renderable.model together, that's supposed to happen right?
-transform should be a reference to the class, not a pointer; not immediately important
-.use texture atlasing for cubemaps
-.use texture atlasing for multitude of images
-some cool skyboxes: http://virtuallyprogramming.com/Content/Content.html
 make getters const even for data primitive types
-take out unnecessary includdes like iostream and gl/glew.h
 possible to make alterRenderable() or getRenderable() more efficient?
--make a framebuffer
+organize renderables more efficiently in layer class -> organize by textures and organize if environmental mapping
+use texture atlasing for cubemaps
+use texture atlasing for multitude of images
+eventually take out if GLFW_KEY_ESCAPE -> exit
 
 post processing stuff -> hud - text + fonts, other interactable stuff -> https://www.opengl.org/discussion_boards/showthread.php/124875-How-to-draw-a-line-using-OpenGL-programme, https://learnopengl.com/#!In-Practice/Text-Rendering, https://learnopengl.com/#!Advanced-OpenGL/Framebuffers
 loads obj uvs, but uvs are messed up -> next meeting; -> http://blender.stackexchange.com/questions/1022/adding-uv-mapping-to-mesh, https://en.wikibooks.org/wiki/Blender_3D:_Noob_to_Pro/UV_Map_Basics
@@ -52,6 +48,12 @@ spot lights
 
 ******
 Yups:
+*maintain camera code -> yup
+*return set float not const float ->  data primitive types -> yup
+*setcameraposition get cameraposition -> yup
+*disable changing screen sizes -> camera update no projection -> yup
+*fix text rending bug -> yup
+*text rendering -> yup
 *binding textures and unbinding textures, renderable class and stuff	, delete //probably going to be useless stuff, replace code with binary serach algorithm -> yup
 *refactor code to have member variables have pointers instead of references -> yup
 *doesn't load all meshes without textures, just a color -> yup
@@ -76,6 +78,8 @@ transformations with layer -> kinda, don't know what else to do -> yup
 
 ******
 Later Fixes:
+
+shader -> singleton for each class
 
 change up all the paramters and make them const stuff
 getters return const stuff

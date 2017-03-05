@@ -17,6 +17,7 @@ namespace ginkgo {
 		GLsizei height;
 		static std::string whitepixelfilepath;
 	public:
+		Texture(const std::string& path, bool pixelate);
 		Texture(const std::string& path = whitepixelfilepath);
 		~Texture();
 		const unsigned int getWidth() const { return width; }

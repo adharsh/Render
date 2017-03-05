@@ -135,7 +135,15 @@ void main()
 		r_color = texture(skybox, R) * rIntensity;
 	}
 
-	fragColor = normalize(diffuse_color + r_color);
+	fragColor = diffuse_color + r_color;
+	
+	//if(diffuse_color.length > 1.0f)
+	//	fragColor = vec4(1.0f, 0.0f, 0.0f, 1.0f);
+
+//	if(hasTexture && refractiveIndex >= 0.0f)
+//		fragColor = normalize(fragColor);
+
+	//fragColor = diffuse_color + r_color;
 	//fragColor = r_color;
 //	if(refractiveIndex < 0) fragColor = vec4(0.0, 0.0, 1.0f, 1.0f);
 //	if(refractiveIndex == 0) fragColor = vec4(1.0, 0.0, 0.0f, 1.0f);

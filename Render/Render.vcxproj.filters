@@ -72,6 +72,9 @@
     <ClCompile Include="Render\graphics\shaders\Text.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Render\utils\Debugging.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render\Engine.h">
@@ -137,6 +140,9 @@
     <ClInclude Include="Render\graphics\shaders\Text.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Render\utils\Debugging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Render\res\shaders\basicVertex.vs" />
@@ -149,5 +155,7 @@
     <None Include="Render\res\shaders\cubemapVertex.vs" />
     <None Include="Render\res\shaders\reflectionVertex.vs" />
     <None Include="Render\res\shaders\reflectionFragment.fs" />
+    <None Include="Render\res\shaders\textVertex.vs" />
+    <None Include="Render\res\shaders\textFragment.fs" />
   </ItemGroup>
 </Project>

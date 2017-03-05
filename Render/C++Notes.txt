@@ -319,8 +319,6 @@ make sense? yeah lemme copy this down
 
 how do 24 bit depth images work with unsigned char* ? each byte is an unsigned char? duh...
 
-
-
 *****************************************************************************************
 *****************************************************************************************
 Coding Guidelines:

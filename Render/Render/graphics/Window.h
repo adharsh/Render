@@ -45,7 +45,7 @@ namespace ginkgo {
 			void getScrollOffset(double& xoffset, double& yoffset) const;
 
 			void disableMouseCursor() const { glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); }
-			void showMouseCursor() const { glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); }
+			void enableMouseCursor() const { glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL); }
 			void setMousePosition(double x, double y) const { glfwSetCursorPos(window, x, y); };
 		private:
 			bool init();

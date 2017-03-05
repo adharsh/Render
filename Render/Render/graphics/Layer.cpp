@@ -8,8 +8,6 @@
 #include "Transform.h"
 #include "shaders/CubeMap.h"
 
-#include <iostream>
-
 namespace ginkgo {
 
 	Layer::Layer(const std::vector<Renderable*> renderablesL, const glm::mat4& model)
@@ -99,7 +97,7 @@ namespace ginkgo {
 		}
 	}
 
-	void Layer::draw(const glm::mat4& transformProjectionView, const glm::vec3& cameraPosition, const PhongShader& phongShader, const CubeMap* cubeMap) const
+	void Layer::draw(const glm::mat4& transformProjectionView, const glm::vec3& cameraPosition, const PhongShader& phongShader, const CubeMap& cubeMap) const
 	{
 		phongShader.bind();
 		if (renderables.size() > 0)
@@ -112,7 +110,7 @@ namespace ginkgo {
 				phongShader.setUniform1i("diffuseTexture", 1); //dependant on phongFragment.fs
 				
 				glActiveTexture(GL_TEXTURE0);
-				cubeMap->bindCubeMapTexture();
+				cubeMap.bindCubeMapTexture();
 				for (int i = 0; i < sizeTextureIDs[0]; i++)
 				{
 					phongShader.updateUniforms(
@@ -122,7 +120,7 @@ namespace ginkgo {
 						cameraPosition);
 					renderables[i]->draw();
 				}
-				cubeMap->unbindCubeMapTexture();
+				cubeMap.unbindCubeMapTexture();
 
 				b = sizeTextureIDs[0];
 				i = 1;
@@ -141,9 +139,9 @@ namespace ginkgo {
 						transformProjectionView * model->getMatrix() * renderables[b]->getModel(),
 						renderables[b]->getMaterial(),
 						cameraPosition);
-					if (renderables[b]->getMaterial().getRefractiveIndex() >= 0) { glActiveTexture(GL_TEXTURE1); cubeMap->bindCubeMapTexture(); }
+					if (renderables[b]->getMaterial().getRefractiveIndex() >= 0) { glActiveTexture(GL_TEXTURE1); cubeMap.bindCubeMapTexture(); }
 					renderables[b]->draw();
-					if (renderables[b]->getMaterial().getRefractiveIndex() >= 0) cubeMap->unbindCubeMapTexture();
+					if (renderables[b]->getMaterial().getRefractiveIndex() >= 0) cubeMap.unbindCubeMapTexture();
 					b++;
 				}
 				glBindTexture(GL_TEXTURE_2D, 0);

@@ -149,6 +149,7 @@
     <ClCompile Include="Render\graphics\Texture.cpp" />
     <ClCompile Include="Render\Time.cpp" />
     <ClCompile Include="Render\graphics\Window.cpp" />
+    <ClCompile Include="Render\utils\Debugging.cpp" />
     <ClCompile Include="Render\Utils\FileUtils.cpp" />
     <ClCompile Include="Render\utils\ObjLoader.cpp" />
   </ItemGroup>
@@ -172,6 +173,7 @@
     <ClInclude Include="Render\graphics\shaders\Shader.h" />
     <ClInclude Include="Render\Time.h" />
     <ClInclude Include="Render\graphics\Window.h" />
+    <ClInclude Include="Render\utils\Debugging.h" />
     <ClInclude Include="Render\Utils\FileUtils.h" />
     <ClInclude Include="Render\utils\ObjLoader.h" />
   </ItemGroup>
@@ -185,6 +187,8 @@
     <None Include="Render\res\shaders\phongVertex.vs" />
     <None Include="Render\res\shaders\reflectionFragment.fs" />
     <None Include="Render\res\shaders\reflectionVertex.vs" />
+    <None Include="Render\res\shaders\textFragment.fs" />
+    <None Include="Render\res\shaders\textVertex.vs" />
     <None Include="Render\res\shaders\vertexshader.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
