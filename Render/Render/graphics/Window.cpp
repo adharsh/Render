@@ -68,13 +68,13 @@ namespace ginkgo {
 		glFrontFace(GL_CW);	//Drawing front face in Clockwise //TBB //already
 		glCullFace(GL_BACK); //Not drawing back face	//TBB
 		//glEnable(GL_CULL_FACE);	//Not drawing unnecessary front and back stuff //TBB
-		glEnable(GL_DEPTH_TEST); //Z component for depth //TBB //already
+		//glEnable(GL_DEPTH_TEST); //Z component for depth //TBB //already
 		//glDepthFunc(GL_LESS); //already
 		glEnable(GL_DEPTH_CLAMP);//Depth clamp so camera won't be halfway inside or outside //TBB //already
 		//glEnable(GL_FRAMEBUFFER_SRGB); //More gamma correction, all other colors are already exponential, it does it for us
 		//Wireframe
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
+		
 		return true;
 	}
 
@@ -107,11 +107,12 @@ namespace ginkgo {
 	}
 
 
-	void Window::clear() const
+	/*void Window::clear() const //deprecated lol
 	{
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		//TODO: change so specific for each framebuffer
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 		glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
-	}
+	}*/
 
 	void Window::update() const
 	{

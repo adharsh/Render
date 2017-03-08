@@ -26,7 +26,7 @@ namespace ginkgo {
 		static const unsigned int FRONT = 4;
 		static const unsigned int BACK = 5;
 	public:
-		CubeMap(std::map<unsigned int, const char*> faces, float scale = 500.0f);
+		CubeMap(std::map<unsigned int, std::string> faces_filepaths, float scale = 500.0f);
 		~CubeMap();
 		void draw(const glm::mat4& transformProjectionView) const;
 		void bindCubeMapTexture() const;

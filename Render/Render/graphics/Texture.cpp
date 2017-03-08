@@ -45,6 +45,8 @@ namespace ginkgo {
 	{ }
 	
 	Texture::~Texture()
-	{ }
+	{ 
+		glDeleteTextures(1, &tid);
+	}
 
 }

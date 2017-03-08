@@ -92,8 +92,7 @@ namespace ginkgo {
 
 	void Engine::render()
 	{
-		glGetError();
-		window->clear();
+		//window->clear();//do clear stuff in render
 		
 		game->render(); //3D
 		game->postProcessing();// 2D

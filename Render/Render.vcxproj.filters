@@ -42,9 +42,6 @@
     <ClCompile Include="Render\graphics\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Render\graphics\shaders\BasicShader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Render\graphics\shaders\PhongShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -73,6 +70,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Render\utils\Debugging.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\graphics\shaders\ScreenBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -110,9 +110,6 @@
     <ClInclude Include="Render\graphics\Renderable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Render\graphics\shaders\BasicShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Render\graphics\shaders\LightStructs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -143,12 +140,11 @@
     <ClInclude Include="Render\utils\Debugging.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Render\graphics\shaders\ScreenBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Render\res\shaders\basicVertex.vs" />
-    <None Include="Render\res\shaders\basicFragment.fs" />
-    <None Include="Render\res\shaders\fragmentshader.fs" />
-    <None Include="Render\res\shaders\vertexshader.vs" />
     <None Include="Render\res\shaders\phongFragment.fs" />
     <None Include="Render\res\shaders\phongVertex.vs" />
     <None Include="Render\res\shaders\cubemapFragment.fs" />
@@ -157,5 +153,7 @@
     <None Include="Render\res\shaders\reflectionFragment.fs" />
     <None Include="Render\res\shaders\textVertex.vs" />
     <None Include="Render\res\shaders\textFragment.fs" />
+    <None Include="Render\res\shaders\screenFragment.fs" />
+    <None Include="Render\res\shaders\screenVertex.vs" />
   </ItemGroup>
 </Project>

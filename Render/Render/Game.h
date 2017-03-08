@@ -9,6 +9,7 @@ namespace ginkgo {
 	class PhongShader;
 	class ReflectionShader;
 	class Text;
+	class ScreenBuffer;
 
 	class Game
 	{
@@ -20,6 +21,7 @@ namespace ginkgo {
 		ReflectionShader* reflectionShader;
 		PhongShader* phongShader;
 		Text* text;
+		ScreenBuffer* screen;
 	public:
 		Game(Window* window);
 

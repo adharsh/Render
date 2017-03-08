@@ -17,7 +17,7 @@ namespace ginkgo {
 	public:
 		void LoadObj(std::string path);
 		
-		const std::vector<glm::vec3>& getVertexList() const { return positions; }
+		const std::vector<glm::vec3>& getPositionList() const { return positions; }
 		const std::vector<glm::vec2>& getUVList() const { return uvs; }
 		const std::vector<glm::vec3>& getNomalList() const { return normals; }
 		const std::vector<unsigned int>& getIndexList() const { return indices; }

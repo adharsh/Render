@@ -1,3 +1,5 @@
+#include <FreeImage\FreeImage.h>
+
 #include "CubeMap.h"
 
 #include "../../utils/FileUtils.h"
@@ -5,7 +7,7 @@
 
 namespace ginkgo {
 
-	CubeMap::CubeMap(std::map<unsigned int, const char*> faces, float scale)
+	CubeMap::CubeMap(std::map<unsigned int, std::string> faces, float scale)
 	{
 		addVertexShader("Render/res/shaders/cubemapVertex.vs");
 		addFragmentShader("Render/res/shaders/cubemapFragment.fs");
@@ -20,34 +22,35 @@ namespace ginkgo {
 		glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
 
 		//RIGHT FACE
-		image = FileUtils::loadImage(faces[CubeMap::RIGHT], &width, &height, 180.0f);
+		image = FileUtils::loadImage(faces[CubeMap::RIGHT].c_str(), &width, &height, 180.0f);
 		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + CubeMap::LEFT, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, image);
 		delete[] image;
 
 		//LEFT FACE
-		image = FileUtils::loadImage(faces[CubeMap::LEFT], &width, &height, 180.0f);
+		image = FileUtils::loadImage(faces[CubeMap::LEFT].c_str(), &width, &height, 180.0f);
 		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + CubeMap::RIGHT, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, image);
 		delete[] image;
 
 		//TOP FACE
-		image = FileUtils::loadImage(faces[CubeMap::TOP], &width, &height, 180.0f);
+		image = FileUtils::loadImage(faces[CubeMap::TOP].c_str(), &width, &height, 180.0f);
 		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + CubeMap::TOP, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, image);
 		delete[] image;
 
 		//BOTTOM FACE
-		image = FileUtils::loadImage(faces[CubeMap::BOTTOM], &width, &height, 180.0f);
+		image = FileUtils::loadImage(faces[CubeMap::BOTTOM].c_str(), &width, &height, 180.0f);
 		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + CubeMap::BOTTOM, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, image);
 		delete[] image;
 
 		//FRONT FACE
-		image = FileUtils::loadImage(faces[CubeMap::FRONT], &width, &height, 180.0f);
+		image = FileUtils::loadImage(faces[CubeMap::FRONT].c_str(), &width, &height, 180.0f);
 		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + CubeMap::BACK, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, image);
 		delete[] image;
 
 		//BACK FACE
-		image = FileUtils::loadImage(faces[CubeMap::BACK], &width, &height, 180.0f);
+		image = FileUtils::loadImage(faces[CubeMap::BACK].c_str(), &width, &height, 180.0f);
 		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + CubeMap::FRONT, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, image);
 		delete[] image;
+
 
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -94,7 +97,6 @@ namespace ginkgo {
 		glDepthFunc(GL_LEQUAL);
 
 		glBindVertexArray(VAO);
-		
 		glActiveTexture(GL_TEXTURE0);
 		bindCubeMapTexture();
 		setUniformMat4("transform", transformProjectionView);

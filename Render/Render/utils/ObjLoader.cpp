@@ -33,7 +33,7 @@ namespace ginkgo {
 						attrib.texcoords[2 * index.texcoord_index + 1]
 					)
 				);
-				
+
 				positions.push_back(
 					glm::vec3(
 						attrib.vertices[3 * index.vertex_index + 0],

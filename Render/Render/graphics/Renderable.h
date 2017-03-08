@@ -34,7 +34,6 @@ namespace ginkgo {
 		const unsigned int getIndex() const { return r_index; }
 
 		void draw() const;
-
 	};
 
 }

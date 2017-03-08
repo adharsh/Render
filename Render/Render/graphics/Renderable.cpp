@@ -32,7 +32,6 @@ namespace ginkgo {
 	void Renderable::draw() const
 	{
 		mesh->draw(); 
-		//mesh->drawLOL();
 	}
 
 }

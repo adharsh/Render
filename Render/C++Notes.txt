@@ -319,6 +319,8 @@ make sense? yeah lemme copy this down
 
 how do 24 bit depth images work with unsigned char* ? each byte is an unsigned char? duh...
 
+practice with C++ bugs -> https://www.toptal.com/c-plus-plus/top-10-common-c-plus-plus-developer-mistakes
+
 *****************************************************************************************
 *****************************************************************************************
 Coding Guidelines:
@@ -386,6 +388,7 @@ references in parameters only if class does not use that as its member pointer
 or just use pointers all the time...lol cuz its much more flexible cuz if you know what you're doing, then you're fine -> also references require initalizations immediately which can become a pain
 returns const references as usual -> dont have to allocate memory all the time, too much work
 vectors of pointers
+or if use of class is being extended on or member variable like Transform must not be a pointer or reference, -> then just include the file and dont forward declare
 
 -includes for class's members -> more the better in forward declarations in header file, .cpp should have a lot of includes too
 -convention for code in header file, have only function prototypes, getters and setters for one to two lines except if its constructors must be defined seperately in .cpp file, doesn't have to include self made headers
@@ -407,3 +410,11 @@ long ternary statements format:
 r1->getMaterial().getTexture() != nullptr) ?
 			r1->getMaterial().getTexture()->getID() :
 			Layer::NO_TEXTURE
+
+it definitely increases speed
+having less dynamic allocation
+and it also reduces the number of includes in the ehader files for compilation
+just use forward declaration whenever possible
+except when you absolutely cant
+like when you extend another class (like that shader bug we went through)
+or if you have a member variable like Transform

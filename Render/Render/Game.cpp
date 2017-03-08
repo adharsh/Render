@@ -25,6 +25,7 @@
 #include "graphics/shaders/ReflectionShader.h"
 #include "graphics/shaders/Text.h"
 #include "utils/Debugging.h"
+#include "graphics\shaders\ScreenBuffer.h"
 
 namespace ginkgo {
 
@@ -39,9 +40,9 @@ namespace ginkgo {
 		Mesh* mesh = new Mesh();
 
 		ObjIntermediate obj;
-		obj.LoadObj("Render/res/models/chalet.obj");
+		obj.LoadObj("Render/res/models/monkey.obj");
 		std::vector<glm::vec2> uvs = obj.getUVList();
-		std::vector<glm::vec3> positions = obj.getVertexList();
+		std::vector<glm::vec3> positions = obj.getPositionList();
 		std::vector<GLuint> indices = obj.getIndexList();
 
 		//std::vector<glm::vec3> positions;
@@ -71,24 +72,27 @@ namespace ginkgo {
 		//r.push_back(new Renderable(mesh, new Material(1.33f, 1.0f, new Texture("Render/res/textures/Hi.png"))));
 		//r.push_back(new Renderable(mesh, new Material(1.33f)));
 		//r.push_back(new Renderable(mesh, new Material(1.33f, 1.0f, new Texture("Render/res/textures/coord.png"))));
-		//r.push_back(new Renderable(mesh, new Material(1.33f)));
-		r.push_back(new Renderable(mesh, new Material(new Texture("Render/res/textures/chalet.jpg"))));
+		r.push_back(new Renderable(mesh, new Material(1.33f)));
+		//r.push_back(new Renderable(mesh, new Material(new Texture("Render/res/textures/chalet.jpg"))));
 
 		layer = new Layer(r);
-		layer->alterRenderable(layer->size()-1)->alterModel()->rotateMatrix(glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		//layer->alterRenderable(layer->size()-1)->alterModel()->rotateMatrix(glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
 		phongShader->setAmbientLight(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
-		std::map<unsigned int, const char*> skyboxImages;
-		skyboxImages[CubeMap::LEFT] = "Render/res/textures/skybox/left.jpg";
-		skyboxImages[CubeMap::RIGHT] = "Render/res/textures/skybox/right.jpg";
-		skyboxImages[CubeMap::TOP] = "Render/res/textures/skybox/top.jpg";
-		skyboxImages[CubeMap::FRONT] = "Render/res/textures/skybox/front.jpg";
-		skyboxImages[CubeMap::BOTTOM] = "Render/res/textures/skybox/bottom.jpg";
-		skyboxImages[CubeMap::BACK] = "Render/res/textures/skybox/back.jpg";
+		std::map<unsigned int, std::string> skyboxImages;
+		std::string basepath = "Render/res/textures/skybox/sea/";
+		std::string extension = ".jpg";
+		skyboxImages[CubeMap::FRONT] = basepath + "front" + extension;
+		skyboxImages[CubeMap::RIGHT] = basepath + "right" + extension;
+		skyboxImages[CubeMap::LEFT] = basepath + "left" + extension;
+		skyboxImages[CubeMap::TOP] = basepath + "top" + extension;
+		skyboxImages[CubeMap::BOTTOM] = basepath + "bottom" + extension;
+		skyboxImages[CubeMap::BACK] = basepath + "back" + extension;
 
 		skybox = new CubeMap(skyboxImages, 500);
 		text = new Text(window->getWidth(), window->getHeight(), "Render/res/fonts/arial.ttf");
+		screen = new ScreenBuffer(window->getWidth(), window->getHeight(), window->getClearColor(), false, false);
 
 		//Debugging::print(layer->getModel());
 	}
@@ -100,29 +104,34 @@ namespace ginkgo {
 
 	void Game::update(double dt)
 	{
-		static double t = 0;
-		t += dt;
-
 		camera->update(dt);
-
 	}
 
 	void Game::render()
 	{
 		glm::mat4 translation;
-
 		translation[3][0] = -camera->getCameraPosition().x;
 		translation[3][1] = -camera->getCameraPosition().y;
 		translation[3][2] = -camera->getCameraPosition().z;
-
 		glm::mat4 transformProjectionView = camera->getProjection() * camera->getView() * translation;
+
+		screen->bindBuffer();
+		screen->clearColor(window->getClearColor());
+		screen->clearBuffer(true, true, false);
+		screen->enableDepthTest();
 		layer->draw(transformProjectionView, camera->getCameraPosition(), *phongShader, *skybox);
 		skybox->draw(transformProjectionView);
-		text->draw("Game Engine", 0.0f, window->getHeight() - 50.0f, 1.0f, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
+
+		ScreenBuffer::bindDefaultBuffer();
+		screen->clearColor(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+		screen->clearBuffer(true, false, false);
+		screen->draw();
+		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	}
 
 	void Game::postProcessing()
 	{
+		text->draw("Game Engine", 0.0f, window->getHeight() - 50.0f, 1.0f, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
 
 	}
 

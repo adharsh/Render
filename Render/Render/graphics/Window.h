@@ -31,11 +31,12 @@ namespace ginkgo {
 			~Window();
 			void update() const;
 			bool closed() const;
-			void clear() const;
+			//void clear() const; //deprecated lol
 
 			unsigned int getWidth() const { return width; }
 			unsigned int getHeight() const { return height; }
 			float getAspectRatio() const{ return (float)width / (float)height; }
+			const glm::vec4& getClearColor() const { return clear_color; }
 
 			void setClearColor(const glm::vec4& color) { clear_color = color; }
 

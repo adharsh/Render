@@ -2,21 +2,25 @@ TODOS:
 
 
 Priority To Do List:
-*implement soyo obj library
-*check if preprcoess project properties define for soyo put there
-*multiple objects reflection/refraction -> framebuffer -> so text is always in front
-*use texture map weird image and use freeimage to export into useable cubemap
-	-http://virtuallyprogramming.com/Content/Content.html
-	-http://wwwtyro.github.io/space-3d/
+*multiple objects reflection/refraction -> framebuffer?
+*change translation matrix usage in Game.cpp in render method
+*transform reference -> to object
+*export framebuffer as iamge https://www.opengl.org/discussion_boards/showthread.php/165852-save-opengl-buffer-with-freeimage
 *use CUDA with this
-*check if any leaked memory
+*check if any leaked memory -> http://swarminglogic.com/jotting/2013_10_gamedev01
+*make sure proper deletion for all opengl objects stuff
+*https://vulkan-tutorial.com/Loading_models optimization reading from obj
+*http://swarminglogic.com/jotting/2013_10_gamedev01 optimization for reading and writing an obj
+*make Engine take Game and Window as references not pointers, check other classes for similar mistake
+*fsaa - https://blog.codinghorror.com/fast-approximate-anti-aliasing-fxaa/, msaa 
 
-*transform reference
-bug: place two renderables next to each other like this: r.push_back(new Renderable(mesh, new Material(1.33f, 10.0f, glm::vec4(1.0f, 1.0f, 0.0f, 1.0f), new Texture()))); r.push_back(new Renderable(mesh, new Material(Material::REFLECT, -1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), new Texture())));
-invert colors material
+*use texture map weird image and use freeimage to export into useable cubemap
+	- http://virtuallyprogramming.com/Content/Content.html
+	- http://wwwtyro.github.io/space-3d/
+	- https://wwwtyro.github.io/space-3d/#animationSpeed=1&fov=80&nebulae=true&pointStars=true&resolution=2048&seed=4i7a4w8u1vy8&stars=true&sun=true
+bug: place two renderables next to each other like this: r.push_back(new Renderable(mesh, new Material(1.33f, 10.0f, glm::vec4(1.0f, 1.0f, 0.0f, 1.0f), new Texture()))); r.push_back(new Renderable(mesh, new Material(Material::REFLECT, -1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), new Texture())));, Downloads/Program/Render.exe
+invert colors material option
 check if normalCoord and normal is the same thing
-cube doesn't work, indices work, normals work, something else maybe? vertices gone wrong?
-eventually take out drawLol and addDataLOL methods stuff 
 When I pass model matrix to shader, it's actually layer.model  * renderable.model together, that's supposed to happen right?
 make getters const even for data primitive types
 possible to make alterRenderable() or getRenderable() more efficient?
@@ -24,12 +28,12 @@ organize renderables more efficiently in layer class -> organize by textures and
 use texture atlasing for cubemaps
 use texture atlasing for multitude of images
 eventually take out if GLFW_KEY_ESCAPE -> exit
-
+make Material a struct and pass in as struct data
 post processing stuff -> hud - text + fonts, other interactable stuff -> https://www.opengl.org/discussion_boards/showthread.php/124875-How-to-draw-a-line-using-OpenGL-programme, https://learnopengl.com/#!In-Practice/Text-Rendering, https://learnopengl.com/#!Advanced-OpenGL/Framebuffers
-loads obj uvs, but uvs are messed up -> next meeting; -> http://blender.stackexchange.com/questions/1022/adding-uv-mapping-to-mesh, https://en.wikibooks.org/wiki/Blender_3D:_Noob_to_Pro/UV_Map_Basics
 msaa in OpenGL etc. -> https://learnopengl.com/#!Advanced-OpenGL/Anti-Aliasing
 sounds -> https://learnopengl.com/#!In-Practice/2D-Game/Audio -> Irrklang
 should game and window in Engine.h be const, should Game methods be const too, effects throughout code okay?
+lighting -> https://learnopengl.com/#!Lighting/
 browser -> http://kripken.github.io/emscripten-site/
 
 fix change fov scroll in
@@ -48,6 +52,11 @@ spot lights
 
 ******
 Yups:
+framebuffer -> so text is always in front -> yup
+cube doesn't work, indices work, normals work, something else maybe? vertices gone wrong? -> yup
+eventually take out drawLol and addDataLOL methods stuff -> yup
+*implement soyo obj library -> yup
+*check if preprocess project properties define for soyo put there -> can't do that, just put into the header file -> yup
 *maintain camera code -> yup
 *return set float not const float ->  data primitive types -> yup
 *setcameraposition get cameraposition -> yup
