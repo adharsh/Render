@@ -25,10 +25,20 @@ namespace ginkgo {
 		unsigned int VAO;
 		unsigned int VBO;
 		std::map<GLchar, Character> Characters;
+		float maxWidth;
+		float maxHeight;
+		float minWidth;
+		float minHeight;
 	public:
 		Text(float windowWidth, float windowHeight, const char* fontFilePath);
 
-		void draw(const std::string& text, GLfloat x, GLfloat y, GLfloat scale, const glm::vec3& color) const;
+		void draw(const std::string& text, GLfloat x, GLfloat y, GLfloat scale, const glm::vec3& color);
+
+		float getMaxCharWidth() const { return maxWidth; }
+		float getMaxCharHeight() const { return maxHeight; }
+		float getMinCharWidth() const { return minWidth; }
+		float getMinCharHeight() const { return minHeight; }
+
 	};
 
 }

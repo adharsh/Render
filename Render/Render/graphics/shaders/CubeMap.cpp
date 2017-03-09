@@ -98,10 +98,10 @@ namespace ginkgo {
 
 		glBindVertexArray(VAO);
 		glActiveTexture(GL_TEXTURE0);
-		bindCubeMapTexture();
+		glBindTexture(GL_TEXTURE_CUBE_MAP, textureID);
 		setUniformMat4("transform", transformProjectionView);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
-		unbindCubeMapTexture();
+		glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
 		glBindVertexArray(0);
 		
 		glDepthFunc(GL_LESS);

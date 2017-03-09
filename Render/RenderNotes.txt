@@ -1,18 +1,17 @@
 TODOS:
 
-
 Priority To Do List:
-*multiple objects reflection/refraction -> framebuffer?
-*change translation matrix usage in Game.cpp in render method
+*multiple objects reflection/refraction -> framebuffer?, no not framebuffer
 *transform reference -> to object
 *export framebuffer as iamge https://www.opengl.org/discussion_boards/showthread.php/165852-save-opengl-buffer-with-freeimage
 *use CUDA with this
 *check if any leaked memory -> http://swarminglogic.com/jotting/2013_10_gamedev01
 *make sure proper deletion for all opengl objects stuff
-*https://vulkan-tutorial.com/Loading_models optimization reading from obj
 *http://swarminglogic.com/jotting/2013_10_gamedev01 optimization for reading and writing an obj
 *make Engine take Game and Window as references not pointers, check other classes for similar mistake
-*fsaa - https://blog.codinghorror.com/fast-approximate-anti-aliasing-fxaa/, msaa 
+*fxaa - https://blog.codinghorror.com/fast-approximate-anti-aliasing-fxaa/, msaa, https://github.com/JoshuaSenouf/GLEngine/blob/master/resources/shaders/postprocess/firstpass.frag
+*http://www.41post.com/5178/programming/opengl-configuring-glfw-and-glew-in-visual-cplusplus-express
+*depth function set up strangely
 
 *use texture map weird image and use freeimage to export into useable cubemap
 	- http://virtuallyprogramming.com/Content/Content.html
@@ -33,7 +32,8 @@ post processing stuff -> hud - text + fonts, other interactable stuff -> https:/
 msaa in OpenGL etc. -> https://learnopengl.com/#!Advanced-OpenGL/Anti-Aliasing
 sounds -> https://learnopengl.com/#!In-Practice/2D-Game/Audio -> Irrklang
 should game and window in Engine.h be const, should Game methods be const too, effects throughout code okay?
-lighting -> https://learnopengl.com/#!Lighting/
+lighting -> https://learnopengl.com/#!Lighting/ -> change all code around
+https://vulkan-tutorial.com/Loading_models optimization reading from obj -> not necessary, linear serach with memory saving, takes more processing time but less memory
 browser -> http://kripken.github.io/emscripten-site/
 
 fix change fov scroll in
@@ -52,6 +52,7 @@ spot lights
 
 ******
 Yups:
+*change translation matrix usage in Game.cpp in render method -> yup
 framebuffer -> so text is always in front -> yup
 cube doesn't work, indices work, normals work, something else maybe? vertices gone wrong? -> yup
 eventually take out drawLol and addDataLOL methods stuff -> yup

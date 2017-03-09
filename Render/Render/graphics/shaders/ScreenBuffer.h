@@ -20,12 +20,11 @@ namespace ginkgo {
 		ScreenBuffer(unsigned int screenWidth, unsigned int screenHeight, glm::vec4 clear_color, bool depth, bool stencil);
 		~ScreenBuffer();
 
-		void draw() const;
+		void drawToTexture() const;
+		void drawToScreen() const;
 
 		void bindBuffer() const;
 		static void bindDefaultBuffer();
-
-		//make bind methods overaload Shader methods for everything that's already done
 
 		static void clearColor(const glm::vec4& clear_color);
 		static void clearBuffer(bool colorBuffer, bool depthBuffer, bool stencilBuffer);
@@ -34,8 +33,6 @@ namespace ginkgo {
 		static void enableStencilTest() { glEnable(GL_STENCIL_TEST); }
 		static void disableDepthTest() { glDisable(GL_DEPTH_TEST); }
 		static void disableStencilTest() { glDisable(GL_STENCIL_TEST); }
-		void bindShader() const { bind(); }
-		void unbindShader() const { unbind(); }
 	};
 
 }

@@ -19,15 +19,15 @@ namespace ginkgo {
 		glDeleteBuffers(1, &VBO);
 	}
 
-	void Mesh::addData(const std::vector<glm::vec3>& positions, const std::vector<GLuint>& indices, const std::vector<glm::vec2>& uvs, bool haveNormals)
+	void Mesh::addData(const std::vector<glm::vec3>& positions, const std::vector<GLuint>& indices, const std::vector<glm::vec2>& uvs, const std::vector<glm::vec3>& normalsM)
 	{
 		//Generating Normals
-		std::vector<glm::vec3> normals;
-		for (int i = 0; i < positions.size(); i++)
-			normals.emplace_back(glm::vec3(0.0f, 0.0f, 0.0f));
-
-		if (haveNormals)
+		std::vector<glm::vec3> normals = normalsM;
+		if (normals.size() == 0)
 		{
+			for (int i = 0; i < positions.size(); i++)
+				normals.emplace_back(glm::vec3(0.0f, 0.0f, 0.0f));
+
 			for (int i = 0; i < indices.size(); i += 3)
 			{
 				int i0 = indices[i];
@@ -39,14 +39,13 @@ namespace ginkgo {
 
 				glm::vec3 normal = glm::normalize(glm::cross(v1, v2));
 
-		//		std::cout << normal.x << " " << normal.y << " " << normal.z << std::endl;
+				//		std::cout << normal.x << " " << normal.y << " " << normal.z << std::endl;
 				normals[i0] += normal;
 				normals[i1] += normal;
 				normals[i2] += normal;
 			}
 			for (int i = 0; i < normals.size(); i++)
 				normals[i] = glm::normalize(normals[i]);
-
 		}
 
 		//Loading Data

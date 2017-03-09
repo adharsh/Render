@@ -32,6 +32,14 @@ namespace ginkgo {
 		ySave = window->getHeight() / 2.0;
 	}
 
+	const glm::mat4& Camera::getCameraPositionTranslation()
+	{
+		position_translation[3][0] = -getCameraPosition().x;
+		position_translation[3][1] = -getCameraPosition().y;
+		position_translation[3][2] = -getCameraPosition().z;
+		return position_translation;
+	}
+
 	void Camera::input(double dt)
 	{
 		GLfloat cameraSpeed = dt * cameraSpeedSensitivity;

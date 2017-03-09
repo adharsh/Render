@@ -13,6 +13,7 @@ namespace ginkgo {
 		const Window* window;
 		glm::mat4 projection;
 		glm::mat4 view;
+		glm::mat4 position_translation;
 		glm::vec3 cameraPosition;
 		glm::quat cameraRotation;
 		GLfloat fov;
@@ -30,10 +31,10 @@ namespace ginkgo {
 		void setFOV(float fov) { this->fov= fov; }
 		void setCameraPosition(const glm::vec3& cameraPosition) { this->cameraPosition = cameraPosition; }
 
-
 		const glm::mat4& getProjection() const { return projection; }
 		const glm::mat4& getView() const { return view; }
 		const glm::vec3& getCameraPosition() const { return cameraPosition; }
+		const glm::mat4& getCameraPositionTranslation();
 		
 		void input(double dt);
 		void update(double dt);

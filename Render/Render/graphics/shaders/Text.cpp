@@ -84,7 +84,7 @@ namespace ginkgo {
 		glBindVertexArray(0);
 	}
 
-	void Text::draw(const std::string& text, GLfloat x, GLfloat y, GLfloat scale, const glm::vec3& color) const
+	void Text::draw(const std::string& text, GLfloat x, GLfloat y, GLfloat scale, const glm::vec3& color)
 	{
 		bind();
 
@@ -103,6 +103,13 @@ namespace ginkgo {
 
 			GLfloat w = ch.Size.x * scale;
 			GLfloat h = ch.Size.y * scale;
+
+			if (w > maxWidth) maxWidth = w;
+			if (h > maxHeight) maxHeight = h;
+
+			if (w < minWidth) minWidth = w;
+			if (h < minHeight) minHeight = h;
+
 			// Update VBO for each character
 			GLfloat vertices[6][4] = {
 				{ xpos,     ypos + h,   0.0, 0.0 },

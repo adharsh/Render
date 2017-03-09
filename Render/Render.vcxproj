@@ -111,6 +111,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
       <FloatingPointModel>Fast</FloatingPointModel>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -142,7 +143,6 @@
     <ClCompile Include="Render\graphics\Mesh.cpp" />
     <ClCompile Include="Render\graphics\shaders\CubeMap.cpp" />
     <ClCompile Include="Render\graphics\shaders\PhongShader.cpp" />
-    <ClCompile Include="Render\graphics\shaders\ReflectionShader.cpp" />
     <ClCompile Include="Render\graphics\shaders\ScreenBuffer.cpp" />
     <ClCompile Include="Render\graphics\shaders\Shader.cpp" />
     <ClCompile Include="Render\graphics\shaders\Text.cpp" />
@@ -164,7 +164,6 @@
     <ClInclude Include="Render\graphics\Mesh.h" />
     <ClInclude Include="Render\graphics\shaders\PhongShader.h" />
     <ClInclude Include="Render\graphics\Renderable.h" />
-    <ClInclude Include="Render\graphics\shaders\ReflectionShader.h" />
     <ClInclude Include="Render\graphics\shaders\ScreenBuffer.h" />
     <ClInclude Include="Render\graphics\shaders\Text.h" />
     <ClInclude Include="Render\graphics\Texture.h" />
@@ -182,8 +181,6 @@
     <None Include="Render\res\shaders\cubemapVertex.vs" />
     <None Include="Render\res\shaders\phongFragment.fs" />
     <None Include="Render\res\shaders\phongVertex.vs" />
-    <None Include="Render\res\shaders\reflectionFragment.fs" />
-    <None Include="Render\res\shaders\reflectionVertex.vs" />
     <None Include="Render\res\shaders\screenFragment.fs" />
     <None Include="Render\res\shaders\screenVertex.vs" />
     <None Include="Render\res\shaders\textFragment.fs" />

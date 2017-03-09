@@ -22,7 +22,6 @@
 #include "utils/ObjLoader.h"
 #include "graphics/Transform.h"
 #include "graphics/Layer.h"
-#include "graphics/shaders/ReflectionShader.h"
 #include "graphics/shaders/Text.h"
 #include "utils/Debugging.h"
 #include "graphics\shaders\ScreenBuffer.h"
@@ -34,55 +33,47 @@ namespace ginkgo {
 	{
 		phongShader = new PhongShader();
 		camera = new Camera(window, glm::vec3(0.0f, 0.01f, 0.0f));
+		//window->enableMouseCursor();
 
 		float side = 1.0f;
 
 		Mesh* mesh = new Mesh();
 
-		ObjIntermediate obj;
-		obj.LoadObj("Render/res/models/monkey.obj");
+		ObjLoader obj("Render/res/models/cube.obj");
 		std::vector<glm::vec2> uvs = obj.getUVList();
 		std::vector<glm::vec3> positions = obj.getPositionList();
+		std::vector<glm::vec3> normals = obj.getNormalList();
 		std::vector<GLuint> indices = obj.getIndexList();
 
-		//std::vector<glm::vec3> positions;
-		//positions.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
-		//positions.push_back(glm::vec3(0.0f, 0.0f, -side));
-		//positions.push_back(glm::vec3(side, 0.0f, -side));
-		//positions.push_back(glm::vec3(side, 0.0f, 0.0f));
-		//std::vector<glm::vec2> uvs;
-		//uvs.push_back(glm::vec2(0.0f, 0.0f));
-		//uvs.push_back(glm::vec2(0.0f, 1.0f));
-		//uvs.push_back(glm::vec2(1.0f, 1.0f));
-		//uvs.push_back(glm::vec2(1.0f, 0.0f));
-		//std::vector<GLuint> indices;
-		//indices.push_back(0); indices.push_back(1); indices.push_back(2);
-		//indices.push_back(2); indices.push_back(3); indices.push_back(0);
-
-		mesh->addData(positions, indices, uvs, true);
+		mesh->addData(positions, indices, uvs, normals);
 
  		std::vector<Renderable*> r;
-		//for(int i = 0; i < 10; i++)
-		//	r.push_back(new Renderable(mesh, new Material(1.33f)));
-		//r.push_back(new Renderable(mesh, new Material(Material::REFLECT)));
-		//r.push_back(new Renderable(mesh, new Material(Material::REFLECT, 5.0f, new Texture("Render/res/textures/Hi.png"))));
-		//r.push_back(new Renderable(mesh, new Material(new Texture("Render/res/textures/prime.png"))));
-		//r.push_back(new Renderable(mesh, new Material(new Texture("Render/res/textures/Hi.png"))));
-		//r.push_back(new Renderable(mesh, new Material(1.33f, 1.0f, new Texture("Render/res/textures/Hi.png"))));
-		//r.push_back(new Renderable(mesh, new Material(1.33f, 1.0f, new Texture("Render/res/textures/Hi.png"))));
-		//r.push_back(new Renderable(mesh, new Material(1.33f)));
-		//r.push_back(new Renderable(mesh, new Material(1.33f, 1.0f, new Texture("Render/res/textures/coord.png"))));
 		r.push_back(new Renderable(mesh, new Material(1.33f)));
-		//r.push_back(new Renderable(mesh, new Material(new Texture("Render/res/textures/chalet.jpg"))));
+		r.push_back(new Renderable(mesh, new Material(1.33f, 1.0f, glm::vec4(1.0f, 1.0f, 0.0f, 1.0f), new Texture("Render/res/textures/Hi.png"))));
+		r.push_back(new Renderable(mesh, new Material(Material::REFLECT, 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), new Texture("Render/res/textures/Coord.png"))));
+		r.push_back(new Renderable(mesh, new Material(Material::REFLECT, 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), new Texture("Render/res/textures/Prime.png"))));
+		r.push_back(new Renderable(mesh, new Material(Material::REFLECT, 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), new Texture("Render/res/textures/Hi.png"))));
+		r.push_back(new Renderable(mesh, new Material(Material::REFLECT, 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), new Texture("Render/res/textures/Coord.png"))));
+		r.push_back(new Renderable(mesh, new Material(Material::REFLECT, 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), new Texture("Render/res/textures/Prime.png"))));
+		r.push_back(new Renderable(mesh, new Material(Material::REFLECT, 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), new Texture("Render/res/textures/Hi.png"))));
+		r.push_back(new Renderable(mesh, new Material(Material::REFLECT, 1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), new Texture("Render/res/textures/chalet.jpg"))));
+		r.push_back(new Renderable(mesh, new Material(Material::REFLECT)));
+		r.push_back(new Renderable(mesh, new Material(1.33f)));
 
 		layer = new Layer(r);
-		//layer->alterRenderable(layer->size()-1)->alterModel()->rotateMatrix(glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+		for (int i = 0; i < layer->size(); i++)
+		{
+			layer->alterRenderable(i)->alterModel()->translateMatrix(glm::vec3(i*2.0f, 0.0f, 0.0f));
+			layer->alterRenderable(i)->alterModel()->rotateMatrix(glm::radians(-90.0f), glm::vec3(i*2.0f, 0.0f, 0.0f));
+
+		}
+
 
 		phongShader->setAmbientLight(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
 		std::map<unsigned int, std::string> skyboxImages;
-		std::string basepath = "Render/res/textures/skybox/sea/";
-		std::string extension = ".jpg";
+		std::string basepath = "Render/res/textures/skybox/cosmos/";
+		std::string extension = ".png";
 		skyboxImages[CubeMap::FRONT] = basepath + "front" + extension;
 		skyboxImages[CubeMap::RIGHT] = basepath + "right" + extension;
 		skyboxImages[CubeMap::LEFT] = basepath + "left" + extension;
@@ -91,10 +82,8 @@ namespace ginkgo {
 		skyboxImages[CubeMap::BACK] = basepath + "back" + extension;
 
 		skybox = new CubeMap(skyboxImages, 500);
-		text = new Text(window->getWidth(), window->getHeight(), "Render/res/fonts/arial.ttf");
+		text = new Text((float)window->getWidth(), (float)window->getHeight(), "Render/res/fonts/arial.ttf");
 		screen = new ScreenBuffer(window->getWidth(), window->getHeight(), window->getClearColor(), false, false);
-
-		//Debugging::print(layer->getModel());
 	}
 
 	void Game::input(double dt)
@@ -105,34 +94,31 @@ namespace ginkgo {
 	void Game::update(double dt)
 	{
 		camera->update(dt);
+
+		for (int i = 0; i < layer->size(); i++)
+		{
+		//	layer->alterRenderable(i)->alterModel()->rotateMatrix(glm::radians(dt*1000.0f), glm::vec3(i*2.0f, 0.0f, 0.0f));
+		}
 	}
 
 	void Game::render()
 	{
-		glm::mat4 translation;
-		translation[3][0] = -camera->getCameraPosition().x;
-		translation[3][1] = -camera->getCameraPosition().y;
-		translation[3][2] = -camera->getCameraPosition().z;
-		glm::mat4 transformProjectionView = camera->getProjection() * camera->getView() * translation;
+		glm::mat4 transformProjectionView = camera->getProjection() * camera->getView() * camera->getCameraPositionTranslation();
 
-		screen->bindBuffer();
-		screen->clearColor(window->getClearColor());
-		screen->clearBuffer(true, true, false);
-		screen->enableDepthTest();
+		ScreenBuffer::clearBuffer(true, true, false);
+		ScreenBuffer::enableDepthTest();
+
+		screen->drawToTexture();
 		layer->draw(transformProjectionView, camera->getCameraPosition(), *phongShader, *skybox);
 		skybox->draw(transformProjectionView);
-
-		ScreenBuffer::bindDefaultBuffer();
-		screen->clearColor(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
-		screen->clearBuffer(true, false, false);
-		screen->draw();
+		screen->drawToScreen();
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	}
 
 	void Game::postProcessing()
 	{
-		text->draw("Game Engine", 0.0f, window->getHeight() - 50.0f, 1.0f, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
-
+		text->draw("Game Engine", 0.0f, window->getHeight() - text->getMaxCharHeight(), 1.0f, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+	
 	}
 
 }

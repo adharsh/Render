@@ -60,9 +60,6 @@
     <ClCompile Include="Render\graphics\shaders\CubeMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Render\graphics\shaders\ReflectionShader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Render\graphics\Layer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -128,9 +125,6 @@
     <ClInclude Include="Render\graphics\shaders\CubeMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Render\graphics\shaders\ReflectionShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Render\graphics\Layer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -149,8 +143,6 @@
     <None Include="Render\res\shaders\phongVertex.vs" />
     <None Include="Render\res\shaders\cubemapFragment.fs" />
     <None Include="Render\res\shaders\cubemapVertex.vs" />
-    <None Include="Render\res\shaders\reflectionVertex.vs" />
-    <None Include="Render\res\shaders\reflectionFragment.fs" />
     <None Include="Render\res\shaders\textVertex.vs" />
     <None Include="Render\res\shaders\textFragment.fs" />
     <None Include="Render\res\shaders\screenFragment.fs" />
