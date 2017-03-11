@@ -24,7 +24,7 @@ namespace ginkgo {
 			throw std::runtime_error(err);
 		}
 
-		if (attrib.normals.size() != 0)
+		if (attrib.normals.size() == 0)
 		{
 			for (const auto& shape : shapes)
 			{

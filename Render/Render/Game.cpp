@@ -38,7 +38,7 @@ namespace ginkgo {
 
 		Mesh* mesh = new Mesh();
 
-		ObjLoader obj("Render/res/models/monkey.obj");
+		ObjLoader obj("Render/res/models/cube.obj");
 		std::vector<glm::vec2> uvs = obj.getUVList();
 		std::vector<glm::vec3> positions = obj.getPositionList();
 		std::vector<GLuint> indices = obj.getIndexList();
