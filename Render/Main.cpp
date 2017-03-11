@@ -19,9 +19,9 @@ int main()
 	//Window window = Window("Render", 1700, 900, glm::vec4(0.0f, 0.0f, 0.0f, 0.0f));
 	//Window window = Window("Render", 500, 500, glm::vec4(0.0f, 0.0f, 0.0f, 0.0f));
 	//Window window = Window("Render", 1000, 1000, glm::vec4(0.0f, 0.0f, 0.0f, 0.0f));
-	Game game = Game(&window);
+	Game game(window);
 
-	Engine engine = Engine(&game, &window);
+	Engine engine = Engine(game, window);
 	engine.start();
 
 	return 0;

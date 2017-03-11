@@ -28,11 +28,11 @@
 
 namespace ginkgo {
 
-	Game::Game(Window* win)
+	Game::Game(Window& win)
 		: window(win)
 	{
 		phongShader = new PhongShader();
-		camera = new Camera(window, glm::vec3(0.0f, 0.01f, 0.0f));
+		camera = new Camera(&window, glm::vec3(0.0f, 0.01f, 0.0f));
 
 		float side = 1.0f;
 
@@ -68,8 +68,8 @@ namespace ginkgo {
 		skyboxImages[CubeMap::BACK] = basepath + "back" + extension;
 
 		skybox = new CubeMap(skyboxImages, 500);
-		text = new Text(window->getWidth(), window->getHeight(), "Render/res/fonts/arial.ttf");
-		screen = new ScreenBuffer(window->getWidth(), window->getHeight(), window->getClearColor(), false, false);
+		text = new Text(window.getWidth(), window.getHeight(), "Render/res/fonts/arial.ttf");
+		screen = new ScreenBuffer(window.getWidth(), window.getHeight(), window.getClearColor(), false, false);
 	}
 
 	void Game::input(double dt)
@@ -102,7 +102,7 @@ namespace ginkgo {
 
 	void Game::postProcessing()
 	{
-		text->draw("Game Engine", 0.0f, window->getHeight() - text->getMaxCharHeight(), 1.0f, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+		text->draw("Game Engine", 0.0f, window.getHeight() - text->getMaxCharHeight(), 1.0f, glm::vec4(1.0f, 0.0f, 0.0f, 1.0f));
 
 	}
 

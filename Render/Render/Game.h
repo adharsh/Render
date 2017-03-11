@@ -14,7 +14,7 @@ namespace ginkgo {
 	class Game
 	{
 	private:
-		Window* window;
+		Window& window;
 		Layer* layer;
 		Camera* camera;
 		CubeMap* skybox;
@@ -23,7 +23,7 @@ namespace ginkgo {
 		Text* text;
 		ScreenBuffer* screen;
 	public:
-		Game(Window* window);
+		Game(Window& window);
 
 		void input(double dt);
 		void update(double dt);

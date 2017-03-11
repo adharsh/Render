@@ -8,12 +8,12 @@ namespace ginkgo{
 	class Engine
 	{
 	private:
-		Window* window;
+		Window& window;
+		Game& game;
 		bool isRunning;
-		Game* game;
 		static const double FRAME_CAP;
 	public:
-		Engine(Game* game, Window* window);
+		Engine(Game& game, Window& window);
 		void start();
 		void stop();
 

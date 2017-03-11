@@ -1,18 +1,17 @@
 TODOS:
 
 Priority To Do List:
-completely understand how depth function works
 *multiple objects reflection/refraction -> framebuffer?, no not framebuffer
-*transform reference -> to object
 *make sure proper deletion for all opengl objects stuff
 *use CUDA with this
 *export framebuffer as image https://www.opengl.org/discussion_boards/showthread.php/165852-save-opengl-buffer-with-freeimage
 *check if any leaked memory -> http://swarminglogic.com/jotting/2013_10_gamedev01
 *http://swarminglogic.com/jotting/2013_10_gamedev01 optimization for reading and writing an obj
-*make Engine take Game and Window as references not pointers, check other classes for similar mistake
+*understand if Game class needs pointers as member variables or as references, check other classes for similar mistake
 *fxaa - https://blog.codinghorror.com/fast-approximate-anti-aliasing-fxaa/, msaa, https://github.com/JoshuaSenouf/GLEngine/blob/master/resources/shaders/postprocess/firstpass.frag
 *check code when to make vectors references or as objects: pass in as (const check this too) references, objects as members
 *load all library stuff again cuz when I searched and and took out the inlines, it probably took and changed the library files too
+completely understand how depth function works
 
 Bob class -> review in club
 *use texture map weird image and use freeimage to export into useable cubemap
@@ -56,6 +55,8 @@ spot lights
 
 ******
 Yups:
+*make Engine take Game and Window as references not pointers -> yup
+*transform reference -> to object -> yup
 *depth function set up strangely
 *bug skybox draw after layer->draw? why? and why for depth function better for optimization?
 *possible revert changse so it can draw first renderables - yup
