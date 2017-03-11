@@ -11,21 +11,15 @@ namespace ginkgo {
 	unsigned int Renderable::index = 0;
 
 	Renderable::Renderable(const Mesh* mesh, Material* material, const glm::mat4& model)
-		: mesh(mesh), material(material)
+		: mesh(mesh), material(material), model(model)
 	{
-		this->model = new Transform();
 		r_index = index;
 		index++;
 	}
 
-	Renderable::~Renderable()
-	{
-		delete model;
-	}
-	
 	const glm::mat4& Renderable::getModel() const 
 	{ 
-		return model->getMatrix(); 
+		return model.getMatrix(); 
 	}
 
 

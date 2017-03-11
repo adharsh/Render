@@ -14,6 +14,7 @@ completely understand how depth function works
 *check code when to make vectors references or as objects: pass in as (const check this too) references, objects as members
 *load all library stuff again cuz when I searched and and took out the inlines, it probably took and changed the library files too
 
+Bob class -> review in club
 *use texture map weird image and use freeimage to export into useable cubemap
 	- http://virtuallyprogramming.com/Content/Content.html
 	- http://wwwtyro.github.io/space-3d/

@@ -11,9 +11,8 @@
 namespace ginkgo {
 
 	Layer::Layer(const std::vector<Renderable*> renderablesL, const glm::mat4& model)
-		: renderables(renderablesL)
+		: renderables(renderablesL), model(model)
 	{
-		this->model = new Transform();
 		std::sort(renderables.begin(), renderables.end(), compareRenderables);
 
 		GLuint tid = 0;
@@ -31,11 +30,6 @@ namespace ginkgo {
 
 	}
 
-	Layer::~Layer()
-	{
-		delete model;
-	}
-
 	GLuint Layer::determineTextureID(Renderable* r)
 	{
 		return (r->getMaterial().getTexture() != nullptr) ?
@@ -50,7 +44,7 @@ namespace ginkgo {
 
 	const glm::mat4& Layer::getModel() const
 	{
-		return model->getMatrix();
+		return model.getMatrix();
 	}
 
 	void Layer::addRenderable(Renderable* renderable)
@@ -114,8 +108,8 @@ namespace ginkgo {
 				for (int i = 0; i < sizeTextureIDs[0]; i++)
 				{
 					phongShader.updateUniforms(
-						model->getMatrix() * renderables[i]->getModel(),
-						transformProjectionView * model->getMatrix() * renderables[i]->getModel(),
+						model.getMatrix() * renderables[i]->getModel(),
+						transformProjectionView * model.getMatrix() * renderables[i]->getModel(),
 						renderables[i]->getMaterial(),
 						cameraPosition);
 					renderables[i]->draw();
@@ -135,8 +129,8 @@ namespace ginkgo {
 				for (unsigned int a = 0; a < sizeTextureIDs[i]; a++)
 				{
 					phongShader.updateUniforms(
-						model->getMatrix() * renderables[b]->getModel(),
-						transformProjectionView * model->getMatrix() * renderables[b]->getModel(),
+						model.getMatrix() * renderables[b]->getModel(),
+						transformProjectionView * model.getMatrix() * renderables[b]->getModel(),
 						renderables[b]->getMaterial(),
 						cameraPosition);
 					if (renderables[b]->getMaterial().getRefractiveIndex() >= 0) { glActiveTexture(GL_TEXTURE1); cubeMap.bindCubeMapTexture(); }

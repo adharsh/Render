@@ -321,6 +321,19 @@ how do 24 bit depth images work with unsigned char* ? each byte is an unsigned c
 
 practice with C++ bugs -> https://www.toptal.com/c-plus-plus/top-10-common-c-plus-plus-developer-mistakes
 
+
+class Bob
+{
+private:
+	int integer;
+public:
+	//int& alterinteger() const { return integer; }; //error
+	int& alterinteger() { return integer; }; //works -> assumption is made that it is possible for integer to be changed, therefore calling this method doesn't gaurentee that all of its members will be const
+};
+
+
+
+
 *****************************************************************************************
 *****************************************************************************************
 Coding Guidelines:

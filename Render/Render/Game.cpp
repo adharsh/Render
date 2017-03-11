@@ -44,41 +44,16 @@ namespace ginkgo {
 		std::vector<GLuint> indices = obj.getIndexList();
 		std::vector<glm::vec3> normals = obj.getNormalList();
 
-		//std::vector<glm::vec3> positions;
-		//positions.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
-		//positions.push_back(glm::vec3(0.0f, 0.0f, -side));
-		//positions.push_back(glm::vec3(side, 0.0f, -side));
-		//positions.push_back(glm::vec3(side, 0.0f, 0.0f));
-		//std::vector<glm::vec2> uvs;
-		//uvs.push_back(glm::vec2(0.0f, 0.0f));
-		//uvs.push_back(glm::vec2(0.0f, 1.0f));
-		//uvs.push_back(glm::vec2(1.0f, 1.0f));
-		//uvs.push_back(glm::vec2(1.0f, 0.0f));
-		//std::vector<GLuint> indices;
-		//indices.push_back(0); indices.push_back(1); indices.push_back(2);
-		//indices.push_back(2); indices.push_back(3); indices.push_back(0);
-
 		mesh->addData(positions, indices, uvs, normals);
 
 		std::vector<Renderable*> r;
 		for(int i = 0; i < 10; i++)
 			r.push_back(new Renderable(mesh, new Material(1.33f)));
-		//r.push_back(new Renderable(mesh, new Material(Material::REFLECT)));
-		//r.push_back(new Renderable(mesh, new Material(Material::REFLECT, 5.0f, new Texture("Render/res/textures/Hi.png"))));
-		//r.push_back(new Renderable(mesh, new Material(new Texture("Render/res/textures/prime.png"))));
-		//r.push_back(new Renderable(mesh, new Material(new Texture("Render/res/textures/Hi.png"))));
-		//r.push_back(new Renderable(mesh, new Material(1.33f, 1.0f, new Texture("Render/res/textures/Hi.png"))));
-		//r.push_back(new Renderable(mesh, new Material(1.33f, 1.0f, new Texture("Render/res/textures/Hi.png"))));
-		//r.push_back(new Renderable(mesh, new Material(1.33f)));
-		//r.push_back(new Renderable(mesh, new Material(1.33f, 1.0f, new Texture("Render/res/textures/coord.png"))));
-		r.push_back(new Renderable(mesh, new Material(1.33f)));
-		//r.push_back(new Renderable(mesh, new Material(new Texture("Render/res/textures/chalet.jpg"))));
 
 		layer = new Layer(r);
-		//layer->alterRenderable(layer->size()-1)->alterModel()->rotateMatrix(glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
 		for (int i = 0; i < layer->size(); i++)
-			layer->alterRenderable(i)->alterModel()->translateMatrix(glm::vec3(i*2.0f, i*1.0f, 0.0f));
+			layer->alterRenderable(i)->alterModel().translateMatrix(glm::vec3(i*2.0f, i*1.0f, 0.0f));
 
 		phongShader->setAmbientLight(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
@@ -95,8 +70,6 @@ namespace ginkgo {
 		skybox = new CubeMap(skyboxImages, 500);
 		text = new Text(window->getWidth(), window->getHeight(), "Render/res/fonts/arial.ttf");
 		screen = new ScreenBuffer(window->getWidth(), window->getHeight(), window->getClearColor(), false, false);
-
-		//Debugging::print(layer->getModel());
 	}
 
 	void Game::input(double dt)
@@ -110,8 +83,8 @@ namespace ginkgo {
 
 		for (int i = 0; i < layer->size(); i++)
 		{
-			layer->alterRenderable(i)->alterModel()->rotateMatrix(glm::radians(dt * 100.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-			layer->alterModel()->rotateMatrix(glm::radians(dt * 10.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+			layer->alterRenderable(i)->alterModel().rotateMatrix(glm::radians(dt * 100.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+			layer->alterModel().rotateMatrix(glm::radians(dt * 10.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 		}
 	}
 
