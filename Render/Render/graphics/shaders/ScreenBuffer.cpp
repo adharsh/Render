@@ -107,29 +107,29 @@ namespace ginkgo {
 		glClear(option);
 	}
 
+	void ScreenBuffer::drawToTexture() const
+	{
+		bindBuffer();
+		clearColor(clear_color);
+		clearBuffer(true, true, false);
+		enableDepthTest();
+	}
+
 	void ScreenBuffer::drawToScreen() const
 	{
 		ScreenBuffer::bindDefaultBuffer();
+		clearColor(clear_color);
 		clearBuffer(true, false, false);
-
+		
 		bind();
 
 		glBindVertexArray(quadVAO);
 		glDisable(GL_DEPTH_TEST);
 		glBindTexture(GL_TEXTURE_2D, textureID);
 		glDrawArrays(GL_TRIANGLES, 0, 6);
-		glBindTexture(GL_TEXTURE_2D, 0);
 		glBindVertexArray(0);
 
 		unbind();
 	}
 
-	void ScreenBuffer::drawToTexture() const
-	{
-		glBindFramebuffer(GL_FRAMEBUFFER, FBO);
-		glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glEnable(GL_DEPTH_TEST);
-	}
-	
 }

@@ -1,17 +1,18 @@
 TODOS:
 
 Priority To Do List:
+completely understand how depth function works
 *multiple objects reflection/refraction -> framebuffer?, no not framebuffer
 *transform reference -> to object
-*export framebuffer as iamge https://www.opengl.org/discussion_boards/showthread.php/165852-save-opengl-buffer-with-freeimage
-*use CUDA with this
-*check if any leaked memory -> http://swarminglogic.com/jotting/2013_10_gamedev01
 *make sure proper deletion for all opengl objects stuff
+*use CUDA with this
+*export framebuffer as image https://www.opengl.org/discussion_boards/showthread.php/165852-save-opengl-buffer-with-freeimage
+*check if any leaked memory -> http://swarminglogic.com/jotting/2013_10_gamedev01
 *http://swarminglogic.com/jotting/2013_10_gamedev01 optimization for reading and writing an obj
 *make Engine take Game and Window as references not pointers, check other classes for similar mistake
 *fxaa - https://blog.codinghorror.com/fast-approximate-anti-aliasing-fxaa/, msaa, https://github.com/JoshuaSenouf/GLEngine/blob/master/resources/shaders/postprocess/firstpass.frag
-*http://www.41post.com/5178/programming/opengl-configuring-glfw-and-glew-in-visual-cplusplus-express
-*depth function set up strangely
+*check code when to make vectors references or as objects: pass in as (const check this too) references, objects as members
+*load all library stuff again cuz when I searched and and took out the inlines, it probably took and changed the library files too
 
 *use texture map weird image and use freeimage to export into useable cubemap
 	- http://virtuallyprogramming.com/Content/Content.html
@@ -35,6 +36,8 @@ should game and window in Engine.h be const, should Game methods be const too, e
 lighting -> https://learnopengl.com/#!Lighting/ -> change all code around
 https://vulkan-tutorial.com/Loading_models optimization reading from obj -> not necessary, linear serach with memory saving, takes more processing time but less memory
 browser -> http://kripken.github.io/emscripten-site/
+*http://www.41post.com/5178/programming/opengl-configuring-glfw-and-glew-in-visual-cplusplus-express - to get rid of that error
+change github username eventually
 
 fix change fov scroll in
 change scrolling so it stays the same even when cursor is out of focus
@@ -52,6 +55,9 @@ spot lights
 
 ******
 Yups:
+*depth function set up strangely
+*bug skybox draw after layer->draw? why? and why for depth function better for optimization?
+*possible revert changse so it can draw first renderables - yup
 *change translation matrix usage in Game.cpp in render method -> yup
 framebuffer -> so text is always in front -> yup
 cube doesn't work, indices work, normals work, something else maybe? vertices gone wrong? -> yup
