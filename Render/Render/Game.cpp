@@ -36,19 +36,15 @@ namespace ginkgo {
 
 		float side = 1.0f;
 
-		Mesh* cmesh = new Mesh();
-		ObjLoader obj("Render/res/models/cube.obj");
-		cmesh->addData(obj.getPositionList(), obj.getIndexList(), obj.getUVList(), obj.getNormalList());
+		Mesh* mesh = new Mesh();
+		ObjLoader obj("Render/res/models/plane.obj");
+		mesh->addData(obj.getPositionList(), obj.getIndexList(), obj.getUVList(), obj.getNormalList());
 
-		Mesh* pmesh = new Mesh();
-		ObjLoader obj2("Render/res/models/plane.obj");
-		pmesh->addData(obj2.getPositionList(), obj2.getIndexList(), obj2.getUVList(), obj2.getNormalList());
+		std::vector<Renderable*> r;
+		for (int i = 0; i < 1; i++)
+			r.push_back(new Renderable(mesh, new Material(1.33f)));
 
-		Renderable* cube = new Renderable(cmesh, new Material(Material::REFLECT));
-		cube->alterModel().translateMatrix(glm::vec3(0.0f, 0.001f, 0.0f));
-		Renderable* floor = new Renderable(pmesh, new Material(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), new Texture()));
-
-		layer = new Layer({cube, floor});
+		layer = new Layer(r);
 		//layer = new Layer({ cube});
 		layer->alterModel().translateMatrix(glm::vec3(0.0f, -1.0f, -3.0f));
 
@@ -57,12 +53,8 @@ namespace ginkgo {
 		std::map<unsigned int, std::string> skyboxImages;
 		std::string basepath = "Render/res/textures/skybox/sea/";
 		std::string extension = ".jpg";
-		skyboxImages[CubeMap::FRONT] = basepath + "front" + extension;
-		skyboxImages[CubeMap::RIGHT] = basepath + "right" + extension;
-		skyboxImages[CubeMap::LEFT] = basepath + "left" + extension;
-		skyboxImages[CubeMap::TOP] = basepath + "top" + extension;
-		skyboxImages[CubeMap::BOTTOM] = basepath + "bottom" + extension;
-		skyboxImages[CubeMap::BACK] = basepath + "back" + extension;
+		std::string singlePath = "Render/res/textures/skybox/dot.png";
+		skyboxImages[CubeMap::BACK] = skyboxImages[CubeMap::BOTTOM] = skyboxImages[CubeMap::TOP] = skyboxImages[CubeMap::LEFT] = skyboxImages[CubeMap::RIGHT] = skyboxImages[CubeMap::FRONT] = singlePath;
 
 		skybox = new CubeMap(skyboxImages, 500);
 		text = new Text(window.getWidth(), window.getHeight(), "Render/res/fonts/arial.ttf");
@@ -80,7 +72,7 @@ namespace ginkgo {
 
 		for (int i = 0; i < layer->size(); i++)
 		{
-			layer->alterModel().rotateMatrix(glm::radians(dt * 100.0f), glm::vec3(0.0f, -1.0f, 0.0f));
+			//layer->alterModel().rotateMatrix(glm::radians(dt * 100.0f), glm::vec3(0.0f, -1.0f, 0.0f));
 		}
 	}
 
@@ -90,30 +82,10 @@ namespace ginkgo {
 
 		screen->drawToTexture();
 
-		//Draw Cube
-		layer->alterRenderable(0)->alterModel().newTranslateMatrix(glm::vec3(0.0f, 0.001f, 0.0f));
-		layer->drawSingle(0, transformProjectionViewCamera, camera->getCameraPosition(), *phongShader, *skybox);
-
-		//Draw Floor
-		glEnable(GL_STENCIL_TEST);
-		glStencilFunc(GL_ALWAYS, 1, 0xFF);
-		glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-		glStencilMask(0xFF);
-		glDepthMask(GL_FALSE);
-		glClear(GL_STENCIL_BUFFER_BIT);
-		layer->drawSingle(1, transformProjectionViewCamera, camera->getCameraPosition(), *phongShader, *skybox);
-
-		//Draw cube reflection
-		glStencilFunc(GL_EQUAL, 1, 0xFF);
-		glStencilMask(0x00);
-		glDepthMask(GL_TRUE);
-		layer->alterRenderable(0)->alterModel().newTranslateMatrix(glm::vec3(0.0f, -1.001f, 0.0f));
-		layer->drawSingle(0, transformProjectionViewCamera, camera->getCameraPosition(), *phongShader, *skybox);
-		glDisable(GL_STENCIL_TEST);
-		
+		layer->draw(transformProjectionViewCamera, camera->getCameraPosition(), *phongShader, *skybox);
 		skybox->draw(transformProjectionViewCamera);
+		
 		screen->drawToScreen();
-
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	}
 

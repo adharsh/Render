@@ -1,7 +1,6 @@
 TODOS:
 
 Priority To Do List:
-*multiple objects reflection/refraction -> framebuffer?, no not framebuffer
 *make sure proper deletion for all opengl objects stuff
 *use CUDA with this
 *export framebuffer as image https://www.opengl.org/discussion_boards/showthread.php/165852-save-opengl-buffer-with-freeimage
@@ -58,6 +57,7 @@ spot lights
 
 ******
 Yups:
+*multiple objects reflection/refraction -> framebuffer?, no not framebuffer -> nah we're not gonna do it, just use dotted cubemap
 *make Engine take Game and Window as references not pointers -> yup
 *transform reference -> to object -> yup
 *depth function set up strangely
