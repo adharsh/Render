@@ -42,6 +42,30 @@ namespace ginkgo {
 		return determineTextureID(r1) < determineTextureID(r2);
 	}
 
+	Renderable* Layer::alterRenderable(unsigned int index) const
+	{
+		if (index < 0 || index >= renderables.size())
+			return nullptr;
+
+		for (unsigned int i = 0; i < renderables.size(); i++)
+			if (renderables[i]->getIndex() == index)
+				return renderables[i];
+
+		return nullptr;
+	}
+
+	const Renderable* Layer::getRenderable(unsigned int index) const
+	{
+		if (index < 0 || index >= renderables.size())
+			return nullptr;
+
+		for (unsigned int i = 0; i < renderables.size(); i++)
+			if (renderables[i]->getIndex() == index)
+				return renderables[i];
+
+		return nullptr;
+	}
+
 	const glm::mat4& Layer::getModel() const
 	{
 		return model.getMatrix();
@@ -102,7 +126,7 @@ namespace ginkgo {
 			{
 				phongShader.setUniform1i("skybox", 0);		   //dependant on phongFragment.fs
 				phongShader.setUniform1i("diffuseTexture", 1); //dependant on phongFragment.fs
-				
+
 				glActiveTexture(GL_TEXTURE0);
 				cubeMap.bindCubeMapTexture();
 				for (int i = 0; i < sizeTextureIDs[0]; i++)
@@ -144,28 +168,105 @@ namespace ginkgo {
 		phongShader.unbind();
 	}
 
-	Renderable* Layer::alterRenderable(unsigned int index) const
+	void Layer::draw(unsigned int index, const glm::mat4& transformProjectionView, const glm::vec3& cameraPosition, const PhongShader& phongShader, const CubeMap& cubeMap) const
 	{
-		if (index < 0 || index >= renderables.size())
-			return nullptr;
+		phongShader.bind();
+		if (renderables.size() > 0)
+		{
+			unsigned int b = 0;
+			unsigned int i = 0;
+			if ((determineTextureID(renderables[0]) == Layer::NO_TEXTURE))
+			{
+				phongShader.setUniform1i("skybox", 0);		   //dependant on phongFragment.fs
+				phongShader.setUniform1i("diffuseTexture", 1); //dependant on phongFragment.fs
 
-		for (unsigned int i = 0; i < renderables.size(); i++)
-			if (renderables[i]->getIndex() == index)
-				return renderables[i];
+				glActiveTexture(GL_TEXTURE0);
+				cubeMap.bindCubeMapTexture();
+				for (int i = 0; i < sizeTextureIDs[0]; i++)
+				{
+					if (index != i)
+					{
+						phongShader.updateUniforms(
+							model.getMatrix() * renderables[i]->getModel(),
+							transformProjectionView * model.getMatrix() * renderables[i]->getModel(),
+							renderables[i]->getMaterial(),
+							cameraPosition);
+						renderables[i]->draw();
+					}
+				}
+				cubeMap.unbindCubeMapTexture();
 
-		return nullptr;
+				b = sizeTextureIDs[0];
+				i = 1;
+			}
+
+			phongShader.setUniform1i("diffuseTexture", 0); //dependant on phongFragment.fs
+			phongShader.setUniform1i("skybox", 1);		   //dependant on phongFragment.fs
+			for (; i < sizeTextureIDs.size(); i++)
+			{
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, determineTextureID(renderables[b]));
+				for (unsigned int a = 0; a < sizeTextureIDs[i]; a++)
+				{
+					if (index != b)
+					{
+						phongShader.updateUniforms(
+							model.getMatrix() * renderables[b]->getModel(),
+							transformProjectionView * model.getMatrix() * renderables[b]->getModel(),
+							renderables[b]->getMaterial(),
+							cameraPosition);
+						if (renderables[b]->getMaterial().getRefractiveIndex() >= 0) { glActiveTexture(GL_TEXTURE1); cubeMap.bindCubeMapTexture(); }
+						renderables[b]->draw();
+						if (renderables[b]->getMaterial().getRefractiveIndex() >= 0) cubeMap.unbindCubeMapTexture();
+					}
+					b++;
+				}
+				glBindTexture(GL_TEXTURE_2D, 0);
+			}
+		}
+		phongShader.unbind();
 	}
 
-	const Renderable* Layer::getRenderable(unsigned int index) const
+	void Layer::drawSingle(unsigned int index, const glm::mat4& transformProjectionView, const glm::vec3& cameraPosition, const PhongShader& phongShader, const CubeMap& cubeMap) const
 	{
-		if (index < 0 || index >= renderables.size())
-			return nullptr;
+		phongShader.bind();
 
-		for (unsigned int i = 0; i < renderables.size(); i++)
-			if (renderables[i]->getIndex() == index)
-				return renderables[i];
+		if ((determineTextureID(renderables[index]) == Layer::NO_TEXTURE))
+		{
+			phongShader.setUniform1i("skybox", 0);		   //dependant on phongFragment.fs
+			phongShader.setUniform1i("diffuseTexture", 1); //dependant on phongFragment.fs
 
-		return nullptr;
+			glActiveTexture(GL_TEXTURE0);
+			cubeMap.bindCubeMapTexture();
+
+			phongShader.updateUniforms(
+				model.getMatrix() * renderables[index]->getModel(),
+				transformProjectionView * model.getMatrix() * renderables[index]->getModel(),
+				renderables[index]->getMaterial(),
+				cameraPosition);
+			renderables[index]->draw();
+			cubeMap.unbindCubeMapTexture();
+		}
+		else
+		{
+			phongShader.setUniform1i("diffuseTexture", 0); //dependant on phongFragment.fs
+			phongShader.setUniform1i("skybox", 1);		   //dependant on phongFragment.fs
+
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, determineTextureID(renderables[index]));
+			phongShader.updateUniforms(
+				model.getMatrix() * renderables[index]->getModel(),
+				transformProjectionView * model.getMatrix() * renderables[index]->getModel(),
+				renderables[index]->getMaterial(),
+				cameraPosition);
+			if (renderables[index]->getMaterial().getRefractiveIndex() >= 0) { glActiveTexture(GL_TEXTURE1); cubeMap.bindCubeMapTexture(); }
+			renderables[index]->draw();
+			if (renderables[index]->getMaterial().getRefractiveIndex() >= 0) cubeMap.unbindCubeMapTexture();
+			
+			glBindTexture(GL_TEXTURE_2D, 0);
+
+		}
+
+		phongShader.unbind();
 	}
-
 }

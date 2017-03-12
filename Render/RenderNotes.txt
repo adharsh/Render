@@ -12,6 +12,9 @@ Priority To Do List:
 *check code when to make vectors references or as objects: pass in as (const check this too) references, objects as members
 *load all library stuff again cuz when I searched and and took out the inlines, it probably took and changed the library files too
 completely understand how depth function works
+*test add renderable
+*double check if properly unbinding textures in Layer class
+*game quit method that affects Engine class
 
 Bob class -> review in club
 *use texture map weird image and use freeimage to export into useable cubemap
@@ -37,7 +40,7 @@ lighting -> https://learnopengl.com/#!Lighting/ -> change all code around
 https://vulkan-tutorial.com/Loading_models optimization reading from obj -> not necessary, linear serach with memory saving, takes more processing time but less memory
 browser -> http://kripken.github.io/emscripten-site/
 *http://www.41post.com/5178/programming/opengl-configuring-glfw-and-glew-in-visual-cplusplus-express - to get rid of that error
-change github username eventually
+change github username eventually, take out forked stuff and other stuff stuff
 
 fix change fov scroll in
 change scrolling so it stays the same even when cursor is out of focus

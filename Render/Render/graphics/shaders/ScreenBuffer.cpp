@@ -111,7 +111,7 @@ namespace ginkgo {
 	{
 		bindBuffer();
 		clearColor(clear_color);
-		clearBuffer(true, true, false);
+		clearBuffer(true, true, true);
 		enableDepthTest();
 	}
 

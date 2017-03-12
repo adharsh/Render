@@ -36,24 +36,21 @@ namespace ginkgo {
 
 		float side = 1.0f;
 
-		Mesh* mesh = new Mesh();
-
+		Mesh* cmesh = new Mesh();
 		ObjLoader obj("Render/res/models/cube.obj");
-		std::vector<glm::vec2> uvs = obj.getUVList();
-		std::vector<glm::vec3> positions = obj.getPositionList();
-		std::vector<GLuint> indices = obj.getIndexList();
-		std::vector<glm::vec3> normals = obj.getNormalList();
+		cmesh->addData(obj.getPositionList(), obj.getIndexList(), obj.getUVList(), obj.getNormalList());
 
-		mesh->addData(positions, indices, uvs, normals);
+		Mesh* pmesh = new Mesh();
+		ObjLoader obj2("Render/res/models/plane.obj");
+		pmesh->addData(obj2.getPositionList(), obj2.getIndexList(), obj2.getUVList(), obj2.getNormalList());
 
-		std::vector<Renderable*> r;
-		for(int i = 0; i < 10; i++)
-			r.push_back(new Renderable(mesh, new Material(1.33f)));
+		Renderable* cube = new Renderable(cmesh, new Material(Material::REFLECT));
+		cube->alterModel().translateMatrix(glm::vec3(0.0f, 0.001f, 0.0f));
+		Renderable* floor = new Renderable(pmesh, new Material(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), new Texture()));
 
-		layer = new Layer(r);
-
-		for (int i = 0; i < layer->size(); i++)
-			layer->alterRenderable(i)->alterModel().translateMatrix(glm::vec3(i*2.0f, i*1.0f, 0.0f));
+		layer = new Layer({cube, floor});
+		//layer = new Layer({ cube});
+		layer->alterModel().translateMatrix(glm::vec3(0.0f, -1.0f, -3.0f));
 
 		phongShader->setAmbientLight(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
@@ -83,18 +80,38 @@ namespace ginkgo {
 
 		for (int i = 0; i < layer->size(); i++)
 		{
-			layer->alterRenderable(i)->alterModel().rotateMatrix(glm::radians(dt * 100.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-			layer->alterModel().rotateMatrix(glm::radians(dt * 10.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+			layer->alterModel().rotateMatrix(glm::radians(dt * 100.0f), glm::vec3(0.0f, -1.0f, 0.0f));
 		}
 	}
 
 	void Game::render()
 	{
-		glm::mat4 transformProjectionView = camera->getProjection() * camera->getView() * camera->getCameraPositionTranslation();
+		glm::mat4 transformProjectionViewCamera = camera->getProjection() * camera->getView() * camera->getCameraPositionTranslation();
 
 		screen->drawToTexture();
-		layer->draw(transformProjectionView, camera->getCameraPosition(), *phongShader, *skybox);
-		skybox->draw(transformProjectionView);
+
+		//Draw Cube
+		layer->alterRenderable(0)->alterModel().newTranslateMatrix(glm::vec3(0.0f, 0.001f, 0.0f));
+		layer->drawSingle(0, transformProjectionViewCamera, camera->getCameraPosition(), *phongShader, *skybox);
+
+		//Draw Floor
+		glEnable(GL_STENCIL_TEST);
+		glStencilFunc(GL_ALWAYS, 1, 0xFF);
+		glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+		glStencilMask(0xFF);
+		glDepthMask(GL_FALSE);
+		glClear(GL_STENCIL_BUFFER_BIT);
+		layer->drawSingle(1, transformProjectionViewCamera, camera->getCameraPosition(), *phongShader, *skybox);
+
+		//Draw cube reflection
+		glStencilFunc(GL_EQUAL, 1, 0xFF);
+		glStencilMask(0x00);
+		glDepthMask(GL_TRUE);
+		layer->alterRenderable(0)->alterModel().newTranslateMatrix(glm::vec3(0.0f, -1.001f, 0.0f));
+		layer->drawSingle(0, transformProjectionViewCamera, camera->getCameraPosition(), *phongShader, *skybox);
+		glDisable(GL_STENCIL_TEST);
+		
+		skybox->draw(transformProjectionViewCamera);
 		screen->drawToScreen();
 
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
