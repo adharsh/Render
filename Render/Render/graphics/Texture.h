@@ -24,6 +24,7 @@ namespace ginkgo {
 		const unsigned int getHeight() const { return height; }
 		const GLuint getID() const { return tid; }
 		const void setID(unsigned int texureID);
+		const void deleteTexture() const;
 
 		static void setWhitePixelFilePath(const std::string& filepath) { whitepixelfilepath = filepath; }
 	};

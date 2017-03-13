@@ -76,8 +76,9 @@ namespace ginkgo {
 	}
 
 	CubeMap::~CubeMap() {
-		glDeleteVertexArrays(1, &VAO);
+		glDeleteTextures(1, &textureID);
 		glDeleteBuffers(1, &VBO);
+		glDeleteVertexArrays(1, &VAO);
 	}
 
 	void CubeMap::bindCubeMapTexture() const

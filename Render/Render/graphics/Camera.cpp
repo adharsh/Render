@@ -40,7 +40,7 @@ namespace ginkgo {
 		return position_translation;
 	}
 
-	void Camera::input(double dt)
+	void Camera::input(bool& isGameOver, double dt)
 	{
 		GLfloat cameraSpeed = dt * cameraSpeedSensitivity;
 		glm::vec3 right;
@@ -67,7 +67,7 @@ namespace ginkgo {
 			cameraPosition += right * cameraSpeed;
 
 		if (window->isKeyPressed(GLFW_KEY_ESCAPE))
-			std::exit(0);
+			isGameOver = true;
 
 		static bool first = true;
 		double x, y;

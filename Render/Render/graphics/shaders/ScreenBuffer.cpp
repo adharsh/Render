@@ -74,9 +74,11 @@ namespace ginkgo {
 
 	ScreenBuffer::~ScreenBuffer()
 	{
-		glDeleteTextures(1, &textureID);
 		glDeleteRenderbuffers(1, &RBO);
 		glDeleteFramebuffers(1, &FBO);
+		glDeleteTextures(1, &textureID);
+		glDeleteBuffers(1, &quadVBO);
+		glDeleteVertexArrays(1, &quadVAO);
 	}
 
 	void ScreenBuffer::bindBuffer() const

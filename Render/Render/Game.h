@@ -14,6 +14,8 @@ namespace ginkgo {
 	class Game
 	{
 	private:
+		bool isGameOver;
+	private:
 		Window& window;
 		Layer* layer;
 		Camera* camera;
@@ -30,6 +32,8 @@ namespace ginkgo {
 
 		void render();
 		void postProcessing();
+
+		bool gameOver() { return isGameOver; }
 
 	};
 

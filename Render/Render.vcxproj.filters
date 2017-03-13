@@ -83,9 +83,6 @@
     <ClInclude Include="Render\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Render\Handle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Render\graphics\Window.h">
       <Filter>Header Files</Filter>
     </ClInclude>

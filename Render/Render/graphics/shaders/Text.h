@@ -31,6 +31,7 @@ namespace ginkgo {
 		float minHeight;
 	public:
 		Text(float windowWidth, float windowHeight, const char* fontFilePath);
+		~Text();
 
 		void draw(const std::string& text, GLfloat x, GLfloat y, GLfloat scale, const glm::vec3& color);
 

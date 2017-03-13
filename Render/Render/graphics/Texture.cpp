@@ -51,8 +51,12 @@ namespace ginkgo {
 
 	const void Texture::setID(unsigned int texureID)
 	{
-		glDeleteTextures(1, &tid);
 		tid = texureID;
+	}
+
+	const void Texture::deleteTexture() const
+	{
+		glDeleteTextures(1, &tid);
 	}
 
 }

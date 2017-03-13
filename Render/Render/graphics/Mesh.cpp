@@ -15,8 +15,9 @@ namespace ginkgo {
 
 	Mesh::~Mesh()
 	{
-		glDeleteVertexArrays(1, &VAO);
+		glDeleteBuffers(1, &EBO);
 		glDeleteBuffers(1, &VBO);
+		glDeleteVertexArrays(1, &VAO);
 	}
 
 	void Mesh::addData(const std::vector<glm::vec3>& positions, const std::vector<GLuint>& indices, const std::vector<glm::vec2>& uvs, const std::vector<glm::vec3>& normalsM)

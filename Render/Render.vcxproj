@@ -168,7 +168,6 @@
     <ClInclude Include="Render\graphics\shaders\Text.h" />
     <ClInclude Include="Render\graphics\Texture.h" />
     <ClInclude Include="Render\graphics\Transform.h" />
-    <ClInclude Include="Render\Handle.h" />
     <ClInclude Include="Render\graphics\shaders\Shader.h" />
     <ClInclude Include="Render\Time.h" />
     <ClInclude Include="Render\graphics\Window.h" />

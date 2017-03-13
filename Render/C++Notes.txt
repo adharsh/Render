@@ -331,8 +331,9 @@ public:
 	int& alterinteger() { return integer; }; //works -> assumption is made that it is possible for integer to be changed, therefore calling this method doesn't gaurentee that all of its members will be const
 };
 
-
-
+RenderBuffers vs FrameBuffers: http://stackoverflow.com/a/2213077
+The final rendering destination of the OpenGL pipeline is called [the] framebuffer.
+In addition, renderbuffer object is newly introduced for offscreen rendering. It allows to render a scene directly to a renderbuffer object, instead of rendering to a texture object. Renderbuffer is simply a data storage object containing a single image of a renderable internal format. It is used to store OpenGL logical buffers that do not have corresponding texture format, such as stencil or depth buffer.
 
 *****************************************************************************************
 *****************************************************************************************

@@ -1,3 +1,5 @@
+#include <chrono>
+#include <thread>
 #include <string>
 #include <fstream>
 #include <iostream>
@@ -61,6 +63,24 @@ namespace ginkgo {
 		FreeImage_Unload(dib);
 
 		return result;
+	}
+
+	void FileUtils::screenshot(unsigned int width, unsigned int height)
+	{
+		static int id = 0;
+		
+		unsigned char* pixels = new unsigned char[3 * width * height];
+
+		glReadPixels(0, 0, width, height, GL_BGR, GL_UNSIGNED_BYTE, pixels);
+
+		FIBITMAP* image = FreeImage_ConvertFromRawBits(pixels, width, height, 3 * width, 24, 0x0000FF, 0xFF0000, 0x00FF00, false);
+		//FreeImage_Save(FIF_BMP, image, ("Render" + std::to_string(id) + ".bmp").c_str(), 0);
+		FreeImage_Save(FIF_BMP, image, "Render.bmp", 0);
+		
+		FreeImage_Unload(image);
+		delete[] pixels;
+
+		id++;
 	}
 
 }

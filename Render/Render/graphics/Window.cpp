@@ -18,8 +18,8 @@ namespace ginkgo {
 
 	Window::~Window()
 	{
+		//glfwDestroyWindow(window); //doesn't actually matter cuz glfwTerminate destroys any remaining windows
 		glfwTerminate();
-		//glfwDestroyWindow(window);
 	}
 
 	bool Window::init()

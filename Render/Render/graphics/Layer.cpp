@@ -168,7 +168,7 @@ namespace ginkgo {
 		phongShader.unbind();
 	}
 
-	void Layer::draw(unsigned int index, const glm::mat4& transformProjectionView, const glm::vec3& cameraPosition, const PhongShader& phongShader, const CubeMap& cubeMap) const
+	void Layer::drawButOne(unsigned int index, const glm::mat4& transformProjectionView, const glm::vec3& cameraPosition, const PhongShader& phongShader, const CubeMap& cubeMap) const
 	{
 		phongShader.bind();
 		if (renderables.size() > 0)
@@ -227,7 +227,7 @@ namespace ginkgo {
 		phongShader.unbind();
 	}
 
-	void Layer::drawSingle(unsigned int index, const glm::mat4& transformProjectionView, const glm::vec3& cameraPosition, const PhongShader& phongShader, const CubeMap& cubeMap) const
+	void Layer::drawOne(unsigned int index, const glm::mat4& transformProjectionView, const glm::vec3& cameraPosition, const PhongShader& phongShader, const CubeMap& cubeMap) const
 	{
 		phongShader.bind();
 

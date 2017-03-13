@@ -1,5 +1,6 @@
+#include <chrono>
+#include <thread>
 #include <iostream>
-#include <Windows.h>
 
 #include "Engine.h"
 
@@ -60,7 +61,7 @@ namespace ginkgo {
 
 				unprocessedTime -= frameTime;
 
-				if (window.closed())
+				if (game.gameOver() || window.closed())
 					stop();
 
 				Time::setDelta(frameTime);
@@ -83,7 +84,7 @@ namespace ginkgo {
 			}
 			else
 			{
-				Sleep(1);
+				std::this_thread::sleep_for(std::chrono::milliseconds(1));
 			}
 		}
 
@@ -110,7 +111,7 @@ namespace ginkgo {
 
 	void Engine::cleanUp()
 	{
-
+	
 	}
 
 

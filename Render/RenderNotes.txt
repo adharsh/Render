@@ -1,25 +1,27 @@
 TODOS:
 
 Priority To Do List:
-*make sure proper deletion for all opengl objects stuff
-*use CUDA with this
-*export framebuffer as image https://www.opengl.org/discussion_boards/showthread.php/165852-save-opengl-buffer-with-freeimage
-*check if any leaked memory -> http://swarminglogic.com/jotting/2013_10_gamedev01
-*http://swarminglogic.com/jotting/2013_10_gamedev01 optimization for reading and writing an obj
-*understand if Game class needs pointers as member variables or as references, check other classes for similar mistake
-*fxaa - https://blog.codinghorror.com/fast-approximate-anti-aliasing-fxaa/, msaa, https://github.com/JoshuaSenouf/GLEngine/blob/master/resources/shaders/postprocess/firstpass.frag
+*download visual studio on another computer to code portably
+*different order for id for each Renderable and different order for ids of renderabels in vector of Layer
 *check code when to make vectors references or as objects: pass in as (const check this too) references, objects as members
-*load all library stuff again cuz when I searched and and took out the inlines, it probably took and changed the library files too
-completely understand how depth function works
-*test add renderable
-*double check if properly unbinding textures in Layer class
-*game quit method that affects Engine class
+*test add renderable, test variety of textures 
+*check if any leaked memory -> http://swarminglogic.com/jotting/2013_10_gamedev01
+*use CUDA with this
+*completely understand how depth function works
+*completely understand how image kernels work - http://setosa.io/ev/image-kernels/
 
-Bob class -> review in club
+change getwidth to width()? layer->size to getsize()?
+screenshot method taking multiple images, how to stop to make only one image in every 0.5 seconds
+destructors being run? ex. Text.cpp
+Bob class in Testing project -> review in club
+how come static methods when defined in cpp dont need scope operatir? FileUtils::screenshot is the same as screenshot
+
 *use texture map weird image and use freeimage to export into useable cubemap
 	- http://virtuallyprogramming.com/Content/Content.html
 	- http://wwwtyro.github.io/space-3d/
 	- https://wwwtyro.github.io/space-3d/#animationSpeed=1&fov=80&nebulae=true&pointStars=true&resolution=2048&seed=4i7a4w8u1vy8&stars=true&sun=true
+*http://swarminglogic.com/jotting/2013_10_gamedev01 optimization for reading and writing an obj
+*fxaa - https://blog.codinghorror.com/fast-approximate-anti-aliasing-fxaa/, msaa, https://github.com/JoshuaSenouf/GLEngine/blob/master/resources/shaders/postprocess/firstpass.frag
 bug: place two renderables next to each other like this: r.push_back(new Renderable(mesh, new Material(1.33f, 10.0f, glm::vec4(1.0f, 1.0f, 0.0f, 1.0f), new Texture()))); r.push_back(new Renderable(mesh, new Material(Material::REFLECT, -1.0f, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), new Texture())));, Downloads/Program/Render.exe
 invert colors material option
 check if normalCoord and normal is the same thing
@@ -29,14 +31,17 @@ possible to make alterRenderable() or getRenderable() more efficient?
 organize renderables more efficiently in layer class -> organize by textures and organize if environmental mapping
 use texture atlasing for cubemaps
 use texture atlasing for multitude of images
-eventually take out if GLFW_KEY_ESCAPE -> exit
+eventually take out GLFW_KEY_ESCAPE -> exit
 make Material a struct and pass in as struct data
 post processing stuff -> hud - text + fonts, other interactable stuff -> https://www.opengl.org/discussion_boards/showthread.php/124875-How-to-draw-a-line-using-OpenGL-programme, https://learnopengl.com/#!In-Practice/Text-Rendering, https://learnopengl.com/#!Advanced-OpenGL/Framebuffers
 msaa in OpenGL etc. -> https://learnopengl.com/#!Advanced-OpenGL/Anti-Aliasing
 sounds -> https://learnopengl.com/#!In-Practice/2D-Game/Audio -> Irrklang
 should game and window in Engine.h be const, should Game methods be const too, effects throughout code okay?
+create a Handle class that has a "handle" on all objects like window, game, other resources, etc.
+stencil testing -> glStencilOpSeparate(), https://learnopengl.com/#!Advanced-OpenGL/Stencil-testing
 lighting -> https://learnopengl.com/#!Lighting/ -> change all code around
 https://vulkan-tutorial.com/Loading_models optimization reading from obj -> not necessary, linear serach with memory saving, takes more processing time but less memory
+*load all library stuff again cuz when I searched and and took out the inlines, it probably took and changed the library files too
 browser -> http://kripken.github.io/emscripten-site/
 *http://www.41post.com/5178/programming/opengl-configuring-glfw-and-glew-in-visual-cplusplus-express - to get rid of that error
 change github username eventually, take out forked stuff and other stuff stuff
@@ -57,6 +62,11 @@ spot lights
 
 ******
 Yups:
+*export framebuffer as image https://www.opengl.org/discussion_boards/showthread.php/165852-save-opengl-buffer-with-freeimage, glReadPixels(0,0,WIDTH,HEIGHT, GL_BGR, GL_UNSIGNED_BYTE, pixels); -> yup
+*understand if Game class needs pointers as member variables or as references, check other classes for similar mistake -> allocate memory for objects with permanence -> yup
+*double check if properly unbinding textures in Layer class -> yup
+*make sure proper deletion for all opengl objects stuff -> yup
+*game quit method that affects Engine class -> yup
 *multiple objects reflection/refraction -> framebuffer?, no not framebuffer -> nah we're not gonna do it, just use dotted cubemap
 *make Engine take Game and Window as references not pointers -> yup
 *transform reference -> to object -> yup

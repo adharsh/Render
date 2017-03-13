@@ -36,8 +36,9 @@ namespace ginkgo {
 		const glm::vec3& getCameraPosition() const { return cameraPosition; }
 		const glm::mat4& getCameraPositionTranslation();
 		
-		void input(double dt);
+		void input(bool& isGameOver, double dt);
 		void update(double dt);
+
 	};
 
 }
