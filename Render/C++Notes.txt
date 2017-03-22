@@ -335,6 +335,19 @@ RenderBuffers vs FrameBuffers: http://stackoverflow.com/a/2213077
 The final rendering destination of the OpenGL pipeline is called [the] framebuffer.
 In addition, renderbuffer object is newly introduced for offscreen rendering. It allows to render a scene directly to a renderbuffer object, instead of rendering to a texture object. Renderbuffer is simply a data storage object containing a single image of a renderable internal format. It is used to store OpenGL logical buffers that do not have corresponding texture format, such as stencil or depth buffer.
 
+const methods:
+can't change member variable in method
+should be no possibility of changing data outside of method
+
+the reason why c/c++ libraries require you to pass to be changed values as a pointer/reference and not return it is because when you return it it may go out of scope
+
+use static_const<int> cast or just (int), which is preferable?, use static_const stuff -> http://stackoverflow.com/a/1609185, casting base to derived class or casting numeric data types, static_cast will generate compile time error, dynamic_cast will make null or valid pointer (useful if you need something that can't be downcasted a null pointer)
+
+std::vector<float>& const methodName()
+
+
+fast writing data to file: http://stackoverflow.com/questions/11563963/writing-a-binary-file-in-c-very-fast/11564931#11564931
+
 *****************************************************************************************
 *****************************************************************************************
 Coding Guidelines:
@@ -432,3 +445,7 @@ just use forward declaration whenever possible
 except when you absolutely cant
 like when you extend another class (like that shader bug we went through)
 or if you have a member variable like Transform
+
+the reason why c/c++ libraries require you to pass to be changed values as a pointer/reference and not return it is because when you return it it may go out of scope
+
+std::vector<float>& const methodName()

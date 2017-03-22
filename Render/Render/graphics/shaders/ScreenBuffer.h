@@ -22,6 +22,7 @@ namespace ginkgo {
 
 		void drawToTexture() const;
 		void drawToScreen() const;
+		static void initalize(const glm::vec4& clearColor = glm::vec4());
 
 		void bindBuffer() const;
 		static void bindDefaultBuffer();
@@ -33,6 +34,10 @@ namespace ginkgo {
 		static void enableStencilTest() { glEnable(GL_STENCIL_TEST); }
 		static void disableDepthTest() { glDisable(GL_DEPTH_TEST); }
 		static void disableStencilTest() { glDisable(GL_STENCIL_TEST); }
+		
+		static void drawAsWireframe() { glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); }
+		static void drawAsPoints() { glPolygonMode(GL_FRONT_AND_BACK, GL_POINT); }
+		static void drawAsFilled() { glPolygonMode(GL_FRONT_AND_BACK, GL_FILL); }
 	};
 
 }

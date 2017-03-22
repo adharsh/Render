@@ -1,7 +1,9 @@
 TODOS:
 
 Priority To Do List:
-*download visual studio on another computer to code portably
+*all refract/reflect single sphere, single smooth sphere, single smooth monkey, dozens of smooth toruses, single plane with text with cosmos background, then different image kernel effects, remind of last year plotting universe project, demonstrate screenshot
+*check screenbuffer drawtotexture and drawtoscreen methods, make sure if need wrapper or actual
+*understand what pdb's are and other visual studio files
 *different order for id for each Renderable and different order for ids of renderabels in vector of Layer
 *check code when to make vectors references or as objects: pass in as (const check this too) references, objects as members
 *test add renderable, test variety of textures 
@@ -10,11 +12,19 @@ Priority To Do List:
 *completely understand how depth function works
 *completely understand how image kernels work - http://setosa.io/ev/image-kernels/
 
-change getwidth to width()? layer->size to getsize()?
-screenshot method taking multiple images, how to stop to make only one image in every 0.5 seconds
-destructors being run? ex. Text.cpp
-Bob class in Testing project -> review in club
-how come static methods when defined in cpp dont need scope operatir? FileUtils::screenshot is the same as screenshot
+uv map square image to sphere -> https://www.youtube.com/watch?v=yc0b5GcYl3U
+
+use 64 bit libs and stuff -> glew64, FreeImage64, etc.
+
+check if not used std::vector<float>& const methodName()
+
+why does freeimage convert rawbtis have parameters for color masks that don't work?
+why is methodName a thing? -> shows address of function, can be used like a variable, like in function pointers -> rev
+change getwidth to width()? layer->size to getsize()? -> stl standard doesn't use getters and setters, java programmer made getters and setters -> yup
+screenshot method taking multiple images, how to stop to make only one image in every 0.5 seconds -> yup
+destructors being run? ex. Text.cpp -> debugger exits at a certain point, and the memory is automatically cleaned up by the OSs -> yup
+Bob class in Testing project -> review in club -> yup
+how come static methods when defined in cpp dont need scope operatir? FileUtils::screenshot is the same as screenshot -> must use that -> yup
 
 *use texture map weird image and use freeimage to export into useable cubemap
 	- http://virtuallyprogramming.com/Content/Content.html

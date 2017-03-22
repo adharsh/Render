@@ -4,9 +4,10 @@
 #include <glm/gtx/rotate_vector.hpp>
 #include <glm/gtx/quaternion.hpp>
 
-#include "Window.h"
-
 #include "Camera.h"
+
+#include "Window.h"
+#include "../utils/FileUtils.h"
 
 namespace ginkgo {
 	Camera::Camera(const Window* win, const glm::vec3& camera_position)
@@ -68,6 +69,19 @@ namespace ginkgo {
 
 		if (window->isKeyPressed(GLFW_KEY_ESCAPE))
 			isGameOver = true;
+
+		static bool pressedPrevious = false;
+		bool keyPressed = window->isKeyPressed(GLFW_KEY_0);
+
+		if (keyPressed && !pressedPrevious)
+		{
+			pressedPrevious = true;
+			FileUtils::screenshot(window->getWidth(), window->getHeight());
+		}
+		else if (!keyPressed)
+		{
+			pressedPrevious = false;
+		}
 
 		static bool first = true;
 		double x, y;

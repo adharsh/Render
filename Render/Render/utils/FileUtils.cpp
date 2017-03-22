@@ -74,8 +74,8 @@ namespace ginkgo {
 		glReadPixels(0, 0, width, height, GL_BGR, GL_UNSIGNED_BYTE, pixels);
 
 		FIBITMAP* image = FreeImage_ConvertFromRawBits(pixels, width, height, 3 * width, 24, 0x0000FF, 0xFF0000, 0x00FF00, false);
-		//FreeImage_Save(FIF_BMP, image, ("Render" + std::to_string(id) + ".bmp").c_str(), 0);
-		FreeImage_Save(FIF_BMP, image, "Render.bmp", 0);
+		FreeImage_Save(FIF_BMP, image, ("Render" + std::to_string(id) + ".bmp").c_str(), 0);
+		//FreeImage_Save(FIF_BMP, image, "Render.bmp", 0);
 		
 		FreeImage_Unload(image);
 		delete[] pixels;

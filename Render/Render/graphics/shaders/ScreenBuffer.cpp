@@ -99,29 +99,34 @@ namespace ginkgo {
 	void ScreenBuffer::clearBuffer(bool color, bool depth, bool stencil)
 	{
 		GLenum option = 0;
+		if (color)
+			option = option | GL_COLOR_BUFFER_BIT;
 		if (depth)
 			option = option | GL_DEPTH_BUFFER_BIT;
 		if (stencil)
 			option = option | GL_STENCIL_BUFFER_BIT;
-		if (color)
-			option = option | GL_COLOR_BUFFER_BIT;
 
 		glClear(option);
+	}
+	
+	void ScreenBuffer::initalize(const glm::vec4& clear)
+	{
+		ScreenBuffer::clearColor(clear);
+		ScreenBuffer::clearBuffer(true, true, true);
+		ScreenBuffer::enableDepthTest();
 	}
 
 	void ScreenBuffer::drawToTexture() const
 	{
 		bindBuffer();
-		clearColor(clear_color);
-		clearBuffer(true, true, true);
-		enableDepthTest();
+		ScreenBuffer::initalize(clear_color);
 	}
 
 	void ScreenBuffer::drawToScreen() const
 	{
 		ScreenBuffer::bindDefaultBuffer();
-		clearColor(clear_color);
-		clearBuffer(true, false, false);
+		ScreenBuffer::clearColor(clear_color);
+		ScreenBuffer::clearBuffer(true, false, false);
 		
 		bind();
 
