@@ -18,7 +18,7 @@ namespace ginkgo {
 		Mesh();
 		~Mesh();
 		void addData(const std::vector<glm::vec3>& positions, const std::vector<GLuint>& indices, const std::vector<glm::vec2>& uvs, const std::vector<glm::vec3>& normals = std::vector<glm::vec3>());
-		void draw() const;
+		virtual void draw() const;
 	};
 
 

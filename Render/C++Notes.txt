@@ -348,6 +348,8 @@ std::vector<float>& const methodName()
 
 fast writing data to file: http://stackoverflow.com/questions/11563963/writing-a-binary-file-in-c-very-fast/11564931#11564931
 
+pass vectors that are const&, never return reference...undefined behavior
+
 *****************************************************************************************
 *****************************************************************************************
 Coding Guidelines:

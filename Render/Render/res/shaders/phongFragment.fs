@@ -129,11 +129,16 @@ void main()
 		vec3 R;
 		if(refractiveIndex > 1.0f) 
 			R = refract(Incident, normalize(Normal), 1.0f/refractiveIndex);
+			//R = refract(Incident, normalize(Normal), 1.0f/2.0f);
 		else 
 			R = reflect(Incident, normalize(Normal));
 		
 		r_color = texture(skybox, R) * rIntensity;
 	}
+
+
+
+
 
 	fragColor = diffuse_color + r_color;
 	

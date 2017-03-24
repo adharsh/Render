@@ -72,6 +72,15 @@
     <ClCompile Include="Render\graphics\shaders\ScreenBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Render\graphics\shaders\LensShader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\graphics\LensLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\graphics\LensMesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render\Engine.h">
@@ -134,6 +143,15 @@
     <ClInclude Include="Render\graphics\shaders\ScreenBuffer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Render\graphics\shaders\LensShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\graphics\LensLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\graphics\LensMesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Render\res\shaders\phongFragment.fs" />
@@ -144,5 +162,7 @@
     <None Include="Render\res\shaders\textFragment.fs" />
     <None Include="Render\res\shaders\screenFragment.fs" />
     <None Include="Render\res\shaders\screenVertex.vs" />
+    <None Include="Render\res\shaders\lensVertex.vs" />
+    <None Include="Render\res\shaders\lensFragment.fs" />
   </ItemGroup>
 </Project>

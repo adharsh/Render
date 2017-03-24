@@ -12,6 +12,8 @@ Priority To Do List:
 *completely understand how depth function works
 *completely understand how image kernels work - http://setosa.io/ev/image-kernels/
 
+next club meeting: how to change github username eventually, take out forked stuff and other stuff stuff
+
 uv map square image to sphere -> https://www.youtube.com/watch?v=yc0b5GcYl3U
 
 use 64 bit libs and stuff -> glew64, FreeImage64, etc.
@@ -54,7 +56,6 @@ https://vulkan-tutorial.com/Loading_models optimization reading from obj -> not 
 *load all library stuff again cuz when I searched and and took out the inlines, it probably took and changed the library files too
 browser -> http://kripken.github.io/emscripten-site/
 *http://www.41post.com/5178/programming/opengl-configuring-glfw-and-glew-in-visual-cplusplus-express - to get rid of that error
-change github username eventually, take out forked stuff and other stuff stuff
 
 fix change fov scroll in
 change scrolling so it stays the same even when cursor is out of focus

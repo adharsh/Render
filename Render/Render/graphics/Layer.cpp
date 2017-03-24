@@ -10,7 +10,7 @@
 
 namespace ginkgo {
 
-	Layer::Layer(const std::vector<Renderable*> renderablesL, const glm::mat4& model)
+	Layer::Layer(const std::vector<Renderable*>& renderablesL, const glm::mat4& model)
 		: renderables(renderablesL), model(model)
 	{
 		std::sort(renderables.begin(), renderables.end(), compareRenderables);

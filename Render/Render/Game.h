@@ -11,6 +11,9 @@ namespace ginkgo {
 	class Text;
 	class ScreenBuffer;
 
+	class LensLayer;
+	class LensShader;
+
 	class Game
 	{
 	private:
@@ -24,6 +27,10 @@ namespace ginkgo {
 		PhongShader* phongShader;
 		Text* text;
 		ScreenBuffer* screen;
+
+		LensShader* lensShader;
+		LensLayer* lensLayer;
+
 	public:
 		Game(Window& window);
 

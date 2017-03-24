@@ -136,12 +136,15 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Render\Engine.cpp" />
     <ClCompile Include="Render\Game.cpp" />
+    <ClCompile Include="Render\graphics\LensMesh.cpp" />
     <ClCompile Include="Render\graphics\Material.cpp" />
     <ClCompile Include="Render\graphics\Renderable.cpp" />
     <ClCompile Include="Render\graphics\Camera.cpp" />
     <ClCompile Include="Render\graphics\Layer.cpp" />
     <ClCompile Include="Render\graphics\Mesh.cpp" />
+    <ClCompile Include="Render\graphics\LensLayer.cpp" />
     <ClCompile Include="Render\graphics\shaders\CubeMap.cpp" />
+    <ClCompile Include="Render\graphics\shaders\LensShader.cpp" />
     <ClCompile Include="Render\graphics\shaders\PhongShader.cpp" />
     <ClCompile Include="Render\graphics\shaders\ScreenBuffer.cpp" />
     <ClCompile Include="Render\graphics\shaders\Shader.cpp" />
@@ -156,10 +159,13 @@
   <ItemGroup>
     <ClInclude Include="Render\Engine.h" />
     <ClInclude Include="Render\Game.h" />
+    <ClInclude Include="Render\graphics\LensMesh.h" />
     <ClInclude Include="Render\graphics\Material.h" />
     <ClInclude Include="Render\graphics\Camera.h" />
     <ClInclude Include="Render\graphics\Layer.h" />
+    <ClInclude Include="Render\graphics\LensLayer.h" />
     <ClInclude Include="Render\graphics\shaders\CubeMap.h" />
+    <ClInclude Include="Render\graphics\shaders\LensShader.h" />
     <ClInclude Include="Render\graphics\shaders\LightStructs.h" />
     <ClInclude Include="Render\graphics\Mesh.h" />
     <ClInclude Include="Render\graphics\shaders\PhongShader.h" />
@@ -178,6 +184,8 @@
   <ItemGroup>
     <None Include="Render\res\shaders\cubemapFragment.fs" />
     <None Include="Render\res\shaders\cubemapVertex.vs" />
+    <None Include="Render\res\shaders\lensFragment.fs" />
+    <None Include="Render\res\shaders\lensVertex.vs" />
     <None Include="Render\res\shaders\phongFragment.fs" />
     <None Include="Render\res\shaders\phongVertex.vs" />
     <None Include="Render\res\shaders\screenFragment.fs" />

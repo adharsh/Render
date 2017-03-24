@@ -39,6 +39,7 @@ namespace ginkgo {
 		void input(bool& isGameOver, double dt);
 		void update(double dt);
 
+		void lensInput(bool& isGameOver, double dt);
 	};
 
 }
