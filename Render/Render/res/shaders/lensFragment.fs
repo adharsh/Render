@@ -19,7 +19,7 @@ void main()
 	//vec3 Normal = vec3(0, 0, texture(normalMap, texCoord).z);
 	vec3 Normal = texture(normalMap, texCoord).xyz * 2.0f - 1.0f;
 	vec3 Incident = normalize(worldPos - cameraPosition);
-	vec3 R = refract(Incident, vec3(-Normal.x, -Normal.y, Normal.z), 1.0f/2.0f); //1/refractive index -> 1.0f/2.0f
+	vec3 R = refract(Incident, vec3(-Normal.x, -Normal.y, Normal.z), 1.0f/1.0f); //1/refractive index -> 1.0f/2.0f
 	fragColor = texture(skybox, R);
 	//fragColor = texture(normalMap, texCoord);
 	//fragColor  = vec4(1.0f, 1.0f, 1.0f, 1.0f);
