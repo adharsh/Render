@@ -12,8 +12,11 @@ namespace ginkgo {
 
 	class LensShader : public Shader
 	{
+	private:
+		GLuint SSBO;
 	public:
 		LensShader();
+		void updateNormals(const std::vector<std::vector<glm::dvec3>>& normals) const;
 		void updateUniforms(const glm::mat4& model, const glm::mat4& transformProjectionViewModel, const glm::vec3& cameraPosition) const;
 	};
 

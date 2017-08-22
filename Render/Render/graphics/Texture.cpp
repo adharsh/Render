@@ -39,7 +39,6 @@ namespace ginkgo {
 		delete[] pixels;
 	}
 
-
 	Texture::Texture(const std::string& path)
 		: Texture(path, false)
 	{ }

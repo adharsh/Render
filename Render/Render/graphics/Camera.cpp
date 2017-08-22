@@ -24,7 +24,7 @@ namespace ginkgo {
 		view = glm::toMat4(cameraRotation);
 
 		cameraSpeedSensitivity = 3.0f; //3.0f
-		mouseRotationSensitivity = 200.f; //5.0f
+		mouseRotationSensitivity = 800.f; //5.0f
 
 		window->disableMouseCursor();
 		window->setMousePosition(window->getWidth() / 2.0f, window->getHeight() / 2.0f);
@@ -58,13 +58,13 @@ namespace ginkgo {
 		right = glm::normalize(right);
 		forward = glm::normalize(forward);
 
-		if (window->isKeyPressed(GLFW_KEY_W))
+		if (window->isKeyPressed(GLFW_KEY_UP))
 			cameraPosition += cameraSpeed * forward;
-		if (window->isKeyPressed(GLFW_KEY_S))
+		if (window->isKeyPressed(GLFW_KEY_DOWN))
 			cameraPosition -= cameraSpeed * forward;
-		if (window->isKeyPressed(GLFW_KEY_A))
+		if (window->isKeyPressed(GLFW_KEY_LEFT))
 			cameraPosition -= right * cameraSpeed;
-		if (window->isKeyPressed(GLFW_KEY_D))
+		if (window->isKeyPressed(GLFW_KEY_RIGHT))
 			cameraPosition += right * cameraSpeed;
 
 		if (window->isKeyPressed(GLFW_KEY_ESCAPE))

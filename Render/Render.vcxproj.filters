@@ -15,64 +15,28 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
+    <ClCompile Include="Render\graphics\shaders\CubeMap.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Render\Engine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\Time.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\graphics\Window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\Utils\FileUtils.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\graphics\Mesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\utils\ObjLoader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\graphics\Texture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\graphics\Camera.cpp">
+    <ClCompile Include="Render\graphics\shaders\LensShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Render\graphics\shaders\PhongShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Render\graphics\shaders\ScreenBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="Render\graphics\shaders\Shader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\graphics\Renderable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\graphics\Material.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\graphics\shaders\CubeMap.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\graphics\Layer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Render\graphics\shaders\Text.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Render\utils\Debugging.cpp">
+    <ClCompile Include="Render\graphics\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Render\graphics\shaders\ScreenBuffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Render\graphics\shaders\LensShader.cpp">
+    <ClCompile Include="Render\graphics\Layer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Render\graphics\LensLayer.cpp">
@@ -81,36 +45,48 @@
     <ClCompile Include="Render\graphics\LensMesh.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Render\graphics\Material.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\graphics\Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\graphics\Renderable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\graphics\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\graphics\Window.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\utils\Debugging.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\Utils\FileUtils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\utils\ObjLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\Engine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\Time.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Render\Engine.h">
+    <ClInclude Include="Render\graphics\shaders\CubeMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Render\Time.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\graphics\Window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\graphics\Mesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\Utils\FileUtils.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\utils\ObjLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\graphics\Texture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\graphics\Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\graphics\Renderable.h">
+    <ClInclude Include="Render\graphics\shaders\LensShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Render\graphics\shaders\LightStructs.h">
@@ -119,31 +95,19 @@
     <ClInclude Include="Render\graphics\shaders\PhongShader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Render\graphics\shaders\ScreenBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Render\graphics\shaders\Shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\graphics\Material.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\graphics\Transform.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\graphics\shaders\CubeMap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\graphics\Layer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Render\graphics\shaders\Text.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Render\utils\Debugging.h">
+    <ClInclude Include="Render\graphics\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Render\graphics\shaders\ScreenBuffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Render\graphics\shaders\LensShader.h">
+    <ClInclude Include="Render\graphics\Layer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Render\graphics\LensLayer.h">
@@ -152,17 +116,48 @@
     <ClInclude Include="Render\graphics\LensMesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Render\graphics\Material.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\graphics\Mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\graphics\Renderable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\graphics\Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\graphics\Transform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\graphics\Window.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\utils\Debugging.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Utils\FileUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\utils\ObjLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Engine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Handle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Time.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\cuda\Lensing.cuh" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Render\res\shaders\phongFragment.fs" />
-    <None Include="Render\res\shaders\phongVertex.vs" />
-    <None Include="Render\res\shaders\cubemapFragment.fs" />
-    <None Include="Render\res\shaders\cubemapVertex.vs" />
-    <None Include="Render\res\shaders\textVertex.vs" />
-    <None Include="Render\res\shaders\textFragment.fs" />
-    <None Include="Render\res\shaders\screenFragment.fs" />
-    <None Include="Render\res\shaders\screenVertex.vs" />
-    <None Include="Render\res\shaders\lensVertex.vs" />
-    <None Include="Render\res\shaders\lensFragment.fs" />
+    <CudaCompile Include="Render\cuda\Lensing.cu" />
   </ItemGroup>
 </Project>

@@ -451,3 +451,5 @@ or if you have a member variable like Transform
 the reason why c/c++ libraries require you to pass to be changed values as a pointer/reference and not return it is because when you return it it may go out of scope
 
 std::vector<float>& const methodName()
+
+function object and functer are the same thing

@@ -12,6 +12,10 @@ Priority To Do List:
 *completely understand how depth function works
 *completely understand how image kernels work - http://setosa.io/ev/image-kernels/
 
+use of override keyword
+
+visual studio git ignore recognizes obj file as intermediate instead of wavefront obj file
+
 next club meeting: how to change github username eventually, take out forked stuff and other stuff stuff
 
 uv map square image to sphere -> https://www.youtube.com/watch?v=yc0b5GcYl3U

@@ -8,6 +8,8 @@
 #include "Transform.h"
 #include "shaders/CubeMap.h"
 
+#include "../cuda/Lensing.cuh"
+
 namespace ginkgo {
 
 	LensLayer::LensLayer(const std::vector<Renderable*>& renderablesL, const glm::mat4& model)
@@ -23,7 +25,7 @@ namespace ginkgo {
 			size++;
 			if ((c == renderables.size() - 1) || ((renderables[c + 1]->getMaterial().getTexture()->getID()) != tid))
 			{
-				sizeTextureIDs.push_back(size);
+				sizeTextureIDs.emplace_back(size);
 				size = 0;
 			}
 		}
@@ -104,8 +106,8 @@ namespace ginkgo {
 		}
 		else
 		{
-			renderables.push_back(renderable);
-			sizeTextureIDs.push_back(1);
+			renderables.emplace_back(renderable);
+			sizeTextureIDs.emplace_back(1);
 		}
 	}
 
@@ -114,6 +116,7 @@ namespace ginkgo {
 	{
 		lensShader.bind();
 
+		lensShader.updateNormals(lensing());
 
 		unsigned int b = 0;
 

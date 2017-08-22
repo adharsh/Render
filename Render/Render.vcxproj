@@ -18,6 +18,57 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Render\Engine.cpp" />
+    <ClCompile Include="Render\Game.cpp" />
+    <ClCompile Include="Render\graphics\Camera.cpp" />
+    <ClCompile Include="Render\graphics\Layer.cpp" />
+    <ClCompile Include="Render\graphics\LensLayer.cpp" />
+    <ClCompile Include="Render\graphics\LensMesh.cpp" />
+    <ClCompile Include="Render\graphics\Material.cpp" />
+    <ClCompile Include="Render\graphics\Mesh.cpp" />
+    <ClCompile Include="Render\graphics\Renderable.cpp" />
+    <ClCompile Include="Render\graphics\shaders\CubeMap.cpp" />
+    <ClCompile Include="Render\graphics\shaders\LensShader.cpp" />
+    <ClCompile Include="Render\graphics\shaders\PhongShader.cpp" />
+    <ClCompile Include="Render\graphics\shaders\ScreenBuffer.cpp" />
+    <ClCompile Include="Render\graphics\shaders\Shader.cpp" />
+    <ClCompile Include="Render\graphics\shaders\Text.cpp" />
+    <ClCompile Include="Render\graphics\Texture.cpp" />
+    <ClCompile Include="Render\graphics\Window.cpp" />
+    <ClCompile Include="Render\Time.cpp" />
+    <ClCompile Include="Render\utils\Debugging.cpp" />
+    <ClCompile Include="Render\Utils\FileUtils.cpp" />
+    <ClCompile Include="Render\utils\ObjLoader.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Render\cuda\Lensing.cuh" />
+    <ClInclude Include="Render\Engine.h" />
+    <ClInclude Include="Render\Game.h" />
+    <ClInclude Include="Render\graphics\Camera.h" />
+    <ClInclude Include="Render\graphics\Layer.h" />
+    <ClInclude Include="Render\graphics\LensLayer.h" />
+    <ClInclude Include="Render\graphics\LensMesh.h" />
+    <ClInclude Include="Render\graphics\Material.h" />
+    <ClInclude Include="Render\graphics\Mesh.h" />
+    <ClInclude Include="Render\graphics\Renderable.h" />
+    <ClInclude Include="Render\graphics\shaders\CubeMap.h" />
+    <ClInclude Include="Render\graphics\shaders\LensShader.h" />
+    <ClInclude Include="Render\graphics\shaders\LightStructs.h" />
+    <ClInclude Include="Render\graphics\shaders\PhongShader.h" />
+    <ClInclude Include="Render\graphics\shaders\ScreenBuffer.h" />
+    <ClInclude Include="Render\graphics\shaders\Shader.h" />
+    <ClInclude Include="Render\graphics\shaders\Text.h" />
+    <ClInclude Include="Render\graphics\Texture.h" />
+    <ClInclude Include="Render\graphics\Transform.h" />
+    <ClInclude Include="Render\graphics\Window.h" />
+    <ClInclude Include="Render\Handle.h" />
+    <ClInclude Include="Render\Time.h" />
+    <ClInclude Include="Render\utils\Debugging.h" />
+    <ClInclude Include="Render\Utils\FileUtils.h" />
+    <ClInclude Include="Render\utils\ObjLoader.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9EE80B7D-286F-4FA0-BBE1-D8696C5C988C}</ProjectGuid>
     <RootNamespace>Render</RootNamespace>
@@ -52,6 +103,7 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 8.0.props" />
   </ImportGroup>
   <ImportGroup Label="Shared">
   </ImportGroup>
@@ -69,16 +121,26 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)bin\$(Configuration)\Intermediates\</IntDir>
-    <IncludePath>$(SolutionDir)Dependencies\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Dependencies\libs;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\Intermediates</IntDir>
+    <IncludePath>$(SolutionDir)Dependencies/Win32\includes;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Dependencies/Win32\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)bin\$(Configuration)\Intermediates\</IntDir>
-    <IncludePath>$(SolutionDir)Dependencies\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Dependencies\libs;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\Intermediates\</IntDir>
+    <IncludePath>$(SolutionDir)/Dependencies/Win32/includes;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)/Dependencies/Win32/libs;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(SolutionDir)/Dependencies/x64/includes;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)/Dependencies/x64/libs;$(LibraryPath)</LibraryPath>
+    <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\Intermediates</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(SolutionDir)/Dependencies/x64/includes;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)/Dependencies/x64/libs;$(LibraryPath)</LibraryPath>
+    <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\Intermediates</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -97,7 +159,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <Link>
+      <AdditionalDependencies>cufft.lib;cudart.lib;glfw3.lib;opengl32.lib;glew32.lib;FreeImage.lib;freetype28MT.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -116,7 +182,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;glew32.lib;FreeImage.lib;freetype271MT.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>cudart.lib;glfw3.lib;opengl32.lib;glew32.lib;FreeImage.lib;freetype271MT.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -126,74 +192,24 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>cufft.lib;cudart.lib;glfw3.lib;opengl32.lib;glew32.lib;FreeImage.lib;freetype28MT.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Render\Engine.cpp" />
-    <ClCompile Include="Render\Game.cpp" />
-    <ClCompile Include="Render\graphics\LensMesh.cpp" />
-    <ClCompile Include="Render\graphics\Material.cpp" />
-    <ClCompile Include="Render\graphics\Renderable.cpp" />
-    <ClCompile Include="Render\graphics\Camera.cpp" />
-    <ClCompile Include="Render\graphics\Layer.cpp" />
-    <ClCompile Include="Render\graphics\Mesh.cpp" />
-    <ClCompile Include="Render\graphics\LensLayer.cpp" />
-    <ClCompile Include="Render\graphics\shaders\CubeMap.cpp" />
-    <ClCompile Include="Render\graphics\shaders\LensShader.cpp" />
-    <ClCompile Include="Render\graphics\shaders\PhongShader.cpp" />
-    <ClCompile Include="Render\graphics\shaders\ScreenBuffer.cpp" />
-    <ClCompile Include="Render\graphics\shaders\Shader.cpp" />
-    <ClCompile Include="Render\graphics\shaders\Text.cpp" />
-    <ClCompile Include="Render\graphics\Texture.cpp" />
-    <ClCompile Include="Render\Time.cpp" />
-    <ClCompile Include="Render\graphics\Window.cpp" />
-    <ClCompile Include="Render\utils\Debugging.cpp" />
-    <ClCompile Include="Render\Utils\FileUtils.cpp" />
-    <ClCompile Include="Render\utils\ObjLoader.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Render\Engine.h" />
-    <ClInclude Include="Render\Game.h" />
-    <ClInclude Include="Render\graphics\LensMesh.h" />
-    <ClInclude Include="Render\graphics\Material.h" />
-    <ClInclude Include="Render\graphics\Camera.h" />
-    <ClInclude Include="Render\graphics\Layer.h" />
-    <ClInclude Include="Render\graphics\LensLayer.h" />
-    <ClInclude Include="Render\graphics\shaders\CubeMap.h" />
-    <ClInclude Include="Render\graphics\shaders\LensShader.h" />
-    <ClInclude Include="Render\graphics\shaders\LightStructs.h" />
-    <ClInclude Include="Render\graphics\Mesh.h" />
-    <ClInclude Include="Render\graphics\shaders\PhongShader.h" />
-    <ClInclude Include="Render\graphics\Renderable.h" />
-    <ClInclude Include="Render\graphics\shaders\ScreenBuffer.h" />
-    <ClInclude Include="Render\graphics\shaders\Text.h" />
-    <ClInclude Include="Render\graphics\Texture.h" />
-    <ClInclude Include="Render\graphics\Transform.h" />
-    <ClInclude Include="Render\graphics\shaders\Shader.h" />
-    <ClInclude Include="Render\Time.h" />
-    <ClInclude Include="Render\graphics\Window.h" />
-    <ClInclude Include="Render\utils\Debugging.h" />
-    <ClInclude Include="Render\Utils\FileUtils.h" />
-    <ClInclude Include="Render\utils\ObjLoader.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Render\res\shaders\cubemapFragment.fs" />
-    <None Include="Render\res\shaders\cubemapVertex.vs" />
-    <None Include="Render\res\shaders\lensFragment.fs" />
-    <None Include="Render\res\shaders\lensVertex.vs" />
-    <None Include="Render\res\shaders\phongFragment.fs" />
-    <None Include="Render\res\shaders\phongVertex.vs" />
-    <None Include="Render\res\shaders\screenFragment.fs" />
-    <None Include="Render\res\shaders\screenVertex.vs" />
-    <None Include="Render\res\shaders\textFragment.fs" />
-    <None Include="Render\res\shaders\textVertex.vs" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\CUDA 8.0.targets" />
   </ImportGroup>
+  <ItemGroup>
+    <DnxInvisibleFolder Include="wwwroot\jspm_packages\" />
+    <DnxInvisibleFolder Include="wwwroot\node_modules\" />
+    <DnxInvisibleContent Include="wwwroot\tsd.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <CudaCompile Include="Render\cuda\Lensing.cu" />
+  </ItemGroup>
 </Project>

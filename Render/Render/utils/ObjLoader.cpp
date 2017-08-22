@@ -3,9 +3,6 @@
 #include <iostream>
 #include <fstream>
 
-#include <boost/algorithm/string.hpp>
-#include <boost/algorithm/string/split.hpp>
-#include <boost/algorithm/string/classification.hpp>
 #include <TinyObjLoader\tiny_obj_loader.h>
 
 #include "ObjLoader.h"
@@ -30,14 +27,14 @@ namespace ginkgo {
 			{
 				for (const auto& index : shape.mesh.indices)
 				{
-					uvs.push_back(
+					uvs.emplace_back(
 						glm::vec2(
 							attrib.texcoords[2 * index.texcoord_index + 0],
 							attrib.texcoords[2 * index.texcoord_index + 1]
 						)
 					);
 					
-					positions.push_back(
+					positions.emplace_back(
 						glm::vec3(
 							attrib.vertices[3 * index.vertex_index + 0],
 							attrib.vertices[3 * index.vertex_index + 1],
@@ -45,7 +42,7 @@ namespace ginkgo {
 						)
 					);
 
-					indices.push_back(indices.size());
+					indices.emplace_back(indices.size());
 				}
 			}
 		}
@@ -55,14 +52,14 @@ namespace ginkgo {
 			{
 				for (const auto& index : shape.mesh.indices)
 				{
-					uvs.push_back(
+					uvs.emplace_back(
 						glm::vec2(
 							attrib.texcoords[2 * index.texcoord_index + 0],
 							attrib.texcoords[2 * index.texcoord_index + 1]
 						)
 					);
 
-					positions.push_back(
+					positions.emplace_back(
 						glm::vec3(
 							attrib.vertices[3 * index.vertex_index + 0],
 							attrib.vertices[3 * index.vertex_index + 1],
@@ -70,7 +67,7 @@ namespace ginkgo {
 						)
 					);
 					
-					normals.push_back(
+					normals.emplace_back(
 						glm::vec3(
 							attrib.normals[3 * index.normal_index + 0],
 							attrib.normals[3 * index.normal_index + 1],
@@ -78,7 +75,7 @@ namespace ginkgo {
 						)
 					);
 
-					indices.push_back(indices.size());
+					indices.emplace_back(indices.size());
 				}
 			}
 		}

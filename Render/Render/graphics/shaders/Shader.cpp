@@ -64,7 +64,7 @@ namespace ginkgo {
 		}
 
 		glAttachShader(program, shaderID);
-		shaders.push_back(shaderID);
+		shaders.emplace_back(shaderID);
 	}
 	
 	void Shader::compileShader() const

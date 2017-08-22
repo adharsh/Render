@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <vector>
 
 #include <glm/glm.hpp>
 #include <GL/glew.h>
@@ -17,6 +18,7 @@ namespace ginkgo {
 		GLsizei height;
 		static std::string whitepixelfilepath;
 	public:
+
 		Texture(const std::string& path, bool pixelate);
 		Texture(const std::string& path = whitepixelfilepath);
 		~Texture();

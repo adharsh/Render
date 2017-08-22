@@ -168,3 +168,6 @@ Ctrl + K + D -> auto format code
 Window->Reset Window LayoutWindow->Reset Window Layout
 
 *32 bit or 64 bit libraries? why? -> some only have 32 bit libraries, ideally 64 bit libraries
+
+JNI is for using C/C++ libraries in Java code
+kinda buggy and stuff, do this at the end, once its all done
