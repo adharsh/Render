@@ -1,3 +1,5 @@
+#include <chrono>
+#include <thread>
 #include <iostream>
 #include <vector>
 #include <iterator>
@@ -13,46 +15,35 @@
 
 #include "Render/cuda/Lensing.cuh"
 
+#include "Render/utils/FileUtils.h"
+
 using namespace ginkgo;
 
 int main()
 {
-	//Window window = Window("Render", 800, 600, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
+
+	auto start = std::chrono::steady_clock::now();
+
+
 	Window window = Window("Render", 1200, 600, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));
-	//Window window = Window("Render", 1920, 1080, glm::vec4(0.0f, 0.0f, 0.0f, 0.0f));
-	//Window window = Window("Render", 1700, 900, glm::vec4(0.0f, 0.0f, 0.0f, 0.0f));
-	//Window window = Window("Render", 500, 500, glm::vec4(0.0f, 0.0f, 0.0f, 0.0f));
-	//Window window = Window("Render", 1000, 800, glm::vec4(0.0f, 0.0f, 0.0f, 0.0f));
 	Game game(window);
-	Engine engine = Engine(game, window);
-	engine.start();
+
+	game.render();
+	FileUtils::screenshot(window.getWidth(), window.getHeight());
+	window.update();
+	std::this_thread::sleep_for(std::chrono::milliseconds(10));
+
+	GLenum error = glGetError();
+	if (error != GL_NO_ERROR)
+		std::cout << "OpenGL Error: " << error << " in Engine.cpp, most likely game.render()" << std::endl;
+
+
+
+	auto end = std::chrono::steady_clock::now();
+	std::cout << "Duration in nanoseconds: " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - start).count() << "\n";
+	std::cout << "Duration in seconds: " << std::chrono::duration_cast<std::chrono::seconds>(end - start).count() << "\n";
+	//system("sleep 0.5");
+	system("pause");
 
 	return 0;
 }
-
-
-//#include <iomanip>
-//void main()
-//{
-//	double a[] = { 5.00001,5,23,34.24572084975948375,5,2,25,45,52,2,5 };
-//	writeBOOMFast("lol.txt", a, sizeof(a) / sizeof(double));
-//
-//	double* b = readBOOMFast("lol.txt", sizeof(a) / sizeof(double));
-//
-//	for (int i = 0; i < sizeof(a) / sizeof(double); i++)
-//		std::cout << std::setprecision(100) << b[i] << std::endl;   
-//
-//	system("pause");
-//}
-
-
-/*
-
-	int* c = new int[5];
-	c[0] = 1;
-	c[1] = 1;
-	c[2] = 2;
-	c[3] = 3;
-	c[4] = 4;
-
-*/

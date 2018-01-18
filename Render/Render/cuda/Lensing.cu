@@ -13,18 +13,20 @@
 namespace ginkgo
 {
 
-#define ZEROPADDING 1
+#define DATADEBUG 1
 
-	std::vector<std::vector<glm::dvec3>>& lensingTesting()
+#define ZEROPADDING 0
+
+	std::vector<std::vector<glm::dvec4>> lensing()
 	{
 		int N =
 #if ZEROPADDING
 			2 *
 #endif
-			64; // ex: N = 2*32 //future: 128 X 128, N = 128 // N is the sidelength of the image
+			512; // ex: N = 2*32 //future: 128 X 128, N = 128 // N is the sidelength of the image
 
-		int block_size_x = 8;
-		int block_size_y = 8;
+		int block_size_x = 32;
+		int block_size_y = 32;
 
 		double *kx, *ky, *r;
 		kx = (double *)malloc(sizeof(double) * N);
@@ -61,9 +63,10 @@ namespace ginkgo
 			ky[i] = N / 2.0f - i; //centers ky values to be at center of image
 		}
 
-		writeDoubleArrayToBitmapImage("SpatialDensity.bmp", N, r);
-		write("SpatialDensity.csv", r, N, N);
-
+#if DATADEBUG
+		writeDoubleArrayToBitmapImage("DataDebug/SpatialDensity.bmp", N, r);
+		write("DataDebug/SpatialDensity.csv", r, N, N);
+#endif
 		cudaMemcpy(kx_d, kx, sizeof(double) * N, cudaMemcpyHostToDevice);
 		cudaMemcpy(ky_d, ky, sizeof(double) * N, cudaMemcpyHostToDevice);
 		cudaMemcpy(r_d, r, sizeof(double) * N * N, cudaMemcpyHostToDevice);
@@ -90,14 +93,19 @@ namespace ginkgo
 
 		cudaMemcpy(r, r_d, sizeof(double) * N * N, cudaMemcpyDeviceToHost);
 
-		writeDoubleArrayToBitmapImage("GravitationalPotential.bmp", N, r);
-		write("GravitationalPotential.csv", r, N, N);
+#if DATADEBUG
+		writeDoubleArrayToBitmapImage("DataDebug/GravitationalPotential.bmp", N, r);
+		write("DataDebug/GravitationalPotential.csv", r, N, N);
+#endif
 
-		std::vector<std::vector<glm::dvec3>> normals = generateNormals(r, N, N);
-		glm::dvec3 normal = normals[N / 2][N / 2];
+		std::vector<std::vector<glm::dvec4>> normals = generateNormals(r, N, N);
+		glm::dvec4 normal = normals[N / 2][N / 2];
 		std::cout << "Center: " << ":\t" << normal.x << " " << normal.y << " " << normal.z << std::endl;
 		//normals[center] = glm::dvec3(0.0f, 0.0f, 0.0f);
-		writeNormalsToBitmapImage("Normals.bmp", N - 2, normals);
+#if DATADEBUG
+		writeNormalsToBitmapImage("DataDebug/Normals.bmp", N - 2, normals);
+		writeNormals("DataDebug/NormalsRender.csv", normals);
+#endif
 		//system("pause");
 
 		/* Destroy plan and clean up memory on device*/
@@ -109,115 +117,10 @@ namespace ginkgo
 		cudaFree(r_complex_d);
 		cudaFree(kx_d);
 
-		return normals;
-	}
-
-	std::vector<std::vector<glm::dvec3>> lensing()
-	{
-		int N = 2 * 512; // ex: N = 2*32 //future: 128 X 128, N = 128 // N is the sidelength of the image
-
-		int block_size_x = N/4;
-		int block_size_y = N/4;
-
-		double *kx, *ky, *r;
-		kx = (double *)malloc(sizeof(double) * N);
-		ky = (double *)malloc(sizeof(double) * N);
-		r = (double *)malloc(sizeof(double) * N * N);
-
-		double *kx_d, *ky_d, *r_d;
-		cufftDoubleComplex *r_complex_d;
-		cudaMalloc((void **)&kx_d, sizeof(double) * N);
-		cudaMalloc((void **)&ky_d, sizeof(double) * N);
-		cudaMalloc((void **)&r_d, sizeof(double) * N * N);
-		cudaMalloc((void **)&r_complex_d, sizeof(cufftDoubleComplex) * N * N);
-
-		for (int y = 0; y < N; y++)
-			for (int x = 0; x < N; x++)
-				r[x + y * N] = sin(
-					exp(-((x - N / 2.0f) * (x - N / 2.0f) + (N / 2.0f - y) * (N / 2.0f - y)) / (10 * 10))
-				);
-
-#if ZEROPADDING
-		for (int y = 0; y < N; y++)
-			for (int x = 0; x < N; x++)
-				if (x < N / 4.0 || x > N * 3.0 / 4.0 || y < N / 4.0 || y > N*3.0 / 4.0)
-					r[x + y*N] = 0;
-#endif
-
-		double* r_inital = (double *)malloc(sizeof(double) * N * N);
-		for (int i = 0; i < N * N; i++)
-			r_inital[i] = r[i];
-
-		for (int i = 0; i < N; i++)
-		{
-			kx[i] = i - N / 2.0f; //centers kx values to be at center of image
-			ky[i] = N / 2.0f - i; //centers ky values to be at center of image
-		}
-
-		cudaMemcpy(kx_d, kx, sizeof(double) * N, cudaMemcpyHostToDevice);
-		cudaMemcpy(ky_d, ky, sizeof(double) * N, cudaMemcpyHostToDevice);
-		cudaMemcpy(r_d, r, sizeof(double) * N * N, cudaMemcpyHostToDevice);
-
-		cufftHandle plan;
-		cufftPlan2d(&plan, N, N, CUFFT_C2C);
-
-		/* Compute the execution configuration
-		NB: block_size_x*block_size_y = number of threads */
-		dim3 dimBlock(block_size_x, block_size_y);
-		dim3 dimGrid(N / dimBlock.x, N / dimBlock.y);
-		/* Handle N not multiple of block_size_x or block_size_y */
-		if (N % block_size_x != 0) dimGrid.x += 1;
-		if (N % block_size_y != 0) dimGrid.y += 1;
-
-		real2complex << < dimGrid, dimBlock >> > (r_complex_d, r_d, N);
-
-		cufftExecZ2Z(plan, r_complex_d, r_complex_d, CUFFT_FORWARD);
-		solve_poisson << <dimGrid, dimBlock >> > (r_complex_d, kx_d, ky_d, N);
-		cufftExecZ2Z(plan, r_complex_d, r_complex_d, CUFFT_INVERSE);
-
-		double scale = 1.0f / (N * N);// *2E3;
-		complex2real_scaled << <dimGrid, dimBlock >> > (r_d, r_complex_d, scale, N);
-
-		cudaMemcpy(r, r_d, sizeof(double) * N * N, cudaMemcpyDeviceToHost);
-
-#if 1
-		std::vector<double> r_ZeroPaddOff;
-		for (int y = 0; y < N; y++)
-		{
-			for (int x = 0; x < N; x++)
-				if (x >= N / 4.0 && x < N * 3.0 / 4.0 && y >= N / 4.0 && y < N *3.0 / 4.0)
-					r_ZeroPaddOff.push_back(r[y * N + x]);
-		}
-
-		std::vector<std::vector<glm::dvec3>> normals = generateNormals(&r_ZeroPaddOff[0], N / 2, N / 2);
-		static bool first = true;
-		if (first)
-		{
-			//writeNormalsToBitmapImage("NormalsRender.bmp", N - 2, normals);
-			writeNormals("NormalsRender.csv", normals);
-		}
-#else 
-		std::vector<std::vector<glm::dvec3>> normals = generateNormals(&r[0], N, N);
-		static bool first = true;
-		if (first)
-		{
-			//writeNormalsToBitmapImage("NormalsRender.bmp", N - 2, normals);
-			writeNormals("NormalsRender.csv", normals);
-		}
-#endif
-		
-		/* Destroy plan and clean up memory on device*/
-		free(kx);
-		free(ky);
-		free(r);
-		free(r_inital);
-		cufftDestroy(plan);
-		cudaFree(r_complex_d);
-		cudaFree(kx_d);
+		std::cout << "Normal Size: " << normals.size() << "\n";
 
 		return normals;
 	}
-
 
 	__global__ void real2complex(cufftDoubleComplex *c, double *a, int N)
 	{
@@ -341,7 +244,6 @@ namespace ginkgo
 		fclose(pFile);
 		return data; //remember to free(data)
 	}
-	
 	void writeDoubleArrayToBitmapImage(const char* filename, int N, double *r)
 	{
 		double max = r[0];
@@ -369,10 +271,10 @@ namespace ginkgo
 		FreeImage_Unload(image);
 		delete[] pixels;
 	}
-	void writeNormalsToBitmapImage(const char* filename, int N, const std::vector<std::vector<glm::dvec3>>& normals)
+	void writeNormalsToBitmapImage(const char* filename, int N, const std::vector<std::vector<glm::dvec4>>& normals)
 	{
-		glm::dvec3 max = normals[0][0];
-		glm::dvec3 min = normals[0][0];
+		glm::dvec4 max = normals[0][0];
+		glm::dvec4 min = normals[0][0];
 		for (int r = 0; r < N; r++)
 		{
 			for (int c = 0; c < N; c++)
@@ -400,7 +302,7 @@ namespace ginkgo
 			for (int c = 0; c < N; c++)
 			{
 
-				glm::dvec3 normal = normals[r][c];
+				glm::dvec4 normal = normals[r][c];
 				//255.0 / (max - min) * (r[i / 3] - min)
 
 				pixels[r*N + c + 2] = static_cast<int>((255.0 * (0.50 * (normal.x + 1))) + 0.50); //red  - x direction
@@ -413,8 +315,7 @@ namespace ginkgo
 		FreeImage_Unload(image);
 		delete[] pixels;
 	}
-
-	void writeNormals(const std::string& path, std::vector<std::vector<glm::dvec3>>& data, int mode)
+	void writeNormals(const std::string& path, std::vector<std::vector<glm::dvec4>>& data, int mode)
 	{
 		std::ofstream fout(path, mode);
 
@@ -425,7 +326,7 @@ namespace ginkgo
 		{
 			for (int x = 0; x < width; x++)
 			{
-				fout << "(" << data[y][x].x << "," << data[y][x].y << "," << data[y][x].z << ")" << ",";
+				fout << "\"=\"\"" << data[y][x].x << ":" << data[y][x].y << ":" << data[y][x].z << "\"\"\"" << ",";
 			}
 			fout << std::endl;
 		}
@@ -451,10 +352,9 @@ namespace ginkgo
 
 		return data;
 	}
-
-	std::vector<std::vector<glm::dvec3>> generateNormals(double* data, int height, int width)
+	std::vector<std::vector<glm::dvec4>> generateNormals(double* data, int height, int width)
 	{
-		std::vector<std::vector<glm::dvec3>> normals;
+		std::vector<std::vector<glm::dvec4>> normals;
 		int normal_size = (width - 2) * (height - 2);
 		std::vector<double> dfx;
 		std::vector<double> dfy;
@@ -486,14 +386,14 @@ namespace ginkgo
 
 		for (int r = 0; r < height - 2; r++)
 		{
-			std::vector<glm::dvec3> row;
+			std::vector<glm::dvec4> row;
 			normals.emplace_back(row);
 			for (int c = 0; c < width - 2; c++)
 			{
 				double nx = a * dfx[r*(height - 2) + c];
 				double ny = a * dfy[r*(height - 2) + c];
 				double nz = sqrt(1.0 - nx * nx - ny * ny);
-				normals[r].emplace_back(glm::dvec3(nx, ny, nz));
+				normals[r].emplace_back(glm::dvec4(nx, ny, nz, 1.0f));
 			}
 		}
 

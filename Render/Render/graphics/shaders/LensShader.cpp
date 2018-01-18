@@ -19,18 +19,36 @@ namespace ginkgo {
 		glGenBuffers(1, &SSBO);
 	}
 
-	void LensShader::updateNormals(const std::vector<std::vector<glm::dvec3>>& normals) const
+	void LensShader::updateNormals(const std::vector<std::vector<glm::dvec4>>& normals) const
 	{
-		std::vector<glm::dvec3> data;
-		for (int i = 0; i < normals.size(); i++)
-				data.insert(std::end(data), std::begin(normals[i]), std::end(normals[i]));
+		/*glm::dvec4 data[4] =
+		{
+		glm::dvec4(1, 0, 0, 0),
+		glm::dvec4(0, 1, 0, 0),
+		glm::dvec4(0, 0, 1, 0),
+		glm::dvec4(1, 1, 1, 0)
+		};
+		*/
+		//std::vector<glm::dvec4> data;
+		//data.emplace_back(glm::dvec4(1, 0, 0, 0));
+		//data.emplace_back(glm::dvec4(0, 1, 0, 0));
+		//data.emplace_back(glm::dvec4(0, 0, 1, 0));
+		//data.emplace_back(glm::dvec4(1, 1, 1, 0));
 
+		///*Potentially chagne to uniform*/
+		//glBindBuffer(GL_SHADER_STORAGE_BUFFER, SSBO);
+		//glBufferData(GL_SHADER_STORAGE_BUFFER, data.size() * sizeof(glm::dvec4), &data[0], GL_DYNAMIC_DRAW);
+		//glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, SSBO);
+		//glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
+
+		std::vector<glm::dvec4> data;
+		for (int i = 0; i < normals.size(); i++)
+			data.insert(std::end(data), std::begin(normals[i]), std::end(normals[i]));
 		/*Potentially chagne to uniform*/
 		glBindBuffer(GL_SHADER_STORAGE_BUFFER, SSBO);
-		glBufferData(GL_SHADER_STORAGE_BUFFER, normals.size() * normals[0].size() * sizeof(glm::dvec3), &data[0], GL_STATIC_DRAW);
-		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 0, SSBO);
+		glBufferData(GL_SHADER_STORAGE_BUFFER, normals.size() * normals[0].size() * sizeof(glm::dvec4), &data[0], GL_STATIC_DRAW);
+		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, SSBO);
 		glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
-
 		setUniform1i("n", normals.size()); //side length
 	}
 

@@ -288,6 +288,7 @@ better to use pointers instead of references as member variables
 vectors manage all the memory they allocate for you
 -everything is abstracted away from its copy constructor, destructor for cleaning, etc
 -just use normally (like in Java)
+-http://www.cplusplus.com/forum/general/56177/ -> don't worry about returning reference, its most efficient in C++11 to return local copy
 
 allocated memory lasts for liftime of program unless its deleted
 
@@ -453,3 +454,7 @@ the reason why c/c++ libraries require you to pass to be changed values as a poi
 std::vector<float>& const methodName()
 
 function object and functer are the same thing
+
+
+glm stuff can be accessed like an array since its all structs
+glm::vec3 a(1,2,3); a[0]; //etc

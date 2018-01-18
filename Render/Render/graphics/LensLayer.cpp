@@ -111,12 +111,24 @@ namespace ginkgo {
 		}
 	}
 
-
 	void LensLayer::draw(const glm::mat4& transformProjectionView, const glm::vec3& cameraPosition, const LensShader& lensShader, const CubeMap& cubeMap) const
 	{
 		lensShader.bind();
 
-		lensShader.updateNormals(lensing());
+		std::vector<std::vector<glm::dvec4>> normals;
+		#define n 510
+		for (int r = 0; r < n; r++)
+		{
+		normals.emplace_back(std::vector<glm::dvec4>());
+		for (int c = 0; c < n; c++)
+		{
+		normals[r].emplace_back(glm::dvec4(0.0f, 0.0f, 1.0f, 1.0f));
+		}
+		}
+		lensShader.updateNormals(normals);
+		
+
+		//lensShader.updateNormals(lensing());
 
 		unsigned int b = 0;
 
@@ -138,8 +150,6 @@ namespace ginkgo {
 			glBindTexture(GL_TEXTURE_2D, 0);
 		}
 		cubeMap.unbindCubeMapTexture();
-
-
 
 		lensShader.unbind();
 	}

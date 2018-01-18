@@ -37,43 +37,29 @@ namespace ginkgo {
 	Game::Game(Window& win)
 		: window(win)
 	{
-		isGameOver = false; 
+		isGameOver = false;
 
 		camera = new Camera(&window, glm::vec3(0.0f, 0.01f, 0.0f));
 		screen = new ScreenBuffer(window.getWidth(), window.getHeight(), window.getClearColor(), false, false);
 
 		LensMesh* lensMesh = new LensMesh();
 		ObjLoader obj("Render/res/models/plane.obj");
+
 		lensMesh->addData(obj.getPositionList(), obj.getIndexList(), obj.getUVList());
+
+		std::vector<glm::vec3> positions = obj.getPositionList();
+		std::vector<glm::vec2> uvs = obj.getUVList();
+
 		lensShader = new LensShader();
 		//when creating Renderable, pass in 2.0f as refractive index in LensLayer
 		lensLayer = new LensLayer({ new Renderable(lensMesh, new Material(new Texture())) });
-		lensLayer->alterRenderable(0)->alterModel().newTranslateMatrix(glm::vec3(0.0f, 0.0f, -2.f));
+		lensLayer->alterRenderable(0)->alterModel().newTranslateMatrix(glm::vec3(0.0f, 0.0f, -0.1f));
 		//	lensLayer->alterRenderable(0)->alterModel().rotateMatrix(glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
 		std::map<unsigned int, std::string> skyboxImages;
-		std::string singlePath = "Render/res/textures/space.jpg";
+		std::string singlePath = "Render/res/textures/grid.jpg";
 		skyboxImages[CubeMap::BACK] = skyboxImages[CubeMap::BOTTOM] = skyboxImages[CubeMap::TOP] = skyboxImages[CubeMap::LEFT] = skyboxImages[CubeMap::RIGHT] = skyboxImages[CubeMap::FRONT] = singlePath;
 		skybox = new CubeMap(skyboxImages, 500);
-		
-	}
-
-	void Game::input(double dt)
-	{
-		camera->input(isGameOver, dt);
-		//camera->lensInput(isGameOver, dt);
-	}
-
-	void Game::update(double dt)
-	{
-		camera->update(dt);
-
-		static double t = 0;
-		t += dt;
-
-		lensLayer->alterRenderable(0)->alterModel().newTranslateMatrix(glm::vec3(sin(t)*8, 0.0f, -2.f));
-
-
 	}
 
 	void Game::render()
@@ -82,12 +68,20 @@ namespace ginkgo {
 
 		ScreenBuffer::initalize();
 		screen->drawToTexture();
+
 		lensLayer->draw(transformProjectionViewCamera, camera->getCameraPosition(), *lensShader, *skybox);
 		skybox->draw(transformProjectionViewCamera);
-		screen->drawToScreen();
 
 		//ScreenBuffer::drawAsWireframe();
+		screen->drawToScreen();
+
 	}
+
+	void Game::input(double dt)
+	{	}
+
+	void Game::update(double dt)
+	{	}
 
 	void Game::postProcessing()
 	{	}

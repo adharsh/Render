@@ -121,26 +121,28 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\bin</OutDir>
     <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\Intermediates</IntDir>
     <IncludePath>$(SolutionDir)Dependencies/Win32\includes;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Dependencies/Win32\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
-    <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\Intermediates\</IntDir>
+    <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\bin</OutDir>
+    <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\bin\Intermediates\</IntDir>
     <IncludePath>$(SolutionDir)/Dependencies/Win32/includes;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)/Dependencies/Win32/libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>$(SolutionDir)/Dependencies/x64/includes;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)/Dependencies/x64/libs;$(LibraryPath)</LibraryPath>
-    <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\Intermediates</IntDir>
+    <IntDir>$(SolutionDir)\bin\$(Platform)\$(Configuration)\Intermediates</IntDir>
+    <OutDir>$(SolutionDir)\bin\$(Platform)\$(Configuration)</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(SolutionDir)/Dependencies/x64/includes;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)/Dependencies/x64/libs;$(LibraryPath)</LibraryPath>
-    <IntDir>$(SolutionDir)$(Platform)\$(Configuration)\Intermediates</IntDir>
+    <IntDir>$(SolutionDir)\bin\$(Platform)\$(Configuration)\Intermediates</IntDir>
+    <OutDir>$(SolutionDir)\bin\$(Platform)\$(Configuration)</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
