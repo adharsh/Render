@@ -119,10 +119,9 @@ namespace ginkgo {
 	void ScreenBuffer::drawToTexture() const
 	{
 		bindBuffer();
-		ScreenBuffer::initalize(clear_color);
 	}
 
-	void ScreenBuffer::drawToScreen() const
+	void ScreenBuffer::drawTextureToScreen() const
 	{
 		ScreenBuffer::bindDefaultBuffer();
 		ScreenBuffer::clearColor(clear_color);

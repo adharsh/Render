@@ -44,56 +44,48 @@ namespace ginkgo {
 		auto lastTime = Time::getTime();
 		double unprocessedTime = 0;
 
-		//while (isRunning)
-		//{
-		//	bool render = false;
-
-		//	auto startTime = Time::getTime();
-		//	auto passedTime = Time::getDuration(startTime, lastTime);
-		//	lastTime = startTime;
-
-		//	unprocessedTime += passedTime / (double) Time::SECOND;
-		//	frameCounter += passedTime;
-
-		//	while (unprocessedTime > frameTime)
-		//	{
-		//		render = true;
-
-		//		unprocessedTime -= frameTime;
-
-		//		if (game.gameOver() || window.closed())
-		//			stop();
-
-		//		Time::setDelta(frameTime);
-
-		//		game.input(Time::getDelta());
-		//		game.update(Time::getDelta());
-
-		//		if (frameCounter >= Time::SECOND)
-		//		{
-		//			//std::cout << frames << std::endl;
-		//			frames = 0;
-		//			frameCounter = 0;
-		//		}
-		//	}
-
-		//	if (render)
-		//	{
-		//		this->render();
-		//		frames++;
-		//	}
-		//	else
-		//	{
-		//		std::this_thread::sleep_for(std::chrono::milliseconds(1));
-		//	}
-		//}
-
 		while (isRunning)
 		{
-			game.input(0.01);
-			game.update(0.01);
-			render();
-			std::this_thread::sleep_for(std::chrono::milliseconds(10));
+			bool render = false;
+
+			auto startTime = Time::getTime();
+			auto passedTime = Time::getDuration(startTime, lastTime);
+			lastTime = startTime;
+
+			unprocessedTime += passedTime / (double)Time::SECOND;
+			frameCounter += passedTime;
+
+			while (unprocessedTime > frameTime)
+			{
+				render = true;
+
+				unprocessedTime -= frameTime;
+
+				if (game.gameOver() || window.closed())
+					stop();
+
+				Time::setDelta(frameTime);
+
+				game.input(Time::getDelta());
+				game.update(Time::getDelta());
+
+				if (frameCounter >= Time::SECOND)
+				{
+					//std::cout << frames << std::endl;
+					frames = 0;
+					frameCounter = 0;
+				}
+			}
+
+			if (render)
+			{
+				this->render();
+				frames++;
+			}
+			else
+			{
+				std::this_thread::sleep_for(std::chrono::milliseconds(1));
+			}
 		}
 
 		cleanUp();
@@ -102,14 +94,14 @@ namespace ginkgo {
 	void Engine::render()
 	{
 		//window->clear();//do clear stuff in render
-		
+
 		game.render(); //3D
 		game.postProcessing();// 2D
 		GLenum error = glGetError();
 
 		if (error != GL_NO_ERROR)
 			std::cout << "OpenGL Error: " << error << " in Engine.cpp, most likely game.render()" << std::endl;
-		
+
 		window.update();
 		error = glGetError();
 
@@ -119,7 +111,7 @@ namespace ginkgo {
 
 	void Engine::cleanUp()
 	{
-		
+
 	}
-	
+
 }

@@ -27,7 +27,7 @@ namespace ginkgo {
 	public:
 		Layer(const std::vector<Renderable*>& renderables, const glm::mat4& model = glm::mat4());
 
-		unsigned int getSize() const { return renderables.size(); }
+		unsigned int size() const { return renderables.size(); }
 
 		void addRenderable(Renderable* renderable);
 		Renderable* alterRenderable(unsigned int index) const;

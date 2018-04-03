@@ -7,42 +7,41 @@ in vec2 texCoord;
 out vec4 fragColor;
 
 uniform vec3 cameraPosition;
-//uniform sampler2D normalMap;
 uniform samplerCube skybox;
+
 //uniform int n;
-#define n 510
+#define N 16
 
  layout(std430, binding = 2) buffer normal_data
  {
-     dvec4 data[n][n];
+     dvec4 data[N][N];
  };
+
+ //#define test 1
 
 void main()
 {
 	fragColor = vec4(0.0f, 0.0f, 0.0f, 0.0f);
 
-	dvec3 Normal = data[int( (n-1)*(1-texCoord.y)+0.5 )][int( (n-1)*texCoord.x + 0.5 )].xyz;
-	//dvec3 Normal = data[n * int( (n-1)*(1-texCoord.y)+0.5 ) + int( (n-1)*texCoord.x + 0.5 )].xyz; 
+	//#if test
+	int r = int( (N-1)*(1-texCoord.y));
+	int c = int( (N-1)*texCoord.x);
+	int a = 1;
+	if(r == (N-1)) r = (N-1) - a;
+	if(c == (N-1)) c == (N-1) - a;
+	dvec3 Normal = normalize(data[r][c] + data[r + a][c] + data[r][c + a]).xyz;
+	
+	//Below is wrong, just skybox needs to be as detailed as possible, but lensing needs to be less pixelated, check with N with 16 for ex
+	//TODO: its not the normal data thats being pixelated, its the actual skybox image that is pixelated
+	//somehow linearly interpolate the samplerCube skybox
 
-	//(n-1) * (1-texCoord.y) * n + (n-1) *x 
+	//#else 
+	//dvec3 Normal = data[int( (N-1)*(1-texCoord.y)+0.5 )][int( (N-1)*texCoord.x + 0.5 )].xyz;
+	//#endif
 
-	//Normal = data[0][0].xyz;
-	//dvec3 Normal = data[2].xyz;
 	dvec3 Incident = normalize(worldPos - cameraPosition);
 	dvec3 R = refract(Incident, Normal, 1.0f/2.0f); //1/refractive index -> 1.0f/2.0f
 	fragColor = texture(skybox, vec3(R));
 
-//	if(	int((n-1) * (1-texCoord.y) * n + (n-1) * texCoord.x) == 0 )
-//		fragColor = vec4(1, 0, 0, 1);
-//	else if (int((n-1) * (1-texCoord.y) * n + (n-1) * texCoord.x) == 1)
-//		fragColor = vec4(0, 1, 0, 1);
-//	else if (int((n-1) * (1-texCoord.y) * n + (n-1) * texCoord.x) == 2)
-//		fragColor = vec4(0, 0, 1, 1);
-//	else if (int((n-1) * (1-texCoord.y) * n + (n-1) * texCoord.x) == 3)
-//		fragColor = vec4(0, 0, 0, 1);
-	
-	//fragColor = vec4(texCoord.x, texCoord.y, 0.0f, 0.0f);
-	//
-	//fragColor  = vec4(Normal,1);
-	//fragColor  = vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	//fragColor = vec4(Normal, 1.0);
 }

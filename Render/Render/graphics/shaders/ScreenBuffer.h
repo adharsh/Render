@@ -21,7 +21,7 @@ namespace ginkgo {
 		~ScreenBuffer();
 
 		void drawToTexture() const;
-		void drawToScreen() const;
+		void drawTextureToScreen() const;
 		static void initalize(const glm::vec4& clearColor = glm::vec4());
 
 		void bindBuffer() const;

@@ -23,7 +23,7 @@ namespace ginkgo
 #if ZEROPADDING
 			2 *
 #endif
-			512; // ex: N = 2*32 //future: 128 X 128, N = 128 // N is the sidelength of the image
+		18; // ex: N = 2*32 //future: 128 X 128, N = 128 // N is the sidelength of the image
 
 		int block_size_x = 32;
 		int block_size_y = 32;
@@ -43,7 +43,7 @@ namespace ginkgo
 		for (int y = 0; y < N; y++)
 			for (int x = 0; x < N; x++)
 				r[x + y * N] = sin(
-					exp(-((x - N / 2.0f) * (x - N / 2.0f) + (N / 2.0f - y) * (N / 2.0f - y)) / (10 * 10))
+					exp(-((x - N / 2.0f) * (x - N / 2.0f) + (N / 2.0f - y) * (N / 2.0f - y)) / (50 * 50))
 				);
 
 #if ZEROPADDING
@@ -85,7 +85,7 @@ namespace ginkgo
 		real2complex << < dimGrid, dimBlock >> > (r_complex_d, r_d, N);
 
 		cufftExecZ2Z(plan, r_complex_d, r_complex_d, CUFFT_FORWARD);
-		solve_poisson << <dimGrid, dimBlock >> > (r_complex_d, kx_d, ky_d, N);
+		//solve_poisson << <dimGrid, dimBlock >> > (r_complex_d, kx_d, ky_d, N);
 		cufftExecZ2Z(plan, r_complex_d, r_complex_d, CUFFT_INVERSE);
 
 		double scale = 1.0f / (N * N);// *2E3;
@@ -104,7 +104,7 @@ namespace ginkgo
 		//normals[center] = glm::dvec3(0.0f, 0.0f, 0.0f);
 #if DATADEBUG
 		writeNormalsToBitmapImage("DataDebug/Normals.bmp", N - 2, normals);
-		writeNormals("DataDebug/NormalsRender.csv", normals);
+		writeNormals("DataDebug/Normals.csv", normals);
 #endif
 		//system("pause");
 

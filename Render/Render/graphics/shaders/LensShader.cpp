@@ -49,7 +49,7 @@ namespace ginkgo {
 		glBufferData(GL_SHADER_STORAGE_BUFFER, normals.size() * normals[0].size() * sizeof(glm::dvec4), &data[0], GL_STATIC_DRAW);
 		glBindBufferBase(GL_SHADER_STORAGE_BUFFER, 2, SSBO);
 		glBindBuffer(GL_SHADER_STORAGE_BUFFER, 0);
-		setUniform1i("n", normals.size()); //side length
+		//setUniform1i("n", normals.size()); //side length
 	}
 
 	void LensShader::updateUniforms(const glm::mat4& model, const glm::mat4& transformProjectionViewModel, const glm::vec3& cameraPosition) const
