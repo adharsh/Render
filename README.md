@@ -1,17 +1,18 @@
-#ginkgo
-##3D OpenGL Rendering Engine 
+#3D OpenGL Rendering Engine - Ginkgo
 
-###Lensing Simulation
-Gravitational Lensiing: 
-![alt text][logo]
+##Gravitational Lensing Simulation
+<img src="https://raw.githubusercontent.com/adharsh/Render/master/Render/Render/examples/Lensing1.png" alt="Drawing" style="width: 200px; height:200px;  padding-right: 50px;"/>
+<img src="https://raw.githubusercontent.com/adharsh/Render/master/Render/Render/examples/Lensing2.png" alt="Drawing" style="width: 200px; height:200px"/>
+##Engine
+<img src="https://raw.githubusercontent.com/adharsh/Render/master/Render/Render/examples/Chalet.bmp" alt="Drawing" style="width: 200px; height:200px;  padding-right: 50px;"/>
+<img src="https://raw.githubusercontent.com/adharsh/Render/master/Render/Render/examples/Chalet-Emboss.bmp" alt="Drawing" style="width: 200px; height:200px"/>
+<img src="https://raw.githubusercontent.com/adharsh/Render/master/Render/Render/examples/Chalet-EdgeDetection.bmp" alt="Drawing" style="width: 200px; height:200px;  padding-right: 50px;"/>
+<img src="https://raw.githubusercontent.com/adharsh/Render/master/Render/Render/examples/Monkeys.bmp" alt="Drawing" style="width: 200px; height:200px"/>
+<img src="https://raw.githubusercontent.com/adharsh/Render/master/Render/Render/examples/Monkey-GaussianBlur.bmp
+" alt="Drawing" style="width: 200px; height:200px"/>
+<img src="https://raw.githubusercontent.com/adharsh/Render/master/Render/Render/examples/Monkey-EdgeDetection.bmp" alt="Drawing" style="width: 200px; height:200px"/>
 
-[Lensing1]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png
-[Lensing2]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png
-
-###Engine
-
-
-###Basic Documentation
+##Basic Documentation
 
 Each renderable is something that can be drawn to the screen.
 Each renderable has a mesh and a material.
