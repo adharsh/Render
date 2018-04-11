@@ -1,11 +1,10 @@
 #ginkgo
 ##3D OpenGL Rendering Engine 
 
-###Gallery Galore
+###Lensing Simulation
 
-####Lensing Simulation
 
-####Engine
+###Engine
 
 
 ###Basic Documentation
@@ -58,13 +57,14 @@ The layer and all of its renderables can be moved together using the same `alter
 void Game::render()				
 {	
 	//Start out with:			
+	
+	//If drawing to single texture, also include this line:
+	screen->drawToTexture();
+
 	//Initalize drawing to screen	
 	ScreenBuffer::initalize();	
 	//Get camera matrix
 	glm::mat4 transformProjectionViewCamera = camera->getProjection() * camera->getView() * camera->getCameraPositionTranslation();
-
-	//If drawing to single texture, also include this line:
-	screen->drawToTexture();
 
 	/*
 		Have rendering code here

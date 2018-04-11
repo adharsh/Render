@@ -1,0 +1,4 @@
+Material class needs to refactored into a struct
+Material class should not have a texture, or if it should, refactor so layer uses material's texture and not renderable's texture
+
+Layer should be able to make empty constructor and then just use addRenderable
