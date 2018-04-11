@@ -35,21 +35,17 @@ namespace ginkgo {
 		camera = new Camera(&window, glm::vec3(0.0f, 0.01f, 0.0f));
 
 		Mesh* smesh = new Mesh();
-		ObjLoader obj("Render/res/models/smooth_monkey.obj");
+		ObjLoader obj("Render/res/models/chalet.obj");
 		smesh->addData(obj.getPositionList(), obj.getIndexList(), obj.getUVList(), obj.getNormalList());
 
 		std::vector<Renderable*> renderables;
-		for (int i = 0; i < 10; i++)
-			renderables.push_back(new Renderable(smesh, new Material( i%2 ? Material::REFLECT : 1.5)));
+		renderables.push_back(new Renderable(smesh, new Material(new Texture("Render/res/textures/chalet.jpg"))));
+		//renderables.push_back(new Renderable(smesh, new Material(new Texture("Render/res/textures/Hi.png"))));
 
 		layer = new Layer(renderables);
-		layer->alterModel().translateMatrix(glm::vec3(0.0f, 0.0f, -10.0f));
-
-		for (int i = 1; i <= layer->size(); i++)
-		{
-			layer->alterRenderable(i - 1)->alterModel().translateMatrix(glm::vec3(rand() % 21 - 10, rand() % 21 - 10, rand() % -20));
-			std::cout << rand() % 21 -10 << std::endl;
-		}//layer->alterRenderable(i - 1)->alterModel().translateMatrix(glm::vec3(0, 0, 0));
+		layer->alterModel().translateMatrix(glm::vec3(0.0f, 0.0f, -3.5));
+		layer->alterRenderable(0)->alterModel().rotateMatrix(glm::radians(-90.0f), glm::vec3(1, 0, 0));
+		//layer->alterRenderable(0)->alterModel().rotateMatrix(glm::radians(90.0f), glm::vec3(0, 1, 0));
 
 		std::map<unsigned int, std::string> skyboxImages;
 		std::string basepath = "Render/res/textures/skybox/sea/";
@@ -74,13 +70,12 @@ namespace ginkgo {
 		camera->update(dt);
 
 		static double t = 0;
-	//	t += dt * 0.000001;
+		//	t += dt * 0.000001;
 
 		dt *= 0.9;
-
 		for (int i = 1; i <= layer->size(); i++)
 		{
-			layer->alterRenderable(i - 1)->alterModel().rotateMatrix(i * dt, glm::vec3(1, 1, 0));
+			//	layer->alterRenderable(i - 1)->alterModel().rotateMatrix(i * dt, glm::vec3(1, 1, 0));
 		}
 	}
 
@@ -88,11 +83,11 @@ namespace ginkgo {
 	{
 		glm::mat4 transformProjectionViewCamera = camera->getProjection() * camera->getView() * camera->getCameraPositionTranslation();
 
-		//screen->drawToTexture();
+		screen->drawToTexture();
 		ScreenBuffer::initalize();
 		layer->draw(transformProjectionViewCamera, camera->getCameraPosition(), *phongShader, *skybox);
 		skybox->draw(transformProjectionViewCamera);
-		//screen->drawTextureToScreen();
+		screen->drawTextureToScreen();
 
 		//why if this code underneath uncommmented and postProcessing commented cant see text?
 		//text->draw("Game Engine", 0.0f, window.getHeight() - 50.0f, 1.0f, glm::vec4(0.0f, 0.0f, 0.0f, 1.0f));

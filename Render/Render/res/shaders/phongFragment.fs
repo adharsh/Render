@@ -136,11 +136,8 @@ void main()
 		r_color = texture(skybox, R) * rIntensity;
 	}
 
-
-
-
-
 	fragColor = diffuse_color + r_color;
+	fragColor = texture(diffuseTexture, texCoord.xy); //change this back 
 	
 	//if(diffuse_color.length > 1.0f)
 	//	fragColor = vec4(1.0f, 0.0f, 0.0f, 1.0f);
