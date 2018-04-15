@@ -1,9 +1,12 @@
-#3D OpenGL Rendering Engine - Ginkgo
+# 3D OpenGL Rendering Engine - Ginkgo
 
-##Gravitational Lensing Simulation
-<img src="https://raw.githubusercontent.com/adharsh/Render/master/Render/Render/examples/Lensing1.png" alt="Drawing" style="width: 200px; height:200px;  padding-right: 50px;"/>
-<img src="https://raw.githubusercontent.com/adharsh/Render/master/Render/Render/examples/Lensing2.png" alt="Drawing" style="width: 200px; height:200px"/>
-##Engine
+## Gravitational Lensing Simulation
+
+| ![](https://raw.githubusercontent.com/adharsh/Render/master/Render/Render/examples/Lensing1.png) | ![](https://raw.githubusercontent.com/adharsh/Render/master/Render/Render/examples/Lensing2.png) |
+| --- | --- |
+
+## Engine
+
 <img src="https://raw.githubusercontent.com/adharsh/Render/master/Render/Render/examples/Chalet.bmp" alt="Drawing" style="width: 200px; height:200px;  padding-right: 50px;"/>
 <img src="https://raw.githubusercontent.com/adharsh/Render/master/Render/Render/examples/Chalet-Emboss.bmp" alt="Drawing" style="width: 200px; height:200px"/>
 <img src="https://raw.githubusercontent.com/adharsh/Render/master/Render/Render/examples/Chalet-EdgeDetection.bmp" alt="Drawing" style="width: 200px; height:200px;  padding-right: 50px;"/>
@@ -12,7 +15,7 @@
 " alt="Drawing" style="width: 200px; height:200px"/>
 <img src="https://raw.githubusercontent.com/adharsh/Render/master/Render/Render/examples/Monkey-EdgeDetection.bmp" alt="Drawing" style="width: 200px; height:200px"/>
 
-##Basic Documentation
+## Basic Documentation
 
 Each renderable is something that can be drawn to the screen.
 Each renderable has a mesh and a material.
