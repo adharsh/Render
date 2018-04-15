@@ -4,18 +4,12 @@
 
 | ![](https://raw.githubusercontent.com/adharsh/Render/master/Render/Render/examples/Lensing1.png) | ![](https://raw.githubusercontent.com/adharsh/Render/master/Render/Render/examples/Lensing2.png) |
 | --- | --- |
-| [Using data from MROBS project](http://galformod.mpa-garching.mpg.de/mrobs/browser/) | Grid [image](https://raw.githubusercontent.com/adharsh/Render/master/Render/Render/res/textures/grid.jpg) |
+| [Using data from MROBS project](http://galformod.mpa-garching.mpg.de/mrobs/browser/) | [Simulation with Grid image](https://raw.githubusercontent.com/adharsh/Render/master/Render/Render/res/textures/grid.jpg) |
 
 ## Engine
-
-<img src="https://raw.githubusercontent.com/adharsh/Render/master/Render/Render/examples/Chalet.bmp" alt="Drawing" style="width: 200px; height:200px;  padding-right: 50px;"/>
-<img src="https://raw.githubusercontent.com/adharsh/Render/master/Render/Render/examples/Chalet-Emboss.bmp" alt="Drawing" style="width: 200px; height:200px"/>
-<img src="https://raw.githubusercontent.com/adharsh/Render/master/Render/Render/examples/Chalet-EdgeDetection.bmp" alt="Drawing" style="width: 200px; height:200px;  padding-right: 50px;"/>
-<img src="https://raw.githubusercontent.com/adharsh/Render/master/Render/Render/examples/Monkeys.bmp" alt="Drawing" style="width: 200px; height:200px"/>
-<img src="https://raw.githubusercontent.com/adharsh/Render/master/Render/Render/examples/Monkey-GaussianBlur.bmp
-" alt="Drawing" style="width: 200px; height:200px"/>
-<img src="https://raw.githubusercontent.com/adharsh/Render/master/Render/Render/examples/Monkey-EdgeDetection.bmp" alt="Drawing" style="width: 200px; height:200px"/>
-
+| ![](https://raw.githubusercontent.com/adharsh/Render/master/Render/Render/examples/Chalet.bmp) | ![](https://raw.githubusercontent.com/adharsh/Render/master/Render/Render/examples/Monkeys.bmp) |
+| --- | ---| 
+| ![](https://raw.githubusercontent.com/adharsh/Render/master/Render/Render/examples/Monkey-EdgeDetection.bmp) | ![](https://raw.githubusercontent.com/adharsh/Render/master/Render/Render/examples/Chalet-Emboss.bmp) | 
 ## Basic Documentation
 
 Each renderable is something that can be drawn to the screen.
