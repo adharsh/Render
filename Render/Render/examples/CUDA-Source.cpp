@@ -139,7 +139,7 @@ namespace ginkgo {
 		skybox->draw(transformProjectionViewCamera);
 
 		//ScreenBuffer::drawAsWireframe();
-		screen->drawToScreen();
+		screen->drawTextureToScreen();
 
 	}
 

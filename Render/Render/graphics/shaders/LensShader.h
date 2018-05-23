@@ -20,5 +20,4 @@ namespace ginkgo {
 		void updateUniforms(const glm::mat4& model, const glm::mat4& transformProjectionViewModel, const glm::vec3& cameraPosition) const;
 	};
 
-
 }

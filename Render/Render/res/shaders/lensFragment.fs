@@ -10,7 +10,7 @@ uniform vec3 cameraPosition;
 uniform samplerCube skybox;
 
 //uniform int n;
-#define N 16
+#define N 51
 
  layout(std430, binding = 2) buffer normal_data
  {

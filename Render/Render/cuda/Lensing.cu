@@ -23,7 +23,7 @@ namespace ginkgo
 #if ZEROPADDING
 			2 *
 #endif
-		18; // ex: N = 2*32 //future: 128 X 128, N = 128 // N is the sidelength of the image
+		514; // ex: N = 2*32 //future: 128 X 128, N = 128 // N is the sidelength of the image
 
 		int block_size_x = 32;
 		int block_size_y = 32;
