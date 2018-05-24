@@ -10,7 +10,7 @@ uniform vec3 cameraPosition;
 uniform samplerCube skybox;
 
 //uniform int n;
-#define N 51
+#define N 512
 
  layout(std430, binding = 2) buffer normal_data
  {
@@ -40,7 +40,9 @@ void main()
 	//#endif
 
 	dvec3 Incident = normalize(worldPos - cameraPosition);
+	//dvec3 R = refract(Incident, Normal, 1.0f/2.0f); //1/refractive index -> 1.0f/2.0f, refractive index in vacuum is 1.0
 	dvec3 R = refract(Incident, Normal, 1.0f/2.0f); //1/refractive index -> 1.0f/2.0f
+	
 	fragColor = texture(skybox, vec3(R));
 
 	//fragColor = vec4(Normal, 1.0);

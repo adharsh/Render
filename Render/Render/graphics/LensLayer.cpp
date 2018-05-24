@@ -115,19 +115,19 @@ namespace ginkgo {
 	{
 		lensShader.bind();
 
-//		std::vector<std::vector<glm::dvec4>> normals;
-//#define n 510
-//		for (int r = 0; r < n; r++)
-//		{
-//			normals.emplace_back(std::vector<glm::dvec4>());
-//			for (int c = 0; c < n; c++)
-//			{
-//				normals[r].emplace_back(glm::dvec4(0.0f, 0.0f, 1.0f, 1.0f));
-//			}
-//		}
-//		lensShader.updateNormals(normals);
+		std::vector<std::vector<glm::dvec4>> normals;
+#define n 510
+		for (int r = 0; r < n; r++)
+		{
+			normals.emplace_back(std::vector<glm::dvec4>());
+			for (int c = 0; c < n; c++)
+			{
+				normals[r].emplace_back(glm::dvec4(0.0f, 0.0f, 1.0f, 1.0f));
+			}
+		}
+		lensShader.updateNormals(normals);
 
-		lensShader.updateNormals(lensing());
+		//lensShader.updateNormals(lensing());
 
 		unsigned int b = 0;
 

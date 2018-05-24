@@ -26,7 +26,7 @@ namespace ginkgo {
 		Material* alterMaterial() const { return material; }
 		
 		const glm::mat4& getModel() const;
-		Transform& alterModel() { return model; }
+		Transform* alterModel() { return &model; }
 
 		const Mesh& getMesh() const { return *mesh; }
 		const Material& getMaterial() const { return *material; }

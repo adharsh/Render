@@ -39,7 +39,7 @@ namespace ginkgo {
 	{
 		isGameOver = false;
 
-		camera = new Camera(&window, glm::vec3(0.0f, 0.01f, 0.0f));
+		camera = new Camera(&window, glm::vec3(0.0f, 0.0f, 30.0f));
 		screen = new ScreenBuffer(window.getWidth(), window.getHeight(), window.getClearColor(), false, false);
 
 		LensMesh* lensMesh = new LensMesh();
@@ -50,13 +50,15 @@ namespace ginkgo {
 		//when creating Renderable, pass in 2.0f as refractive index in LensLayer
 		lensShader = new LensShader();
 		lensLayer = new LensLayer({ new Renderable(lensMesh, new Material(new Texture())) });
-		lensLayer->alterRenderable(0)->alterModel().newTranslateMatrix(glm::vec3(0.0f, 0.0f, -0.5f));
+		lensLayer->alterRenderable(0)->alterModel()->
+			newTranslateMatrix(glm::vec3(0.0f, 0.0f, -10.f))->
+			scaleMatrix(glm::vec3(20, 20, 20));
 		//	lensLayer->alterRenderable(0)->alterModel().rotateMatrix(glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
 
 		std::map<unsigned int, std::string> skyboxImages;
 		std::string singlePath = "Render/res/textures/grid.jpg";
 		skyboxImages[CubeMap::BACK] = skyboxImages[CubeMap::BOTTOM] = skyboxImages[CubeMap::TOP] = skyboxImages[CubeMap::LEFT] = skyboxImages[CubeMap::RIGHT] = skyboxImages[CubeMap::FRONT] = singlePath;
-		skybox = new CubeMap(skyboxImages, 500);
+		skybox = new CubeMap(skyboxImages, 10);
 	}
 
 	void Game::render()
@@ -65,8 +67,8 @@ namespace ginkgo {
 
 		//screen->drawToTexture();
 		ScreenBuffer::initalize();
-		lensLayer->draw(transformProjectionViewCamera, camera->getCameraPosition(), *lensShader, *skybox);
 		skybox->draw(transformProjectionViewCamera);
+		lensLayer->draw(transformProjectionViewCamera, camera->getCameraPosition(), *lensShader, *skybox);
 		//screen->drawTextureToScreen();
 	}
 
